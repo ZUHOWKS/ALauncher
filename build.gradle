@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'dev.asiluxserver'
+group 'dev.asiluxserver.launcher'
 version 'dev-0.1'
 
 repositories {

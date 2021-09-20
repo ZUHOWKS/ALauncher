@@ -23,6 +23,7 @@ public class TopPanel extends Panel {
         this.topBar = this.layout;
         this.layout.setStyle("-fx-background-color: rgb(31,35,37);");
         GridPane topBarButtom = new GridPane();
+        this.layout.getChildren().add(topBarButtom);
 
         Label title = new Label();
         this.layout.getChildren().add(title);
@@ -42,7 +43,7 @@ public class TopPanel extends Panel {
         GridPane.setVgrow(hide, Priority.ALWAYS);
 
         // Bouton Close //
-        close.setFill(Color.rgb(200, 0, 76));
+        close.setFill(Color.rgb(95, 188, 85));
         close.setOpacity(0.7F);
         close.setSize("18.0px");
         close.setOnMouseEntered(e-> close.setOpacity(1.0f));
@@ -51,13 +52,24 @@ public class TopPanel extends Panel {
         close.setTranslateX(70.0d);
 
         // Bouton Fullscreen //
-        fullscreen.setFill(Color.rgb(200, 0, 76));
+        fullscreen.setFill(Color.rgb(245, 255, 239));
         fullscreen.setOpacity(0.7F);
         fullscreen.setSize("16.0px");
-        fullscreen.setOnMouseEntered(e-> close.setOpacity(1.0f));
-        fullscreen.setOnMouseExited(e-> close.setOpacity(0.7f));
+        fullscreen.setOnMouseEntered(e-> fullscreen.setOpacity(1.0f));
+        fullscreen.setOnMouseExited(e-> fullscreen.setOpacity(0.7f));
         fullscreen.setOnMouseClicked(e-> this.panelManager.getStage().setMaximized(!this.panelManager.getStage().isMaximized()));
-        fullscreen.setTranslateX(70.0d);
+        fullscreen.setTranslateX(50.0d);
+
+        // Bouton Hide //
+        hide.setFill(Color.rgb(245, 255, 239));
+        hide.setOpacity(0.7F);
+        hide.setSize("18.0px");
+        hide.setOnMouseEntered(e-> hide.setOpacity(1.0f));
+        hide.setOnMouseExited(e-> hide.setOpacity(0.7f));
+        hide.setOnMouseClicked(e-> this.panelManager.getStage().setIconified(true));
+        hide.setTranslateX(30.0d);
+
+        topBarButtom.getChildren().addAll(close, fullscreen, hide);
 
     }
 }
