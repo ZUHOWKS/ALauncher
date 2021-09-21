@@ -43,7 +43,7 @@ public class TopPanel extends Panel {
         GridPane.setVgrow(hide, Priority.ALWAYS);
 
         // Bouton Close //
-        close.setFill(Color.rgb(95, 188, 85));
+        close.setFill(Color.rgb(223, 0, 73));
         close.setOpacity(0.7F);
         close.setSize("18.0px");
         close.setOnMouseEntered(e-> close.setOpacity(1.0f));
@@ -61,7 +61,7 @@ public class TopPanel extends Panel {
         fullscreen.setTranslateX(50.0d);
 
         // Bouton Hide //
-        hide.setFill(Color.rgb(245, 255, 239));
+        hide.setFill(Color.rgb(95, 188, 85));
         hide.setOpacity(0.7F);
         hide.setSize("18.0px");
         hide.setOnMouseEntered(e-> hide.setOpacity(1.0f));
