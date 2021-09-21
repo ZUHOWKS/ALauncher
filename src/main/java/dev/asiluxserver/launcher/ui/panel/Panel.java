@@ -2,6 +2,9 @@ package dev.asiluxserver.launcher.ui.panel;
 
 import dev.asiluxserver.launcher.ui.PanelManager;
 import javafx.animation.FadeTransition;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.util.Duration;
@@ -31,11 +34,21 @@ public class Panel implements IPanel {
         transition.play();
     }
     
-    public void setGrow(GridPane layout){
+    public void setGrow(Node layout){
         setGrow(layout, Priority.ALWAYS, Priority.ALWAYS);
     }
-    public void setGrow(GridPane layout, Priority Hgrow, Priority Vgrow) {
+
+    public void setGrow(Node layout, Priority Hgrow, Priority Vgrow) {
         GridPane.setHgrow(layout, Hgrow);
         GridPane.setVgrow(layout, Vgrow);
+    }
+
+    public void setAlignment(Node layout){
+        setAlignment(layout, HPos.CENTER, VPos.CENTER);
+    }
+
+    public void setAlignment(Node layout, HPos Hpos, VPos Vpos) {
+        GridPane.setHalignment(layout, Hpos);
+        GridPane.setValignment(layout, Vpos);
     }
 }
