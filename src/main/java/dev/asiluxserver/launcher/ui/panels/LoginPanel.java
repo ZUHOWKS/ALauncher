@@ -1,45 +1,25 @@
 package dev.asiluxserver.launcher.ui.panels;
 
 import dev.asiluxserver.launcher.Main;
-import dev.asiluxserver.launcher.auth.mineweb.AuthMineWeb;
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.panel.Panel;
-import fr.arinonia.arilibfx.auth.premium.Auth;
-import fr.arinonia.arilibfx.auth.premium.exceptions.AuthenticationUnavailableException;
-import fr.arinonia.arilibfx.auth.premium.exceptions.RequestException;
-import fr.arinonia.arilibfx.auth.premium.responses.AuthenticationResponse;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TextField;
-import javafx.scene.effect.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
-import javafx.util.Duration;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LoginPanel extends Panel {
-
-    private HomePanel homePanel;
 
     @Override
     public void init(PanelManager panelManager) {
@@ -47,134 +27,55 @@ public class LoginPanel extends Panel {
 
         GridPane loginPanel = new GridPane();
         GridPane mainPanel = new GridPane();
-        GridPane middlePannel = new GridPane();
-        GridPane topPanel = new GridPane();
-        GridPane topPanelContour = new GridPane();
         GridPane bottomPanel = new GridPane();
 
         AtomicBoolean connectWithMojang = new AtomicBoolean(false);
-        AtomicBoolean antiSpamConnection = new AtomicBoolean(false);
 
         loginPanel.setMaxWidth(400);
         loginPanel.setMinWidth(400);
         loginPanel.setMaxHeight(580);
         loginPanel.setMinHeight(580);
-        GridPane.setHgrow(loginPanel, Priority.ALWAYS);
-        GridPane.setVgrow(loginPanel, Priority.ALWAYS);
-        GridPane.setHalignment(loginPanel, HPos.CENTER);
-        GridPane.setValignment(loginPanel, VPos.CENTER);
-        loginPanel.setStyle("-fx-background-color: rgba(0,0,0,0); -fx-opacity: 100%;");
+        setGrow(loginPanel);
+        setAlignment(loginPanel);
+        loginPanel.setOpacity(70);
 
         RowConstraints bottomConstraints = new RowConstraints();
         bottomConstraints.setValignment(VPos.BOTTOM);
         bottomConstraints.setMaxHeight(55);
         loginPanel.getRowConstraints().addAll(new RowConstraints(), bottomConstraints);
         loginPanel.add(mainPanel, 0 , 0);
-        loginPanel.add(bottomPanel, 0 , 1);
-        
+        loginPanel.add(bottomPanel, 0 , 0);
 
+        setGrow(mainPanel);
+        setGrow(bottomPanel);
 
-        GridPane.setHgrow(mainPanel, Priority.ALWAYS);
-        GridPane.setVgrow(mainPanel, Priority.ALWAYS);
-
-        GridPane.setHgrow(bottomPanel, Priority.ALWAYS);
-        GridPane.setVgrow(bottomPanel, Priority.ALWAYS);
-
-        RowConstraints topConstraints = new RowConstraints();
-        RowConstraints middleConstraints = new RowConstraints();
-        topConstraints.setValignment(VPos.TOP);
-        middleConstraints.setValignment(VPos.TOP);
-        mainPanel.getRowConstraints().addAll(new RowConstraints(), topConstraints);
-        mainPanel.add(topPanelContour, 0, 0);
-        mainPanel.add(middlePannel, 0,1);
-
-        topPanelContour.getRowConstraints().addAll(new RowConstraints(), middleConstraints);
-        topPanelContour.add(topPanel, 0, 0);
-
-        /* Top Panel */
-        topPanel.setMaxHeight(42);
-        topPanel.setMinHeight(42);
-        topPanel.setMaxWidth(272);
-        topPanel.setMinWidth(272);
-        GridPane.setHgrow(topPanel, Priority.ALWAYS);
-        GridPane.setVgrow(topPanel, Priority.ALWAYS);
-        setAlignment(topPanel, HPos.CENTER, VPos.CENTER);
-
-        /* Contour du Top Panel */
-        topPanelContour.setMaxHeight(48);
-        topPanelContour.setMinHeight(48);
-        topPanelContour.setMaxWidth(278);
-        topPanelContour.setMinWidth(278);
-        GridPane.setHgrow(topPanelContour, Priority.ALWAYS);
-        GridPane.setVgrow(topPanelContour, Priority.ALWAYS);
-        setAlignment(topPanelContour, HPos.CENTER, VPos.TOP);
-        topPanelContour.setTranslateY(23d);
-
-        /* Middle Panel */
-        middlePannel.setMaxHeight(350);
-        middlePannel.setMinHeight(350);
-        middlePannel.setMaxWidth(280);
-        middlePannel.setMinWidth(280);
-        GridPane.setHgrow(middlePannel, Priority.ALWAYS);
-        GridPane.setVgrow(middlePannel, Priority.ALWAYS);
-        setAlignment(middlePannel, HPos.CENTER, VPos.TOP);
-
-
-
-
-        /*
-        * STYLE DES PANEL
-        */
-
-        /* Style Main Panel */
-        mainPanel.setStyle("-fx-background-color: rgba(143, 168, 95, 0.75);");
-
-        /* Style Bottom Panel*/
-        bottomPanel.setStyle("-fx-background-color: rgba(24,24,24,0.65);");
-
-        /* Style Top Panel */
-        topPanel.setStyle("-fx-background-color: rgba(37, 37, 37, 0.8);");
-
-        /* Style Contour du Top Panel*/
-        topPanelContour.setStyle("-fx-background-color: rgba(143, 168, 95, 0.5);");
-        topPanelContour.setEffect(new GaussianBlur(5));
-        topPanelContour.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.17), 31, 0, 0, 0));
-
-        /* Style Middle Panel */
-        middlePannel.setEffect(new Bloom(18));
-        middlePannel.setEffect(new BoxBlur(10,10,5));
-        middlePannel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.15), 17, 0, 0, 0));
-
-
-        /*
-         *  ELEMENT DANS BOTTOM PANEL
-         */
-
-        /* Text sans action */
+        mainPanel.setStyle("-fx-background-color: #181818;");
+        bottomPanel.setStyle("-fx-background-color: #181818; -fx-opacity: 50%");
+        bottomPanel.setOpacity(50d);
         Label noAccount = new Label("Vous n'avez pas encore de compte ?");
-        setGrow(noAccount);
-        setAlignment(noAccount, HPos.CENTER, VPos.TOP);
-        noAccount.setTranslateY(6);
-        noAccount.setStyle("-fx-text-fill: #ffffff; -fx-font-size: 14px;");
-
-        /* Text pour S'inscrire avec action */
         Label registerHere = new Label("S'inscrire");
+
+        setGrow(noAccount);
+        setAlignment(noAccount, HPos.CENTER, VPos.BOTTOM);
+        noAccount.setTranslateY(-27);
+        noAccount.setStyle("-fx-text-fill: #bcc6e7; -fx-font-size: 14px");
+
         setGrow(registerHere);
         setAlignment(registerHere, HPos.CENTER, VPos.BOTTOM);
-        registerHere.setStyle("-fx-font-size: 14px;");
-        registerHere.setTranslateY(-6);
-        registerHere.setTextFill(Color.rgb(143, 168, 95));
+        registerHere.setStyle("-fx-font-size: 14px");
+        registerHere.setTextFill(Color.rgb(100, 175, 100));
         registerHere.setUnderline(true);
+        registerHere.setTranslateY(-10);
         registerHere.setOnMouseEntered(e-> {
 
             this.layout.setCursor(Cursor.HAND);
-            registerHere.setTextFill(Color.rgb(245, 255, 245));
+            registerHere.setTextFill(Color.rgb(200, 223, 200));
 
         });
         registerHere.setOnMouseExited(e-> {
 
             this.layout.setCursor(Cursor.DEFAULT);
-            registerHere.setTextFill(Color.rgb(143, 168, 95));
+            registerHere.setTextFill(Color.rgb(100, 175, 100));
 
         });
         registerHere.setOnMouseClicked(e-> {
@@ -189,273 +90,15 @@ public class LoginPanel extends Panel {
         });
 
 
-        /*
-        * ELEMENT DANS TOP PANEL CONTOUR -> TOP PANEL
-        */
-
-        /* Titre Connectez vous */
-        Label connectionLabel = new Label("CONNECTEZ-VOUS");
-        setGrow(connectionLabel);
-        connectionLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 6, 0, 0, 0));
-        setAlignment(connectionLabel, HPos.CENTER ,VPos.CENTER);
-        connectionLabel.setStyle("-fx-font-size: 26;");
-        connectionLabel.setTextFill(Color.rgb(255,255,255));
-
-        /*
-        * ELEMENT DANS MIDDLE PANEL
-        */
-
-
-        /* Text Nom d'utilisateur */
-        Label usernameLabel = new Label("Adresse mail");
-        setGrow(usernameLabel);
-        setAlignment(usernameLabel, HPos.LEFT ,VPos.TOP);
-        usernameLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
-        usernameLabel.setTextFill(Color.rgb(255,255,255));
-        usernameLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
-        usernameLabel.setTranslateX(7d);
-        usernameLabel.setTranslateY(17d);
-
-        /* Text Field Nom d'utilisateur + Separator */
-        TextField usernameField = new TextField();
-        setGrow(usernameField);
-        setAlignment(usernameField, HPos.LEFT ,VPos.TOP);
-        usernameField.setStyle("-fx-background-color: rgba(37, 37, 37, 0.8); -fx-font-size: 16; -fx-text-fill: rgba(255,255,255,1);");
-        usernameField.setMaxHeight(38);
-        usernameField.setMinHeight(38);
-        usernameField.setMaxWidth(268);
-        usernameField.setMinWidth(268);
-        usernameField.setTranslateX(6d);
-        usernameField.setTranslateY(45d);
-
-        Separator usernameSeparator = new Separator();
-        setGrow(usernameSeparator);
-        setAlignment(usernameSeparator, HPos.LEFT ,VPos.TOP);
-        usernameSeparator.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
-        usernameSeparator.setMaxHeight(38);
-        usernameSeparator.setMinHeight(38);
-        usernameSeparator.setMaxWidth(268);
-        usernameSeparator.setMinWidth(268);
-        usernameSeparator.setTranslateX(6d);
-        usernameSeparator.setTranslateY(64d);
-
-        /* Text Mot de passe */
-        Label passwordLabel = new Label("Mots de passes");
-        setGrow(passwordLabel);
-        setAlignment(passwordLabel, HPos.LEFT ,VPos.TOP);
-        passwordLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
-        passwordLabel.setTextFill(Color.rgb(255,255,255));
-        passwordLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
-        passwordLabel.setTranslateX(7d);
-        passwordLabel.setTranslateY(124d);
-
-        /* Text Field Nom d'utilisateur + Separator */
-        PasswordField passwordField = new PasswordField();
-        setGrow(passwordField);
-        setAlignment(passwordField, HPos.LEFT ,VPos.TOP);
-        passwordField.setStyle("-fx-background-color: rgba(37, 37, 37, 0.8); -fx-font-size: 16; -fx-text-fill: rgba(255,255,255,1);");
-        passwordField.setMaxHeight(38);
-        passwordField.setMinHeight(38);
-        passwordField.setMaxWidth(268);
-        passwordField.setMinWidth(268);
-        passwordField.setTranslateX(6d);
-        passwordField.setTranslateY(152d);
-
-        Separator passwordSeparator = new Separator();
-        setGrow(passwordSeparator);
-        setAlignment(passwordSeparator, HPos.LEFT ,VPos.TOP);
-        passwordSeparator.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
-        passwordSeparator.setMaxHeight(38);
-        passwordSeparator.setMinHeight(38);
-        passwordSeparator.setMaxWidth(268);
-        passwordSeparator.setMinWidth(268);
-        passwordSeparator.setTranslateX(6d);
-        passwordSeparator.setTranslateY(171d);
-
-        /* Text Oublie de Mot de passe avec action */
-        Label forgotenpasswordLabel = new Label("Mot de passe oublié ?");
-        setGrow(forgotenpasswordLabel);
-        setAlignment(forgotenpasswordLabel, HPos.LEFT ,VPos.TOP);
-        forgotenpasswordLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 14));
-        forgotenpasswordLabel.setTextFill(Color.rgb(225,225,225));
-        forgotenpasswordLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(210, 210, 210, 0.2), 4, 0, 0, 0));
-        forgotenpasswordLabel.setTranslateX(6d);
-        forgotenpasswordLabel.setTranslateY(196d);
-        forgotenpasswordLabel.setOnMouseEntered(e-> {
-
-            this.layout.setCursor(Cursor.HAND);
-            forgotenpasswordLabel.setTextFill(Color.rgb(245, 255, 245));
-
-        });
-        forgotenpasswordLabel.setOnMouseExited(e-> {
-
-            this.layout.setCursor(Cursor.DEFAULT);
-            forgotenpasswordLabel.setTextFill(Color.rgb(225, 225, 225));
-
-        });
-        forgotenpasswordLabel.setOnMouseClicked(e-> {
-            if (connectWithMojang.get()) {
-                openUrl("https:///www.minecraft.net/fr-fr/password/forgot");
-            }
-
-            else {
-                openUrl("https://asilux.w4.cmws.fr/#");
-            }
-
-        });
-
-        /* Bouton pour se connecter*/
-
-        Button connectionButton = new Button("SE CONNECTER");
-        setGrow(connectionButton);
-        setAlignment(connectionButton, HPos.CENTER ,VPos.BOTTOM);
-        connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);");
-        connectionButton.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
-        connectionButton.setTextAlignment(TextAlignment.CENTER);
-        connectionButton.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.2), 3, 0.3, 0, 0));
-        connectionButton.setMaxHeight(40);
-        connectionButton.setMinHeight(40);
-        connectionButton.setMaxWidth(268);
-        connectionButton.setMinWidth(268);
-        connectionButton.setTranslateY(-76d);
-        connectionButton.setOnMouseClicked(e-> {
-
-            Timeline clickedAnimation = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(connectionButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#74923AFF"), CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY)))),
-                    new KeyFrame(Duration.millis(1000), new KeyValue(connectionButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#91B848FF"), CornerRadii.EMPTY, Insets.EMPTY)))));
-            clickedAnimation.setOnFinished(ev -> connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-text-fill: rgba(225,225,225,1);"));
-            clickedAnimation.play();
-            if (!antiSpamConnection.get()) {
-                antiSpamConnection.set(true);
-                /**
-                if (connectWithMojang.get()) {
-                    //TODO:MOJANG LOGIN
-
-                    try {
-                        AuthenticationResponse response = Auth.authenticate(usernameField.getText(), passwordField.getText());
-                        Main.Logger.log("======================[AUTH]======================");
-                        Main.Logger.log("Access token: " + response.getAccessToken());
-                        Main.Logger.log("Access name: " + response.getSelectedProfile().getName());
-                        Main.Logger.log("Access id: " + response.getSelectedProfile().getUUID());
-                        Main.Logger.log("==================================================");
-                    } catch (RequestException | AuthenticationUnavailableException ex) {
-                        antiSpamConnection.set(false);
-                        connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);");
-                        ex.printStackTrace();
-
-                    }
-
-                } else {
-                    AuthMineWeb authMineWeb = new AuthMineWeb(usernameField.getText(), passwordField.getText());
-                    if (authMineWeb.isConnected()) {
-                        Main.Logger.log("Vous êtes connecté avec le pseudo " + authMineWeb.getInfos("pseudo"));
-                        //TODO: switch Panel
-                    } else {
-                        antiSpamConnection.set(false);
-                        connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1)");
-                    }
-                }
-                */
-
-                this.panelManager.showPanel(homePanel = new HomePanel());
-            }
-
-        });
-
-        Separator connectionChoseS1 = new Separator();
-        setGrow(connectionChoseS1);
-        setAlignment(connectionChoseS1, HPos.CENTER ,VPos.BOTTOM);
-        connectionChoseS1.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
-        connectionChoseS1.setMaxHeight(38);
-        connectionChoseS1.setMinHeight(38);
-        connectionChoseS1.setMaxWidth(268);
-        connectionChoseS1.setMinWidth(268);
-        connectionChoseS1.setTranslateY(-45d);
-
-        Separator connectionChoseS2 = new Separator();
-        setGrow(connectionChoseS2);
-        setAlignment(connectionChoseS2, HPos.LEFT ,VPos.BOTTOM);
-        connectionChoseS2.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
-        connectionChoseS2.setMaxHeight(38);
-        connectionChoseS2.setMinHeight(38);
-        connectionChoseS2.setMaxWidth(50);
-        connectionChoseS2.setMinWidth(50);
-        connectionChoseS2.setTranslateY(-30d);
-
-        Separator connectionChoseS3 = new Separator();
-        setGrow(connectionChoseS3);
-        setAlignment(connectionChoseS3, HPos.RIGHT ,VPos.BOTTOM);
-        connectionChoseS3.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
-        connectionChoseS3.setMaxHeight(38);
-        connectionChoseS3.setMinHeight(38);
-        connectionChoseS3.setMaxWidth(50);
-        connectionChoseS3.setMinWidth(50);
-        connectionChoseS3.setTranslateY(-30d);
-
-        Label connectionwithLabel = new Label("CONNEXION AVEC");
-        setGrow(connectionwithLabel);
-        setAlignment(connectionwithLabel, HPos.CENTER ,VPos.BOTTOM);
-        connectionwithLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 18));
-        connectionwithLabel.setTextFill(Color.rgb(225,225,225));
-        connectionwithLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(210, 210, 210, 0.2), 4, 0, 0, 0));
-        connectionwithLabel.setTranslateY(-37d);
-
-        Image mojangLogo = new Image(Objects.requireNonNull(Main.class.getResource("/mojang-icone.png")).toExternalForm());
-        ImageView mojangView = new ImageView(mojangLogo);
-        mojangView.setFitWidth(20);
-        mojangView.setFitHeight(20);
-
-        Image minewebLogo = new Image(Objects.requireNonNull(Main.class.getResource("/asilux-icone.png")).toExternalForm());
-        ImageView minewebView = new ImageView(minewebLogo);
-        minewebView.setFitWidth(38);
-        minewebView.setFitHeight(38);
-
-
-        Button connectionModeButton = new Button("Mojang", mojangView);
-        connectWithMojang.set(true);
-        setGrow(connectionModeButton);
-        setAlignment(connectionModeButton, HPos.CENTER ,VPos.BOTTOM);
-        connectionModeButton.setStyle("-fx-background-color: #CB2B2BFF; -fx-font-size: 18; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);");
-        connectionModeButton.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 18));
-        connectionModeButton.setTextAlignment(TextAlignment.CENTER);
-        connectionModeButton.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.1), 3, 0.3, 0, 0));
-        connectionModeButton.setMaxHeight(36);
-        connectionModeButton.setMinHeight(36);
-        connectionModeButton.setMaxWidth(122);
-        connectionModeButton.setMinWidth(122);
-        connectionModeButton.setTranslateY(12d);
-        connectionModeButton.setOnMouseClicked(e-> {
-            if (connectWithMojang.get()) {
-                connectWithMojang.set(false);
-                usernameLabel.setText("Nom d'utilisateur");
-                connectionModeButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 18; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);");
-                connectionModeButton.setGraphic(minewebView);
-                connectionModeButton.setText("Asilux");
-            }
-
-            else {
-                connectWithMojang.set(true);
-                usernameLabel.setText("Adresse mail");
-                connectionModeButton.setStyle("-fx-background-color: #CB2B2BFF; -fx-font-size: 18; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);");
-                connectionModeButton.setGraphic(mojangView);
-                connectionModeButton.setText("Mojang");
-            }
-
-        });
-
-
-
-
-
-        /*
-        * Label Registery
-        */
-
-        topPanel.getChildren().addAll(connectionLabel);
         bottomPanel.getChildren().addAll(noAccount, registerHere);
-        middlePannel.getChildren().addAll(usernameLabel, usernameField, usernameSeparator, passwordLabel, passwordField, passwordSeparator,forgotenpasswordLabel, connectionButton,
-                connectionChoseS2, connectionChoseS3, connectionwithLabel, connectionModeButton);
         this.layout.getChildren().add(loginPanel);
+
+        Label connectionLabel = new Label("Se connecter:");
+        setGrow(connectionLabel);
+        setAlignment(connectionLabel, HPos.CENTER ,VPos.TOP);
+        connectionLabel.setStyle("-fx-text-fill: #bcc6e7; -fx-font-size: 17px");
+
+        mainPanel.getChildren().addAll(connectionLabel);
 
     }
 
@@ -467,9 +110,5 @@ public class LoginPanel extends Panel {
         } catch (IOException | URISyntaxException e) {
             Main.Logger.warn(e.getMessage());
         }
-    }
-
-    public HomePanel getHomePanel() {
-        return homePanel;
     }
 }
