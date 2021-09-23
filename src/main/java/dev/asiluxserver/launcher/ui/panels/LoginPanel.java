@@ -7,12 +7,15 @@ import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TextField;
+import javafx.scene.effect.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 
 import javax.swing.*;
@@ -30,6 +33,7 @@ public class LoginPanel extends Panel {
 
         GridPane loginPanel = new GridPane();
         GridPane mainPanel = new GridPane();
+        GridPane middlePannel = new GridPane();
         GridPane topPanel = new GridPane();
         GridPane topPanelContour = new GridPane();
         GridPane bottomPanel = new GridPane();
@@ -62,58 +66,89 @@ public class LoginPanel extends Panel {
         GridPane.setVgrow(bottomPanel, Priority.ALWAYS);
 
         RowConstraints topConstraints = new RowConstraints();
+        RowConstraints middleConstraints = new RowConstraints();
         topConstraints.setValignment(VPos.TOP);
-        topConstraints.setMaxHeight(33);
+        middleConstraints.setValignment(VPos.TOP);
         mainPanel.getRowConstraints().addAll(new RowConstraints(), topConstraints);
+        mainPanel.add(topPanelContour, 0, 0);
+        mainPanel.add(middlePannel, 0,1);
 
-        mainPanel.add(topPanelContour, 0, 1);
-        mainPanel.add(topPanel, 0, 1);
+        topPanelContour.getRowConstraints().addAll(new RowConstraints(), middleConstraints);
+        topPanelContour.add(topPanel, 0, 0);
 
-
-
-        /* Top Panel intérieur qui encadre le text se connecter... */
+        /* Top Panel */
         topPanel.setMaxHeight(42);
         topPanel.setMinHeight(42);
         topPanel.setMaxWidth(272);
         topPanel.setMinWidth(272);
         GridPane.setHgrow(topPanel, Priority.ALWAYS);
         GridPane.setVgrow(topPanel, Priority.ALWAYS);
-        setAlignment(topPanel);
-        topPanel.setTranslateY(23d);
+        setAlignment(topPanel, HPos.CENTER, VPos.CENTER);
 
-        /* Contour du Top Panel intérieur qui encadre le text se connecter... */
+        /* Contour du Top Panel */
         topPanelContour.setMaxHeight(48);
         topPanelContour.setMinHeight(48);
         topPanelContour.setMaxWidth(278);
         topPanelContour.setMinWidth(278);
         GridPane.setHgrow(topPanelContour, Priority.ALWAYS);
         GridPane.setVgrow(topPanelContour, Priority.ALWAYS);
-        setAlignment(topPanelContour);
+        setAlignment(topPanelContour, HPos.CENTER, VPos.TOP);
         topPanelContour.setTranslateY(23d);
 
+        /* Middle Panel */
+        middlePannel.setMaxHeight(320);
+        middlePannel.setMinHeight(320);
+        middlePannel.setMaxWidth(280);
+        middlePannel.setMinWidth(280);
+        GridPane.setHgrow(middlePannel, Priority.ALWAYS);
+        GridPane.setVgrow(middlePannel, Priority.ALWAYS);
+        setAlignment(middlePannel, HPos.CENTER, VPos.TOP);
 
 
 
-        /* Style de chaque Panel */
-        mainPanel.setStyle("-fx-background-color: rgba(79, 167, 79, 0.85);");
+
+        /*
+        * STYLE DES PANEL
+        */
+
+        /* Style Main Panel */
+        mainPanel.setStyle("-fx-background-color: rgba(143, 168, 95, 0.75);");
+
+        /* Style Bottom Panel*/
         bottomPanel.setStyle("-fx-background-color: rgba(24,24,24,0.65);");
-        topPanel.setStyle("-fx-background-color: rgb(79, 167, 79);");
-        topPanelContour.setStyle("-fx-background-color: #ffffff;");
 
-        /* Label du Bottom Panel */
+        /* Style Top Panel */
+        topPanel.setStyle("-fx-background-color: rgba(37, 37, 37, 0.8);");
+
+        /* Style Contour du Top Panel*/
+        topPanelContour.setStyle("-fx-background-color: rgba(143, 168, 95, 0.5);");
+        topPanelContour.setEffect(new GaussianBlur(5));
+        topPanelContour.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.3), 23, 0, 0, 0));
+
+        /* Style Middle Panel */
+        middlePannel.setEffect(new Bloom(18));
+        middlePannel.setEffect(new BoxBlur(10,10,5));
+        middlePannel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 17, 0, 0, 0));
+
+
+        /*
+         *  ELEMENT DANS BOTTOM PANEL
+         */
+
+        /* Text sans action */
         Label noAccount = new Label("Vous n'avez pas encore de compte ?");
-        Label registerHere = new Label("S'inscrire");
-
         setGrow(noAccount);
         setAlignment(noAccount, HPos.CENTER, VPos.TOP);
         noAccount.setTranslateY(6);
         noAccount.setStyle("-fx-text-fill: #ffffff; -fx-font-size: 14px;");
 
+        /* Text pour S'inscrire avec action */
+        Label registerHere = new Label("S'inscrire");
         setGrow(registerHere);
         setAlignment(registerHere, HPos.CENTER, VPos.BOTTOM);
         registerHere.setStyle("-fx-font-size: 14px;");
         registerHere.setTranslateY(-6);
-        registerHere.setTextFill(Color.rgb(100, 175, 100));
+        registerHere.setTextFill(Color.rgb(143, 168, 95));
         registerHere.setUnderline(true);
         registerHere.setOnMouseEntered(e-> {
 
@@ -124,7 +159,7 @@ public class LoginPanel extends Panel {
         registerHere.setOnMouseExited(e-> {
 
             this.layout.setCursor(Cursor.DEFAULT);
-            registerHere.setTextFill(Color.rgb(100, 175, 100));
+            registerHere.setTextFill(Color.rgb(143, 168, 95));
 
         });
         registerHere.setOnMouseClicked(e-> {
@@ -138,15 +173,93 @@ public class LoginPanel extends Panel {
 
         });
 
+
+        /*
+        * ELEMENT DANS TOP PANEL CONTOUR -> TOP PANEL
+        */
+
+        /* Titre Connectez vous */
         Label connectionLabel = new Label("CONNECTEZ-VOUS");
         setGrow(connectionLabel);
+        connectionLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 6, 0, 0, 0));
         setAlignment(connectionLabel, HPos.CENTER ,VPos.CENTER);
-        connectionLabel.setStyle("-fx-font-size: 24;");
+        connectionLabel.setStyle("-fx-font-size: 26;");
         connectionLabel.setTextFill(Color.rgb(255,255,255));
 
-        topPanel.getChildren().addAll(connectionLabel);
+        /*
+        * ELEMENT DANS MIDDLE PANEL
+        */
 
+
+        /* Text Nom d'utilisateur */
+        Label usernameLabel = new Label("Nom d'utilisateur");
+        setGrow(usernameLabel);
+        setAlignment(usernameLabel, HPos.LEFT ,VPos.TOP);
+        usernameLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        usernameLabel.setTextFill(Color.rgb(255,255,255));
+        usernameLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
+        usernameLabel.setTranslateX(7d);
+        usernameLabel.setTranslateY(17d);
+
+        /* Text Field Nom d'utilisateur + Separator */
+        TextField usernameField = new TextField();
+        setGrow(usernameField);
+        setAlignment(usernameField, HPos.LEFT ,VPos.TOP);
+        usernameField.setStyle("-fx-background-color: rgba(37, 37, 37, 0.8); -fx-font-size: 16; -fx-text-fill: rgba(255,255,255,1)");
+        usernameField.setMaxHeight(38);
+        usernameField.setMinHeight(38);
+        usernameField.setMaxWidth(268);
+        usernameField.setMinWidth(268);
+        usernameField.setTranslateX(6d);
+        usernameField.setTranslateY(45d);
+
+        Separator usernameSeparator = new Separator();
+        setGrow(usernameSeparator);
+        setAlignment(usernameSeparator, HPos.LEFT ,VPos.TOP);
+        usernameSeparator.setMaxHeight(38);
+        usernameSeparator.setMinHeight(38);
+        usernameSeparator.setMaxWidth(268);
+        usernameSeparator.setMinWidth(268);
+        usernameSeparator.setTranslateX(6d);
+        usernameSeparator.setTranslateY(64d);
+
+        /* Text Mot de passe */
+        Label passwordLabel = new Label("Mots de passes");
+        setGrow(passwordLabel);
+        setAlignment(passwordLabel, HPos.LEFT ,VPos.TOP);
+        passwordLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        passwordLabel.setTextFill(Color.rgb(255,255,255));
+        passwordLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
+        passwordLabel.setTranslateX(7d);
+        passwordLabel.setTranslateY(124d);
+
+        /* Text Field Nom d'utilisateur + Separator */
+        PasswordField passwordField = new PasswordField();
+        setGrow(passwordField);
+        setAlignment(passwordField, HPos.LEFT ,VPos.TOP);
+        passwordField.setStyle("-fx-background-color: rgba(37, 37, 37, 0.8); -fx-font-size: 16; -fx-text-fill: rgba(255,255,255,1)");
+        passwordField.setMaxHeight(38);
+        passwordField.setMinHeight(38);
+        passwordField.setMaxWidth(268);
+        passwordField.setMinWidth(268);
+        passwordField.setTranslateX(6d);
+        passwordField.setTranslateY(152d);
+
+        Separator passwordSeparator = new Separator();
+        setGrow(passwordSeparator);
+        setAlignment(passwordSeparator, HPos.LEFT ,VPos.TOP);
+        passwordSeparator.setMaxHeight(38);
+        passwordSeparator.setMinHeight(38);
+        passwordSeparator.setMaxWidth(268);
+        passwordSeparator.setMinWidth(268);
+        passwordSeparator.setTranslateX(6d);
+        passwordSeparator.setTranslateY(171d);
+
+
+        /* Label Registery */
+        topPanel.getChildren().addAll(connectionLabel);
         bottomPanel.getChildren().addAll(noAccount, registerHere);
+        middlePannel.getChildren().addAll(usernameLabel, usernameField, usernameSeparator, passwordLabel, passwordField, passwordSeparator);
         this.layout.getChildren().add(loginPanel);
 
     }

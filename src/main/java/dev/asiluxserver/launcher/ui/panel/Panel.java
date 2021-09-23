@@ -7,10 +7,10 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 public class Panel implements IPanel {
-
     protected GridPane layout = new GridPane();
     protected PanelManager panelManager;
 
