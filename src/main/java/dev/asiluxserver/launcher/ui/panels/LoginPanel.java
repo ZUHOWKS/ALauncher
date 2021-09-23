@@ -123,12 +123,12 @@ public class LoginPanel extends Panel {
         /* Style Contour du Top Panel*/
         topPanelContour.setStyle("-fx-background-color: rgba(143, 168, 95, 0.5);");
         topPanelContour.setEffect(new GaussianBlur(5));
-        topPanelContour.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.3), 23, 0, 0, 0));
+        topPanelContour.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.1), 27, 0, 0, 0));
 
         /* Style Middle Panel */
         middlePannel.setEffect(new Bloom(18));
         middlePannel.setEffect(new BoxBlur(10,10,5));
-        middlePannel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 17, 0, 0, 0));
+        middlePannel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.15), 17, 0, 0, 0));
 
 
         /*
@@ -197,7 +197,7 @@ public class LoginPanel extends Panel {
         setAlignment(usernameLabel, HPos.LEFT ,VPos.TOP);
         usernameLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
         usernameLabel.setTextFill(Color.rgb(255,255,255));
-        usernameLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
+        usernameLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
         usernameLabel.setTranslateX(7d);
         usernameLabel.setTranslateY(17d);
 
@@ -216,6 +216,7 @@ public class LoginPanel extends Panel {
         Separator usernameSeparator = new Separator();
         setGrow(usernameSeparator);
         setAlignment(usernameSeparator, HPos.LEFT ,VPos.TOP);
+        usernameSeparator.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
         usernameSeparator.setMaxHeight(38);
         usernameSeparator.setMinHeight(38);
         usernameSeparator.setMaxWidth(268);
@@ -229,7 +230,7 @@ public class LoginPanel extends Panel {
         setAlignment(passwordLabel, HPos.LEFT ,VPos.TOP);
         passwordLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
         passwordLabel.setTextFill(Color.rgb(255,255,255));
-        passwordLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
+        passwordLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
         passwordLabel.setTranslateX(7d);
         passwordLabel.setTranslateY(124d);
 
@@ -248,6 +249,7 @@ public class LoginPanel extends Panel {
         Separator passwordSeparator = new Separator();
         setGrow(passwordSeparator);
         setAlignment(passwordSeparator, HPos.LEFT ,VPos.TOP);
+        passwordSeparator.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
         passwordSeparator.setMaxHeight(38);
         passwordSeparator.setMinHeight(38);
         passwordSeparator.setMaxWidth(268);
