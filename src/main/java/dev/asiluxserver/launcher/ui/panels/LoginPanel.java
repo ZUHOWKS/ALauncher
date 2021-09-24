@@ -6,14 +6,15 @@ import dev.asiluxserver.launcher.ui.panel.Panel;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -23,6 +24,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LoginPanel extends Panel {
@@ -96,8 +98,8 @@ public class LoginPanel extends Panel {
         topPanelContour.setTranslateY(23d);
 
         /* Middle Panel */
-        middlePannel.setMaxHeight(320);
-        middlePannel.setMinHeight(320);
+        middlePannel.setMaxHeight(350);
+        middlePannel.setMinHeight(350);
         middlePannel.setMaxWidth(280);
         middlePannel.setMinWidth(280);
         GridPane.setHgrow(middlePannel, Priority.ALWAYS);
@@ -123,7 +125,7 @@ public class LoginPanel extends Panel {
         /* Style Contour du Top Panel*/
         topPanelContour.setStyle("-fx-background-color: rgba(143, 168, 95, 0.5);");
         topPanelContour.setEffect(new GaussianBlur(5));
-        topPanelContour.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.1), 27, 0, 0, 0));
+        topPanelContour.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.17), 31, 0, 0, 0));
 
         /* Style Middle Panel */
         middlePannel.setEffect(new Bloom(18));
@@ -257,11 +259,137 @@ public class LoginPanel extends Panel {
         passwordSeparator.setTranslateX(6d);
         passwordSeparator.setTranslateY(171d);
 
+        /* Text Oublie de Mot de passe avec action */
+        Label forgotenpasswordLabel = new Label("Mot de passe oublié ?");
+        setGrow(forgotenpasswordLabel);
+        setAlignment(forgotenpasswordLabel, HPos.LEFT ,VPos.TOP);
+        forgotenpasswordLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 14));
+        forgotenpasswordLabel.setTextFill(Color.rgb(225,225,225));
+        forgotenpasswordLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(210, 210, 210, 0.2), 4, 0, 0, 0));
+        forgotenpasswordLabel.setTranslateX(6d);
+        forgotenpasswordLabel.setTranslateY(193d);
+        registerHere.setOnMouseEntered(e-> {
 
-        /* Label Registery */
+            this.layout.setCursor(Cursor.HAND);
+            registerHere.setTextFill(Color.rgb(245, 255, 245));
+
+        });
+        registerHere.setOnMouseExited(e-> {
+
+            this.layout.setCursor(Cursor.DEFAULT);
+            registerHere.setTextFill(Color.rgb(143, 168, 95));
+
+        });
+        registerHere.setOnMouseClicked(e-> {
+            if (connectWithMojang.get()) {
+                openUrl("https:///www.minecraft.net/fr-fr/password/forgot");
+            }
+
+            else {
+                openUrl("https://asilux.w4.cmws.fr/#");
+            }
+
+        });
+
+        /* Bouton pour se connecter*/
+
+        Button connectionButton = new Button("SE CONNECTER");
+        setGrow(connectionButton);
+        setAlignment(connectionButton, HPos.CENTER ,VPos.BOTTOM);
+        connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 21; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1)");
+        connectionButton.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 21));
+        connectionButton.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.2), 3, 0.3, 0, 0));
+        connectionButton.setMaxHeight(38);
+        connectionButton.setMinHeight(38);
+        connectionButton.setMaxWidth(268);
+        connectionButton.setMinWidth(268);
+        connectionButton.setTranslateY(-65d);
+        connectionButton.setOnMouseClicked(e-> {
+            if (connectWithMojang.get()) {
+                //TODO:MOJANG LOGIN
+            }
+
+            else {
+                //TODO:MINEWEBLOGIN
+            }
+
+        });
+
+        Separator connectionChoseS1 = new Separator();
+        setGrow(connectionChoseS1);
+        setAlignment(connectionChoseS1, HPos.CENTER ,VPos.BOTTOM);
+        connectionChoseS1.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
+        connectionChoseS1.setMaxHeight(38);
+        connectionChoseS1.setMinHeight(38);
+        connectionChoseS1.setMaxWidth(268);
+        connectionChoseS1.setMinWidth(268);
+        connectionChoseS1.setTranslateY(-45d);
+
+        Separator connectionChoseS2 = new Separator();
+        setGrow(connectionChoseS2);
+        setAlignment(connectionChoseS2, HPos.LEFT ,VPos.BOTTOM);
+        connectionChoseS2.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
+        connectionChoseS2.setMaxHeight(38);
+        connectionChoseS2.setMinHeight(38);
+        connectionChoseS2.setMaxWidth(98);
+        connectionChoseS2.setMinWidth(98);
+        connectionChoseS2.setTranslateY(-30d);
+
+        Separator connectionChoseS3 = new Separator();
+        setGrow(connectionChoseS3);
+        setAlignment(connectionChoseS3, HPos.RIGHT ,VPos.BOTTOM);
+        connectionChoseS3.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
+        connectionChoseS3.setMaxHeight(38);
+        connectionChoseS3.setMinHeight(38);
+        connectionChoseS3.setMaxWidth(98);
+        connectionChoseS3.setMinWidth(98);
+        connectionChoseS3.setTranslateY(-30d);
+
+        Label connectionwithLabel = new Label("AVEC");
+        setGrow(connectionwithLabel);
+        setAlignment(connectionwithLabel, HPos.CENTER ,VPos.BOTTOM);
+        connectionwithLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 19));
+        connectionwithLabel.setTextFill(Color.rgb(225,225,225));
+        connectionwithLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(210, 210, 210, 0.2), 4, 0, 0, 0));
+        connectionwithLabel.setTranslateY(-37d);
+
+        Image mojangLogo = new Image(Objects.requireNonNull(Main.class.getResource("/mojang-icone.png")).toExternalForm());
+        ImageView mojangView = new ImageView(mojangLogo);
+        mojangView.setFitWidth(20);
+        mojangView.setFitHeight(20);
+        Button mojangAccountButton = new Button(" Mojang", mojangView);
+        setGrow(mojangAccountButton);
+        setAlignment(mojangAccountButton, HPos.LEFT ,VPos.BOTTOM);
+        mojangAccountButton.setStyle("-fx-background-color: #D92626FF; -fx-font-size: 18; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1)");
+        mojangAccountButton.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 18));
+        mojangAccountButton.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.1), 3, 0.3, 0, 0));
+        mojangAccountButton.setMaxHeight(38);
+        mojangAccountButton.setMinHeight(38);
+        mojangAccountButton.setMaxWidth(134);
+        mojangAccountButton.setMinWidth(134);
+        mojangAccountButton.setTranslateX(-6d);
+        mojangAccountButton.setTranslateY(2d);
+        mojangAccountButton.setOnMouseClicked(e-> {
+            if (connectWithMojang.get()) {
+                //TODO:MOJANG LOGIN
+            }
+
+            else {
+                //TODO:MINEWEBLOGIN
+            }
+
+        });
+
+
+
+        /*
+        * Label Registery
+        */
+
         topPanel.getChildren().addAll(connectionLabel);
         bottomPanel.getChildren().addAll(noAccount, registerHere);
-        middlePannel.getChildren().addAll(usernameLabel, usernameField, usernameSeparator, passwordLabel, passwordField, passwordSeparator);
+        middlePannel.getChildren().addAll(usernameLabel, usernameField, usernameSeparator, passwordLabel, passwordField, passwordSeparator,forgotenpasswordLabel, connectionButton,
+                connectionChoseS1, connectionChoseS2, connectionChoseS3, connectionwithLabel, mojangAccountButton);
         this.layout.getChildren().add(loginPanel);
 
     }
