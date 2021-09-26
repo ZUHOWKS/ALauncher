@@ -25,7 +25,7 @@ public class TopPanel extends Panel {
         GridPane topBarButtom = new GridPane();
         this.layout.getChildren().add(topBarButtom);
 
-        Label title = new Label();
+        Label title = new Label(); //TODO: Mettre un titre ou une image
         this.layout.getChildren().add(title);
         title.setFont(Font.font("Consolas", FontWeight.THIN, FontPosture.REGULAR, 21.0));
         title.setStyle("-fx-text-fill: white;");
