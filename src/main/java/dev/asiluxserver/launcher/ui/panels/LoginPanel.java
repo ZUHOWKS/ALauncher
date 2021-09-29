@@ -312,9 +312,11 @@ public class LoginPanel extends Panel {
         connectionButton.setMinWidth(268);
         connectionButton.setTranslateY(-76d);
         connectionButton.setOnMouseClicked(e-> {
+
             connectionButton.setStyle("-fx-background-color: #74923AFF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(225,225,225,0.9)");
             if (!antiSpamConnection.get()) {
                 antiSpamConnection.set(true);
+                /**
                 if (connectWithMojang.get()) {
                     //TODO:MOJANG LOGIN
 
@@ -342,6 +344,8 @@ public class LoginPanel extends Panel {
                         connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1)");
                     }
                 }
+                */
+
                 this.panelManager.showPanel(new HomePanel());
             }
 
