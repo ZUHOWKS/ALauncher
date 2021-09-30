@@ -15,8 +15,6 @@ public class Main {
         try {
             Class.forName("javafx.application.Application");
             Application.launch(FxApplication.class, args);
-
-
         }
         catch(ClassNotFoundException e) {
             Logger.warn("Java FX not found :cry:");
