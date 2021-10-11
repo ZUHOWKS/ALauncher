@@ -1,9 +1,16 @@
 package dev.asiluxserver.launcher.ui.panels;
 
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import dev.asiluxserver.launcher.Main;
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.panel.Panel;
+import fr.arinonia.arilibfx.ui.component.AProgressBar;
+import fr.arinonia.arilibfx.updater.DownloadJob;
+import fr.arinonia.arilibfx.updater.DownloadListener;
+import javafx.animation.*;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
@@ -15,23 +22,23 @@ import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.*;
+import javafx.scene.paint.*;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class HomePanel extends Panel {
+public class HomePanel extends Panel implements DownloadListener {
 
     private GridPane centerPane = new GridPane();
-    private AtomicInteger mainMenuPanelPage = new AtomicInteger(0);
+    private AProgressBar downloadBar;
 
     @Override
     public void init(PanelManager panelManager) {
@@ -66,11 +73,11 @@ public class HomePanel extends Panel {
 
         GridPane mainMenuPanel = new GridPane();
         setGrow(mainMenuPanel);
-        setAlignment(mainMenuPanel, HPos.RIGHT, VPos.CENTER);
-        mainMenuPanel.setMinWidth(600);
-        mainMenuPanel.setMaxWidth(600);
-        mainMenuPanel.setMinHeight(600);
-        mainMenuPanel.setMinHeight(600);
+            setAlignment(mainMenuPanel, HPos.RIGHT, VPos.TOP);
+        mainMenuPanel.setMinWidth(700);
+        mainMenuPanel.setMaxWidth(700);
+        mainMenuPanel.setMinHeight(700);
+        mainMenuPanel.setMinHeight(700);
         addTomainMenuPanel(mainMenuPanel);
 
         /* NEWS ACCEUIL */
@@ -97,34 +104,86 @@ public class HomePanel extends Panel {
         GridPane.setValignment(asiluxView, VPos.CENTER);
         GridPane.setHalignment(asiluxView, HPos.CENTER);
         asiluxView.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(210, 210, 210, 0.2), 4, 0, 0, 0));
+        asiluxView.setTranslateY(-25);
 
-        Separator separator1 = new Separator();
-        setGrow(separator1);
-        setAlignment(separator1, HPos.CENTER ,VPos.CENTER);
-        separator1.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 12, 0, 0, 0));
-        separator1.setOpacity(10);
-        separator1.setMaxHeight(38);
-        separator1.setMinHeight(38);
-        separator1.setMaxWidth(400);
-        separator1.setMinWidth(400);
-        separator1.setTranslateY(115);
+        downloadBar = new AProgressBar(450, 18);
+        setGrow(downloadBar);
+        setAlignment(downloadBar, HPos.CENTER ,VPos.CENTER);
+        downloadBar.setBackgroundColor(Color.rgb(67,67,67,0.4));
+        Stop[] stops = new Stop[]{new Stop(0, Color.rgb(95, 142, 51)), new Stop(1, Color.rgb(155, 190, 82))};
+        LinearGradient lg = new LinearGradient(0,0,1,0,true, CycleMethod.NO_CYCLE, stops);
+        downloadBar.setForegroundColor(lg);
+        downloadBar.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(67, 67, 67, 0.15), 12, 0, 0, 0));
+        downloadBar.setTranslateY(93);
 
-        Button PlayButton = new Button("JOUER");
+
+        Button PlayButton = new Button("INSTALLER");
         setGrow(PlayButton);
         setAlignment(PlayButton, HPos.CENTER ,VPos.CENTER);
         PlayButton.setMinWidth(220);
         PlayButton.setMinHeight(60);
-        PlayButton.setMaxWidth(240);
-        PlayButton.setMaxHeight(80);
-        PlayButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 42; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1)");
-        PlayButton.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 42));
+        PlayButton.setMaxWidth(220);
+        PlayButton.setMaxHeight(60);
+        PlayButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 32;  -fx-text-fill: rgba(255,255,255,1);");
+        PlayButton.setFont(Font.font("Arial", FontWeight.MEDIUM, 32));
         PlayButton.setTextAlignment(TextAlignment.CENTER);
         PlayButton.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.2), 3, 0.3, 0, 0));
-        PlayButton.setTranslateY(175);
+        PlayButton.setTranslateY(150);
+        PlayButton.setOnMouseEntered(e-> {
+            this.layout.setCursor(Cursor.HAND);
+        });
+        PlayButton.setOnMouseClicked(e-> {
 
 
-        pane.getChildren().addAll(asiluxView, separator1, PlayButton);
+            Timeline clickedAnimation = new Timeline(
+                    new KeyFrame    (Duration.ZERO, new KeyValue(PlayButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#74923AFF"), CornerRadii.EMPTY, Insets.EMPTY)))),
+                    new KeyFrame(Duration.millis(700), new KeyValue(PlayButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#91B248FF"), CornerRadii.EMPTY, Insets.EMPTY)))));
+            clickedAnimation.setOnFinished(ev -> {
+                PlayButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 32; -fx-text-fill: rgba(255,255,255,1);");
+                this.panelManager.getAsiluxLauncher().launchGame();
+            });
+            clickedAnimation.play();
+        });
+        PlayButton.setOnMouseExited(e-> {
+            this.layout.setCursor(Cursor.DEFAULT);
+        });
+
+
+        Button SettingsButtom = new Button();
+        setGrow(SettingsButtom);
+        setAlignment(SettingsButtom, HPos.CENTER ,VPos.CENTER);
+        MaterialDesignIconView settingsIcone = new MaterialDesignIconView(MaterialDesignIcon.SETTINGS);
+        settingsIcone.setSize("25px");
+        settingsIcone.setFill(Color.rgb(255,255,255));
+        SettingsButtom.setMinWidth(35);
+        SettingsButtom.setMinHeight(35);
+        SettingsButtom.setMaxWidth(35);
+        SettingsButtom.setMaxHeight(35);
+        SettingsButtom.setGraphic(settingsIcone);
+        SettingsButtom.setStyle("-fx-background-color: rgba(0,0,0,0); -fx-border-color: rgba(255,255,255); -fx-borer-radius: 2px");
+        //SettingsButtom.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.2), 3, 0.3, 0, 0));
+        SettingsButtom.setTranslateX(150);
+        SettingsButtom.setTranslateY(150);
+        SettingsButtom.setOnMouseEntered(e-> {
+            this.layout.setCursor(Cursor.HAND);
+        });
+        SettingsButtom.setOnMouseClicked(e-> {
+
+            Timeline clickedAnimation = new Timeline(
+                    new KeyFrame(Duration.ZERO, new KeyValue(settingsIcone.fillProperty(), Color.rgb(225,225,225))),
+                    new KeyFrame(Duration.millis(250), new KeyValue(settingsIcone.fillProperty(), Color.rgb(235,235,235))),
+                    new KeyFrame(Duration.millis(500), new KeyValue(settingsIcone.fillProperty(), Color.rgb(255,255,255))));
+            clickedAnimation.setOnFinished(ev -> settingsIcone.setFill(Color.rgb(255,255,255)));
+            clickedAnimation.play();
+        });
+        SettingsButtom.setOnMouseExited(e-> {
+            this.layout.setCursor(Cursor.DEFAULT);
+        });
+
+
+        pane.getChildren().addAll(asiluxView, downloadBar, PlayButton, SettingsButtom);
     }
+
 
     private void addToactuMainPanel(GridPane pane) {
 
@@ -261,17 +320,11 @@ public class HomePanel extends Panel {
         playMainMenuPanel.setOnMouseEntered(e-> {
 
             this.layout.setCursor(Cursor.HAND);
-            if (mainMenuPanelPage.get() != 0) {
-                playMainMenuPanel.setTextFill(Color.rgb(225, 255, 245));
-            }
 
         });
         playMainMenuPanel.setOnMouseExited(e-> {
 
             this.layout.setCursor(Cursor.DEFAULT);
-            if (mainMenuPanelPage.get() != 0) {
-                playMainMenuPanel.setTextFill(Color.rgb(225, 225, 225));
-            }
 
         });
         playMainMenuPanel.setOnMouseClicked(e-> {
@@ -289,17 +342,11 @@ public class HomePanel extends Panel {
         actuMainMenuPanel.setOnMouseEntered(e -> {
 
             this.layout.setCursor(Cursor.HAND);
-            if (mainMenuPanelPage.get() != 1) {
-                actuMainMenuPanel.setTextFill(Color.rgb(225, 255, 245));
-            }
 
         });
         actuMainMenuPanel.setOnMouseExited(e-> {
 
             this.layout.setCursor(Cursor.DEFAULT);
-            if (mainMenuPanelPage.get() != 1) {
-                actuMainMenuPanel.setTextFill(Color.rgb(225, 225, 225));
-            }
 
         });
         actuMainMenuPanel.setOnMouseClicked(e-> {
@@ -309,4 +356,18 @@ public class HomePanel extends Panel {
         pane.getChildren().addAll(playMainMenuPanel, actuMainMenuPanel);
     }
 
+    @Override
+    public void onDownloadJobFinished(DownloadJob job) {
+        Main.Logger.log("'" + job.getName() + "is finished.");
+    }
+
+    @Override
+    public void onDownloadJobProgressChanged(DownloadJob job) {
+        this.downloadBar.setProgress(job.getAllFiles().size() - job.getRemainingFiles().size(), job.getAllFiles().size());
+    }
+
+    @Override
+    public void onDownloadJobStarted(DownloadJob job) {
+        Main.Logger.log("'" + job.getName() + "' started to download.");
+    }
 }
