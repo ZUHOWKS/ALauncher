@@ -8,7 +8,11 @@ import fr.arinonia.arilibfx.auth.premium.Auth;
 import fr.arinonia.arilibfx.auth.premium.exceptions.AuthenticationUnavailableException;
 import fr.arinonia.arilibfx.auth.premium.exceptions.RequestException;
 import fr.arinonia.arilibfx.auth.premium.responses.AuthenticationResponse;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -24,6 +28,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 
 import java.awt.*;
 import java.io.IOException;
@@ -33,6 +38,8 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LoginPanel extends Panel {
+
+    private HomePanel homePanel;
 
     @Override
     public void init(PanelManager panelManager) {
@@ -213,7 +220,7 @@ public class LoginPanel extends Panel {
         TextField usernameField = new TextField();
         setGrow(usernameField);
         setAlignment(usernameField, HPos.LEFT ,VPos.TOP);
-        usernameField.setStyle("-fx-background-color: rgba(37, 37, 37, 0.8); -fx-font-size: 16; -fx-text-fill: rgba(255,255,255,1)");
+        usernameField.setStyle("-fx-background-color: rgba(37, 37, 37, 0.8); -fx-font-size: 16; -fx-text-fill: rgba(255,255,255,1);");
         usernameField.setMaxHeight(38);
         usernameField.setMinHeight(38);
         usernameField.setMaxWidth(268);
@@ -246,7 +253,7 @@ public class LoginPanel extends Panel {
         PasswordField passwordField = new PasswordField();
         setGrow(passwordField);
         setAlignment(passwordField, HPos.LEFT ,VPos.TOP);
-        passwordField.setStyle("-fx-background-color: rgba(37, 37, 37, 0.8); -fx-font-size: 16; -fx-text-fill: rgba(255,255,255,1)");
+        passwordField.setStyle("-fx-background-color: rgba(37, 37, 37, 0.8); -fx-font-size: 16; -fx-text-fill: rgba(255,255,255,1);");
         passwordField.setMaxHeight(38);
         passwordField.setMinHeight(38);
         passwordField.setMaxWidth(268);
@@ -302,7 +309,7 @@ public class LoginPanel extends Panel {
         Button connectionButton = new Button("SE CONNECTER");
         setGrow(connectionButton);
         setAlignment(connectionButton, HPos.CENTER ,VPos.BOTTOM);
-        connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1)");
+        connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);");
         connectionButton.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
         connectionButton.setTextAlignment(TextAlignment.CENTER);
         connectionButton.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.2), 3, 0.3, 0, 0));
@@ -313,7 +320,11 @@ public class LoginPanel extends Panel {
         connectionButton.setTranslateY(-76d);
         connectionButton.setOnMouseClicked(e-> {
 
-            connectionButton.setStyle("-fx-background-color: #74923AFF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(225,225,225,0.9)");
+            Timeline clickedAnimation = new Timeline(
+                    new KeyFrame(Duration.ZERO, new KeyValue(connectionButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#74923AFF"), CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY)))),
+                    new KeyFrame(Duration.millis(1000), new KeyValue(connectionButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#91B848FF"), CornerRadii.EMPTY, Insets.EMPTY)))));
+            clickedAnimation.setOnFinished(ev -> connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-text-fill: rgba(225,225,225,1);"));
+            clickedAnimation.play();
             if (!antiSpamConnection.get()) {
                 antiSpamConnection.set(true);
                 /**
@@ -329,7 +340,7 @@ public class LoginPanel extends Panel {
                         Main.Logger.log("==================================================");
                     } catch (RequestException | AuthenticationUnavailableException ex) {
                         antiSpamConnection.set(false);
-                        connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1)");
+                        connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);");
                         ex.printStackTrace();
 
                     }
@@ -346,7 +357,7 @@ public class LoginPanel extends Panel {
                 }
                 */
 
-                this.panelManager.showPanel(new HomePanel());
+                this.panelManager.showPanel(homePanel = new HomePanel());
             }
 
         });
@@ -404,7 +415,7 @@ public class LoginPanel extends Panel {
         connectWithMojang.set(true);
         setGrow(connectionModeButton);
         setAlignment(connectionModeButton, HPos.CENTER ,VPos.BOTTOM);
-        connectionModeButton.setStyle("-fx-background-color: #CB2B2BFF; -fx-font-size: 18; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1)");
+        connectionModeButton.setStyle("-fx-background-color: #CB2B2BFF; -fx-font-size: 18; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);");
         connectionModeButton.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 18));
         connectionModeButton.setTextAlignment(TextAlignment.CENTER);
         connectionModeButton.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.1), 3, 0.3, 0, 0));
@@ -417,7 +428,7 @@ public class LoginPanel extends Panel {
             if (connectWithMojang.get()) {
                 connectWithMojang.set(false);
                 usernameLabel.setText("Nom d'utilisateur");
-                connectionModeButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 18; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1)");
+                connectionModeButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 18; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);");
                 connectionModeButton.setGraphic(minewebView);
                 connectionModeButton.setText("Asilux");
             }
@@ -425,7 +436,7 @@ public class LoginPanel extends Panel {
             else {
                 connectWithMojang.set(true);
                 usernameLabel.setText("Adresse mail");
-                connectionModeButton.setStyle("-fx-background-color: #CB2B2BFF; -fx-font-size: 18; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1)");
+                connectionModeButton.setStyle("-fx-background-color: #CB2B2BFF; -fx-font-size: 18; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);");
                 connectionModeButton.setGraphic(mojangView);
                 connectionModeButton.setText("Mojang");
             }
@@ -456,5 +467,9 @@ public class LoginPanel extends Panel {
         } catch (IOException | URISyntaxException e) {
             Main.Logger.warn(e.getMessage());
         }
+    }
+
+    public HomePanel getHomePanel() {
+        return homePanel;
     }
 }
