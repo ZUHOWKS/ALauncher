@@ -8,7 +8,9 @@ import fr.flowarg.flowcompat.Platform;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -58,12 +60,21 @@ public class PanelManager {
             topBar.init(this);
         }
 
+        this.layout.add(this.contentPane, 0,1);
+        this.layout.setStyle("-fx-background-image: url('/background.png'); -fx-background-repeat: stretch;-fx-background-position: center center;-fx-background-size: cover;");
+        GridPane.setVgrow(this.contentPane, Priority.ALWAYS);
+        GridPane.setHgrow(this.contentPane, Priority.ALWAYS);
+
         this.stage.show();
     }
 
     public void showPanel(IPanel panel) {
         this.contentPane.getChildren().clear();
         this.contentPane.getChildren().add(panel.getLayout());
+        if (panel.getStyleSheetPath() != null) {
+            this.stage.getScene().getStylesheets().clear();
+            this.stage.getScene().getStylesheets().add(panel.getStyleSheetPath());
+        }
         panel.init(this);
         panel.onShow();
     }
