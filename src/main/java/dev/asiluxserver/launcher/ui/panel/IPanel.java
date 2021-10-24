@@ -7,4 +7,5 @@ public interface IPanel {
     void init(PanelManager panelManager);
     GridPane getLayout();
     void onShow();
+    String getName();
 }

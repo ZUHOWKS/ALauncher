@@ -1,62 +1,69 @@
 package dev.asiluxserver.launcher.ui;
 
-import dev.asiluxserver.launcher.AsiluxLauncher;
+import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
+import dev.asiluxserver.launcher.Launcher;
 import dev.asiluxserver.launcher.ui.panel.IPanel;
-import dev.asiluxserver.launcher.ui.panels.include.TopPanel;
-import fr.arinonia.arilibfx.AriLibFX;
-import fr.arinonia.arilibfx.ui.utils.ResizeHelper;
+import dev.asiluxserver.launcher.ui.panels.partials.TopBar;
+import fr.flowarg.flowcompat.Platform;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class PanelManager {
-
-    private final AsiluxLauncher asiluxLauncher;
+    private final Launcher launcher;
     private final Stage stage;
     private GridPane layout;
-    private TopPanel topPanel = new TopPanel();
-    private GridPane centerPanel = new GridPane();
+    private final GridPane contentPane = new GridPane();
 
-    public PanelManager(AsiluxLauncher asiluxLauncher, Stage stage) {
-        this.asiluxLauncher = asiluxLauncher;
+    public PanelManager(Launcher launcher, Stage stage) {
+        this.launcher = launcher;
         this.stage = stage;
     }
 
     public void init() {
         this.stage.setTitle("Asilux");
-        this.stage.setMinWidth(1280);
+        this.stage.setMinWidth(854);
+        this.stage.setMinHeight(480);
         this.stage.setWidth(1280);
-        this.stage.setMinHeight(720);
         this.stage.setHeight(720);
-        this.stage.initStyle(StageStyle.UNDECORATED);
         this.stage.centerOnScreen();
-        this.stage.show();
+        this.stage.getIcons().add(new Image("images/asilux-icone.png"));
 
         this.layout = new GridPane();
-        this.layout.setStyle(AriLibFX.setResponsiveBackground("/background.png"));
-        this.stage.setScene(new Scene(this.layout));
 
-        RowConstraints topPanelConstraints = new RowConstraints();
-        topPanelConstraints.setValignment(VPos.TOP);
-        topPanelConstraints.setMinHeight(25);
-        topPanelConstraints.setMaxHeight(25);
-        this.layout.getRowConstraints().addAll(topPanelConstraints, new RowConstraints());
-        this.layout.add(this.topPanel.getLayout(), 0, 0);
-        this.topPanel.init(this);
+        if (Platform.isOnLinux()) {
+            Scene scene = new Scene(this.layout);
+            this.stage.setScene(scene);
+        } else {
+            this.stage.initStyle(StageStyle.UNDECORATED);
 
-        this.layout.add(this.centerPanel, 0, 1);
-        GridPane.setVgrow(this.centerPanel, Priority.ALWAYS);
-        GridPane.setHgrow(this.centerPanel, Priority.ALWAYS);
-        ResizeHelper.addResizeListener(this.stage);
+            TopBar topBar = new TopBar();
+            BorderlessScene scene = new BorderlessScene(this.stage, StageStyle.UNDECORATED, this.layout);
+            scene.setResizable(true);
+            scene.setMoveControl(topBar.getLayout());
+            scene.removeDefaultCSS();
+
+            this.stage.setScene(scene);
+
+            RowConstraints topPaneContraints = new RowConstraints();
+            topPaneContraints.setValignment(VPos.TOP);
+            topPaneContraints.setMinHeight(25);
+            topPaneContraints.setMaxHeight(25);
+            this.layout.getRowConstraints().addAll(topPaneContraints, new RowConstraints());
+            this.layout.add(topBar.getLayout(), 0, 0);
+            topBar.init(this);
+        }
+
+        this.stage.show();
     }
 
     public void showPanel(IPanel panel) {
-        this.centerPanel.getChildren().clear();
-        this.centerPanel.getChildren().add(panel.getLayout());
+        this.contentPane.getChildren().clear();
+        this.contentPane.getChildren().add(panel.getLayout());
         panel.init(this);
         panel.onShow();
     }
@@ -64,6 +71,8 @@ public class PanelManager {
     public Stage getStage() {
         return stage;
     }
-    public AsiluxLauncher getAsiluxLauncher() { return asiluxLauncher; }
-    public TopPanel getTopPanel() { return topPanel; }
+
+    public Launcher getLauncher() {
+        return launcher;
+    }
 }
