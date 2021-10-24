@@ -4,6 +4,11 @@ import dev.asiluxserver.launcher.Launcher;
 import dev.asiluxserver.launcher.Main;
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.panel.Panel;
+import fr.litarvan.openauth.AuthPoints;
+import fr.litarvan.openauth.AuthenticationException;
+import fr.litarvan.openauth.Authenticator;
+import fr.litarvan.openauth.model.AuthAgent;
+import fr.litarvan.openauth.model.response.AuthResponse;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -31,9 +36,21 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Login extends Panel {
+
+    GridPane loginPanel = new GridPane();
+    GridPane mainPanel = new GridPane();
+    GridPane middlePannel = new GridPane();
+    GridPane topPanel = new GridPane();
+    GridPane topPanelContour = new GridPane();
+    GridPane bottomPanel = new GridPane();
+
+    TextField usernameField = new TextField();
+    PasswordField passwordField = new PasswordField();
+    Button connectionButton = new Button("SE CONNECTER");
 
     Saver saver = Launcher.getInstance().getSaver();
 
@@ -50,12 +67,6 @@ public class Login extends Panel {
     @Override
     public void init(PanelManager panelManager) {
         super.init(panelManager);
-        GridPane loginPanel = new GridPane();
-        GridPane mainPanel = new GridPane();
-        GridPane middlePannel = new GridPane();
-        GridPane topPanel = new GridPane();
-        GridPane topPanelContour = new GridPane();
-        GridPane bottomPanel = new GridPane();
 
         AtomicBoolean connectWithMojang = new AtomicBoolean(false);
         AtomicBoolean antiSpamConnection = new AtomicBoolean(false);
@@ -123,9 +134,6 @@ public class Login extends Panel {
         GridPane.setHgrow(middlePannel, Priority.ALWAYS);
         GridPane.setVgrow(middlePannel, Priority.ALWAYS);
         setAlignment(middlePannel, HPos.CENTER, VPos.TOP);
-
-
-
 
         /*
          * STYLE DES PANEL
@@ -221,8 +229,18 @@ public class Login extends Panel {
         usernameLabel.setTranslateX(7d);
         usernameLabel.setTranslateY(17d);
 
+        /* Text Nom d'utilisateur Erreur */
+        Label errorUsernameLabel = new Label("");
+        setGrow(errorUsernameLabel);
+        setAlignment(errorUsernameLabel, HPos.LEFT ,VPos.TOP);
+        errorUsernameLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        errorUsernameLabel.setTextFill(Color.rgb(225,53,53));
+        errorUsernameLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        errorUsernameLabel.setTranslateX(7d);
+        errorUsernameLabel.setTranslateY(84d);
+
+
         /* Text Field Nom d'utilisateur + Separator */
-        TextField usernameField = new TextField();
         setGrow(usernameField);
         setAlignment(usernameField, HPos.LEFT ,VPos.TOP);
         usernameField.setStyle("-fx-background-color: rgba(37, 37, 37, 0.8); -fx-font-size: 16; -fx-text-fill: rgba(255,255,255,1);");
@@ -232,6 +250,9 @@ public class Login extends Panel {
         usernameField.setMinWidth(268);
         usernameField.setTranslateX(6d);
         usernameField.setTranslateY(45d);
+        usernameField.focusedProperty().addListener((_a, oldValue, newValue) -> {
+            if (!newValue) this.updateLoginBtnState(passwordField, errorUsernameLabel);
+        });
 
         Separator usernameSeparator = new Separator();
         setGrow(usernameSeparator);
@@ -254,8 +275,17 @@ public class Login extends Panel {
         passwordLabel.setTranslateX(7d);
         passwordLabel.setTranslateY(124d);
 
+        /* Text Error Mot de passe */
+        Label errorPasswordLabel = new Label("");
+        setGrow(errorPasswordLabel);
+        setAlignment(errorPasswordLabel, HPos.LEFT ,VPos.TOP);
+        errorPasswordLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        errorPasswordLabel.setTextFill(Color.rgb(225,53,53));
+        errorPasswordLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        errorPasswordLabel.setTranslateX(7d);
+        errorPasswordLabel.setTranslateY(211d);
+
         /* Text Field Nom d'utilisateur + Separator */
-        PasswordField passwordField = new PasswordField();
         setGrow(passwordField);
         setAlignment(passwordField, HPos.LEFT ,VPos.TOP);
         passwordField.setStyle("-fx-background-color: rgba(37, 37, 37, 0.8); -fx-font-size: 16; -fx-text-fill: rgba(255,255,255,1);");
@@ -265,6 +295,9 @@ public class Login extends Panel {
         passwordField.setMinWidth(268);
         passwordField.setTranslateX(6d);
         passwordField.setTranslateY(152d);
+        passwordField.focusedProperty().addListener((_a, oldValue, newValue) -> {
+            if (!newValue) this.updateLoginBtnState(passwordField, errorPasswordLabel);
+        });
 
         Separator passwordSeparator = new Separator();
         setGrow(passwordSeparator);
@@ -304,14 +337,12 @@ public class Login extends Panel {
             }
 
             else {
-                openUrl("https://asilux.w4.cmws.fr/#");
+                openUrl("https://asilux.w4.cmws.fr/#"); //TODO: CHANGER LE SITE INTERNET
             }
 
         });
 
         /* Bouton pour se connecter*/
-
-        Button connectionButton = new Button("SE CONNECTER");
         setGrow(connectionButton);
         setAlignment(connectionButton, HPos.CENTER ,VPos.BOTTOM);
         connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);");
@@ -323,16 +354,23 @@ public class Login extends Panel {
         connectionButton.setMaxWidth(268);
         connectionButton.setMinWidth(268);
         connectionButton.setTranslateY(-76d);
+        connectionButton.setDisable(true);
         connectionButton.setOnMouseClicked(e-> {
-
+            this.authenticate(usernameField.getText(), passwordField.getText());
             Timeline clickedAnimation = new Timeline(
                     new KeyFrame(Duration.ZERO, new KeyValue(connectionButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#74923AFF"), CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY)))),
                     new KeyFrame(Duration.millis(500), new KeyValue(connectionButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#91B848FF"), CornerRadii.EMPTY, Insets.EMPTY)))));
             clickedAnimation.setOnFinished(ev -> connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);"));
             clickedAnimation.play();
 
+
         });
 
+        /*
+         * SEPARATEUR MOD DE CONNECTION
+         */
+
+        /* Separateurs */
         Separator connectionChoseS1 = new Separator();
         setGrow(connectionChoseS1);
         setAlignment(connectionChoseS1, HPos.CENTER ,VPos.BOTTOM);
@@ -363,6 +401,7 @@ public class Login extends Panel {
         connectionChoseS3.setMinWidth(50);
         connectionChoseS3.setTranslateY(-30d);
 
+        /* Label se connecter */
         Label connectionwithLabel = new Label("CONNEXION AVEC");
         setGrow(connectionwithLabel);
         setAlignment(connectionwithLabel, HPos.CENTER ,VPos.BOTTOM);
@@ -371,21 +410,59 @@ public class Login extends Panel {
         connectionwithLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(210, 210, 210, 0.2), 4, 0, 0, 0));
         connectionwithLabel.setTranslateY(-37d);
 
+        /* Bouttons mode de connection + Microsoft */
+
+
+        /*
+        * REGISTERY HANDLERS
+        */
         topPanel.getChildren().addAll(connectionLabel);
         bottomPanel.getChildren().addAll(noAccount, registerHere);
-        middlePannel.getChildren().addAll(usernameLabel, usernameField, usernameSeparator, passwordLabel, passwordField, passwordSeparator,forgotenpasswordLabel, connectionButton,
+        middlePannel.getChildren().addAll(usernameLabel, usernameField, usernameSeparator, errorUsernameLabel, passwordLabel, passwordField, passwordSeparator, errorPasswordLabel,forgotenpasswordLabel, connectionButton,
                 connectionChoseS2, connectionChoseS3, connectionwithLabel);
         this.layout.getChildren().add(loginPanel);
 
     }
 
     private void openUrl(String str) {
-
         try {
             Desktop.getDesktop().browse(new URI(str));
-
         } catch (IOException | URISyntaxException e) {
+            //TODO: Message d'erreur
+        }
+    }
 
+    private void updateLoginBtnState(TextField textField, Label errorLabel) {
+        if (textField.getText().length() == 0) {
+            errorLabel.setText("Le champs ne peux être vide");
+        } else {
+            errorLabel.setText("");
+        }
+
+        connectionButton.setDisable(!(usernameField.getText().length() > 0 && passwordField.getText().length() > 0));
+    }
+
+    public void authenticate(String user, String password) {
+        Authenticator authenticator = new Authenticator(Authenticator.MOJANG_AUTH_URL, AuthPoints.NORMAL_AUTH_POINTS);
+
+        try {
+            AuthResponse response = authenticator.authenticate(AuthAgent.MINECRAFT, user, password, null);
+
+            saver.set("accessToken", response.getAccessToken());
+            saver.set("clientToken", response.getClientToken());
+            saver.save();
+
+            Launcher.getInstance().setAuthProfile(response.getSelectedProfile());
+
+            this.logger.info("Hello " + response.getSelectedProfile().getName());
+            // TODO: redirect the user to the homepage
+
+        } catch (AuthenticationException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Une erreur est survenu lors de la connexion");
+            alert.setContentText(e.getMessage());
+            alert.show();
         }
     }
 }
