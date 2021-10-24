@@ -8,6 +8,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.util.Duration;
 
 public abstract class Panel implements IPanel, IMovable, ITakePLace {
@@ -41,6 +42,29 @@ public abstract class Panel implements IPanel, IMovable, ITakePLace {
 
     @Override
     public abstract String getName();
+
+    @Override
+    public String getStyleSheetPath() {
+        return null;
+    }
+
+    public void setGrow(Node layout){
+        setGrow(layout, Priority.ALWAYS, Priority.ALWAYS);
+    }
+
+    public void setGrow(Node layout, Priority Hgrow, Priority Vgrow) {
+        GridPane.setHgrow(layout, Hgrow);
+        GridPane.setVgrow(layout, Vgrow);
+    }
+
+    public void setAlignment(Node layout){
+        setAlignment(layout, HPos.CENTER, VPos.CENTER);
+    }
+
+    public void setAlignment(Node layout, HPos Hpos, VPos Vpos) {
+        GridPane.setHalignment(layout, Hpos);
+        GridPane.setValignment(layout, Vpos);
+    }
 
     @Override
     public void setLeft(Node node) {
