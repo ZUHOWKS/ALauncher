@@ -19,3 +19,5 @@ dev/asiluxserver/launcher/Launcher.java
  dev.asiluxserver.launcher.Launcher
 dev/asiluxserver/launcher/ui/panels/pages/Login.java
  dev.asiluxserver.launcher.ui.panels.pages.Login
+dev/asiluxserver/launcher/ui/panels/pages/App.java
+ dev.asiluxserver.launcher.ui.panels.pages.App

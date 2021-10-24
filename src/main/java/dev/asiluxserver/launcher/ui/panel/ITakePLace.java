@@ -14,7 +14,7 @@ public interface ITakePLace {
 
     default void setCanTakeAllWidth(Node... nodes) {
         for (Node n : nodes) {
-            setVgrow(n, Priority.ALWAYS);
+            setHgrow(n, Priority.ALWAYS);
         }
     }
 }
