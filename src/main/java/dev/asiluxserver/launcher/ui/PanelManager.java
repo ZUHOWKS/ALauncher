@@ -28,10 +28,10 @@ public class PanelManager {
 
     public void init() {
         this.stage.setTitle("Asilux");
-        this.stage.setMinWidth(1280);
-        this.stage.setMinHeight(720);
-        this.stage.setWidth(1280);
-        this.stage.setHeight(720);
+        this.stage.setMinWidth(1180);
+        this.stage.setMinHeight(620);
+        this.stage.setWidth(1180);
+        this.stage.setHeight(620);
         this.stage.centerOnScreen();
         this.stage.getIcons().add(new Image("images/asilux-icone.png"));
 
