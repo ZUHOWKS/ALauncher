@@ -350,11 +350,11 @@ public class App extends Panel {
         windowsPanel.getChildren().addAll(NewsTitle, separator1, separator2);
         newsPanel.getChildren().add(newsLabel);
 
-        /* REGISTRY MAIN PANEL */
         windowsPanel.getChildren().add(scrollPane);
         scrollPane.setContent(vBox);
         vBox.getChildren().add(0, newsPanel);
 
+        /* REGISTRY @PANE PANEL */
         pane.getChildren().addAll(windowsBackground, windowsPanel);
 
 
