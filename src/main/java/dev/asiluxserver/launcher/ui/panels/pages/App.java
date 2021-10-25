@@ -65,8 +65,8 @@ public class App extends Panel {
         GridPane leftBarPanel = new GridPane();
         setGrow(leftBarPanel);
         setAlignment(leftBarPanel, HPos.LEFT, VPos.CENTER);
-        leftBarPanel.setMinWidth(120);
-        leftBarPanel.setMaxWidth(120);
+        leftBarPanel.setMinWidth(140);
+        leftBarPanel.setMaxWidth(140);
         leftBarPanel.setStyle("-fx-background-color: rgba(24,24,24,1);");
         leftBarNav(leftBarPanel);
 
@@ -226,11 +226,47 @@ public class App extends Panel {
         setGrow(userLocationRectangle);
         setLeft(userLocationRectangle);
         setTop(userLocationRectangle);
-        userLocationRectangle.setTranslateY(100);
         userLocationRectangle.setTranslateX(2);
+        userLocationRectangle.setTranslateY(100);
+
+        /* TITLE HOME */
+        Label homeLabel = new Label("Accueille");
+        homeLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        homeLabel.setTextFill(Color.rgb(255,255,255));
+        homeLabel.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.HOME));
+        homeLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        setGrow(homeLabel);
+        setTop(homeLabel);
+        setLeft(homeLabel);
+        homeLabel.setTranslateX(15);
+        homeLabel.setTranslateY(105);
+
+        /* TITLE NEWS */
+        Label newsLabel = new Label("Nouveauté");
+        newsLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        newsLabel.setTextFill(Color.rgb(255,255,255));
+        newsLabel.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.BELL));
+        newsLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        setGrow(newsLabel);
+        setTop(newsLabel);
+        setLeft(newsLabel);
+        newsLabel.setTranslateX(15);
+        newsLabel.setTranslateY(150);
+
+        /* TITLE UPDATE */
+        Label updateLabel = new Label("Mise à jour");
+        updateLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        updateLabel.setTextFill(Color.rgb(255,255,255));
+        updateLabel.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.CODE));
+        updateLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        setGrow(updateLabel);
+        setTop(updateLabel);
+        setLeft(updateLabel);
+        updateLabel.setTranslateX(15);
+        updateLabel.setTranslateY(195);
 
         /* REGISTERY @PANE PANEL */
-        pane.getChildren().addAll(avatarRectangle, avatarView, userLocationRectangle);
+        pane.getChildren().addAll(avatarRectangle, avatarView, userLocationRectangle, homeLabel, newsLabel, updateLabel);
 
     }
 
@@ -278,40 +314,7 @@ public class App extends Panel {
             this.layout.setCursor(Cursor.DEFAULT);
         });
 
-
-        Button SettingsButtom = new Button();
-        setGrow(SettingsButtom);
-        setAlignment(SettingsButtom, HPos.CENTER ,VPos.CENTER);
-        FontAwesomeIconView settingsIcone = new FontAwesomeIconView(FontAwesomeIcon.GEARS);
-        settingsIcone.setSize("25px");
-        settingsIcone.setFill(Color.rgb(255,255,255));
-        SettingsButtom.setMinWidth(35);
-        SettingsButtom.setMinHeight(35);
-        SettingsButtom.setMaxWidth(35);
-        SettingsButtom.setMaxHeight(35);
-        SettingsButtom.setGraphic(settingsIcone);
-        SettingsButtom.setStyle("-fx-background-color: rgba(0,0,0,0); -fx-border-color: rgba(255,255,255); -fx-borer-radius: 2px");
-        //SettingsButtom.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.2), 3, 0.3, 0, 0));
-        SettingsButtom.setTranslateX(150);
-        SettingsButtom.setTranslateY(150);
-        SettingsButtom.setOnMouseEntered(e-> {
-            this.layout.setCursor(Cursor.HAND);
-        });
-        SettingsButtom.setOnMouseClicked(e-> {
-
-            Timeline clickedAnimation = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(settingsIcone.fillProperty(), Color.rgb(225,225,225))),
-                    new KeyFrame(Duration.millis(250), new KeyValue(settingsIcone.fillProperty(), Color.rgb(235,235,235))),
-                    new KeyFrame(Duration.millis(500), new KeyValue(settingsIcone.fillProperty(), Color.rgb(255,255,255))));
-            clickedAnimation.setOnFinished(ev -> settingsIcone.setFill(Color.rgb(255,255,255)));
-            clickedAnimation.play();
-        });
-        SettingsButtom.setOnMouseExited(e-> {
-            this.layout.setCursor(Cursor.DEFAULT);
-        });
-
-
-        pane.getChildren().addAll(asiluxView, PlayButton, SettingsButtom);
+        pane.getChildren().addAll(asiluxView, PlayButton);
     }
 
     /* Tableau des News */
@@ -491,5 +494,8 @@ public class App extends Panel {
 
         pane.getChildren().addAll(playMainMenuPanel, actuMainMenuPanel);
     }
+
+    /* METHODES NAVIGATION */
+    //TODO: Navigation methode.
 
 }

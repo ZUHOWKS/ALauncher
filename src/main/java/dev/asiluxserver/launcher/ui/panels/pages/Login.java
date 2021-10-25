@@ -208,11 +208,12 @@ public class Login extends Panel {
 
         /* Titre Connectez vous */
         Label connectionLabel = new Label("CONNECTEZ-VOUS");
-        setGrow(connectionLabel);
-        connectionLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 6, 0, 0, 0));
-        setAlignment(connectionLabel, HPos.CENTER ,VPos.CENTER);
         connectionLabel.setStyle("-fx-font-size: 26;");
         connectionLabel.setTextFill(Color.rgb(255,255,255));
+        connectionLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 6, 0, 0, 0));
+        setGrow(connectionLabel);
+        setAlignment(connectionLabel, HPos.CENTER ,VPos.CENTER);
+
 
         /*
          * ELEMENT DANS MIDDLE PANEL
@@ -221,21 +222,21 @@ public class Login extends Panel {
 
         /* Text Nom d'utilisateur */
         Label usernameLabel = new Label("Adresse mail");
-        setGrow(usernameLabel);
-        setAlignment(usernameLabel, HPos.LEFT ,VPos.TOP);
         usernameLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
         usernameLabel.setTextFill(Color.rgb(255,255,255));
         usernameLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        setGrow(usernameLabel);
+        setAlignment(usernameLabel, HPos.LEFT ,VPos.TOP);
         usernameLabel.setTranslateX(7d);
         usernameLabel.setTranslateY(17d);
 
         /* Text Nom d'utilisateur Erreur */
         Label errorUsernameLabel = new Label("");
-        setGrow(errorUsernameLabel);
-        setAlignment(errorUsernameLabel, HPos.LEFT ,VPos.TOP);
         errorUsernameLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
         errorUsernameLabel.setTextFill(Color.rgb(225,53,53));
         errorUsernameLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        setGrow(errorUsernameLabel);
+        setAlignment(errorUsernameLabel, HPos.LEFT ,VPos.TOP);
         errorUsernameLabel.setTranslateX(7d);
         errorUsernameLabel.setTranslateY(84d);
 
