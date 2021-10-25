@@ -34,6 +34,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
+import javafx.scene.transform.Scale;
 import javafx.util.Duration;
 
 import java.util.Objects;
@@ -64,54 +65,15 @@ public class App extends Panel {
         GridPane leftBarPanel = new GridPane();
         setGrow(leftBarPanel);
         setAlignment(leftBarPanel, HPos.LEFT, VPos.CENTER);
-        leftBarPanel.setMinWidth(100);
-        leftBarPanel.setMaxWidth(100);
+        leftBarPanel.setMinWidth(120);
+        leftBarPanel.setMaxWidth(120);
         leftBarPanel.setStyle("-fx-background-color: rgba(24,24,24,1);");
+        leftBarNav(leftBarPanel);
 
         this.layout.add(leftBarPanel, 0, 0);
         this.layout.add(this.centerPane, 1, 0);
         setGrow(this.centerPane);
         setAlignment(this.centerPane, HPos.RIGHT, VPos.CENTER);
-
-
-
-        String avatarUrl = "https://minotar.net/avatar/MHF_Steve.png"; //+ Launcher.getInstance().getAuthProfile().getId() + ".png";
-        ImageView avatarView = new ImageView();
-        Image avatarImg = new Image(avatarUrl);
-        avatarView.setImage(avatarImg);
-        avatarView.setPreserveRatio(true);
-        avatarView.setFitHeight(50d);
-        avatarView.setStyle("");
-        avatarView.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.3), 7, 0.5, 0, 0));
-        setTop(avatarView);
-        setCanTakeAllSize(avatarView);
-        setCenterH(avatarView);
-        avatarView.setTranslateY(15d);
-
-        Transition animation = new Transition() {
-            {
-                setCycleDuration(Duration.millis(500));
-            }
-            @Override
-            protected void interpolate(double frac) {
-                avatarView.setFitHeight( (double) (avatarView.getFitHeight() + 0.1));
-                avatarView.setTranslateX(avatarView.getX() - 0.1);
-            }
-        };
-        avatarView.setOnMouseEntered(e-> animation.play());
-
-        Rectangle avatarRectangle = new Rectangle(0, 0, 64 ,64);
-        avatarRectangle.setFill(Color.valueOf("#91B848FF"));
-        avatarRectangle.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.2), 3, 0.3, 0, 0));
-        avatarRectangle.setArcWidth(12);
-        avatarRectangle.setArcHeight(12);
-        setTop(avatarRectangle);
-        setCanTakeAllSize(avatarRectangle);
-        setCenterH(avatarRectangle);
-        avatarRectangle.setTranslateY(8d);
-
-        leftBarPanel.getChildren().add(avatarRectangle);
-        leftBarPanel.getChildren().add(avatarView);
 
         /* ACCEUIL */
         ColumnConstraints mainContraints = new ColumnConstraints();
@@ -142,16 +104,146 @@ public class App extends Panel {
         centerPane.add(mainMenuPanel, 0, 0);
         centerPane.add(actuMainMenuPanel, 1, 0);
     }
+    /*
+     * ELEMENTS DE LA PAGE D'ACCUEILLE
+     */
+
+    /* Barre de navigation */
+    private void leftBarNav(GridPane pane) {
+
+        /* USER AVATAR BACKGROUND */
+        Rectangle avatarRectangle = new Rectangle(0, 0, 64 ,64);
+        avatarRectangle.setFill(Color.valueOf("#91B848FF"));
+        avatarRectangle.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.2), 3, 0.3, 0, 0));
+        avatarRectangle.setArcWidth(12);
+        avatarRectangle.setArcHeight(12);
+        setTop(avatarRectangle);
+        setCanTakeAllSize(avatarRectangle);
+        setCenterH(avatarRectangle);
+        avatarRectangle.setTranslateY(8d);
+
+        /* USER AVATAR */
+        String avatarUrl = "https://minotar.net/avatar/MHF_Steve.png"; //+ Launcher.getInstance().getAuthProfile().getId() + ".png";
+        ImageView avatarView = new ImageView();
+        Image avatarImg = new Image(avatarUrl);
+        avatarView.setImage(avatarImg);
+        avatarView.setPreserveRatio(true);
+        avatarView.setFitHeight(50d);
+        avatarView.setStyle("");
+        avatarView.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.3), 7, 0.5, 0, 0));
+        setTop(avatarView);
+        setCanTakeAllSize(avatarView);
+        setCenterH(avatarView);
+        avatarView.setTranslateY(15d);
+
+
+        avatarView.setOnMouseEntered(e-> {
+
+            //Change User Cursor
+            this.layout.setCursor(Cursor.HAND);
+
+            /* UP AVATAR SCALE */
+            Transition avatarUpScale = new Transition() {
+                {
+                    setCycleDuration(Duration.millis(500));
+                }
+
+                double n = 0.0001;
+
+                @Override
+                protected void interpolate(double frac) {
+                    if (n <= 0.05) {
+                        n = n + 0.001;
+                    } else {
+                        n = n - 0.0005;
+                    }
+
+                    if (avatarView.getFitHeight() < 58d) {
+                        avatarView.setFitHeight(avatarView.getFitHeight() + 0.05 + n);
+                        if (avatarView.getTranslateY() > 11d) {
+                            avatarView.setTranslateY(avatarView.getTranslateY() - 0.025 - 0.5 * n);
+                        } else {
+                            avatarView.setTranslateY(11d);
+                        }
+                    } else {
+                        n = 0.0001;
+                        avatarView.setFitHeight(58d);
+                        avatarView.setTranslateY(11d);
+                    }
+                }
+            };
+
+            if (avatarView.getFitHeight() < 58d) {
+                avatarUpScale.play();
+            }
+        });
+
+        avatarView.setOnMouseExited(e-> {
+
+            //Change User Cursor
+            this.layout.setCursor(Cursor.DEFAULT);
+            /* DOWN AVATAR SCALE */
+            Transition avatarDownScale = new Transition() {
+                {
+                    setCycleDuration(Duration.millis(500));
+                }
+
+                double n = 0.0001;
+
+                @Override
+                protected void interpolate(double frac) {
+                    if (n <= 0.05) {
+                        n = n + 0.001;
+                    } else {
+                        n = n - 0.0005;
+                    }
+
+                    if (avatarView.getFitHeight() > 50d) {
+                        avatarView.setFitHeight(avatarView.getFitHeight() - 0.05 - n);
+                        if (avatarView.getTranslateY() < 15d) {
+                            avatarView.setTranslateY(avatarView.getTranslateY() + 0.025 + 0.5 * n);
+                        } else {
+                            avatarView.setTranslateY(15d);
+                        }
+                    } else {
+                        n = 0.0001;
+                        avatarView.setFitHeight(50d);
+                        avatarView.setTranslateY(15d);
+                    }
+                }
+            };
+
+            if (avatarView.getFitHeight() > 50d) {
+                avatarDownScale.play();
+            }
+        });
+
+        /* RECTANGLE INFO USER LOCATION */
+        Rectangle userLocationRectangle = new Rectangle(10, 30);
+        userLocationRectangle.setFill(Color.valueOf("#91B848FF"));
+        userLocationRectangle.setArcWidth(8);
+        userLocationRectangle.setArcHeight(8);
+        setGrow(userLocationRectangle);
+        setLeft(userLocationRectangle);
+        setTop(userLocationRectangle);
+        userLocationRectangle.setTranslateY(100);
+        userLocationRectangle.setTranslateX(2);
+
+        /* REGISTERY @PANE PANEL */
+        pane.getChildren().addAll(avatarRectangle, avatarView, userLocationRectangle);
+
+    }
+
     private void addTomainMenuPanel(GridPane pane) {
 
         Image asiluxLogo = new Image("images/asilux-logo-500px.png");
         ImageView asiluxView = new ImageView(asiluxLogo);
         asiluxView.setFitWidth(500);
         asiluxView.setFitHeight(250);
+        asiluxView.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(210, 210, 210, 0.2), 4, 0, 0, 0));
         setGrow(asiluxView);
         GridPane.setValignment(asiluxView, VPos.CENTER);
         GridPane.setHalignment(asiluxView, HPos.CENTER);
-        asiluxView.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(210, 210, 210, 0.2), 4, 0, 0, 0));
         asiluxView.setTranslateY(-25);
 
         //TODO: Barre de chargement
@@ -220,14 +312,6 @@ public class App extends Panel {
 
 
         pane.getChildren().addAll(asiluxView, PlayButton, SettingsButtom);
-    }
-    /*
-     * ELEMENTS DE LA PAGE D'ACCUEILLE
-     */
-
-    /* Barre de navigation */
-    private void leftBarNav(GridPane pane) {
-
     }
 
     /* Tableau des News */

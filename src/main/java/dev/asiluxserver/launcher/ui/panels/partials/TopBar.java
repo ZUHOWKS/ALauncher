@@ -71,26 +71,32 @@ public class TopBar extends Panel {
         closeBtn.setFill(Color.WHITE);
         closeBtn.setOpacity(0.70f);
         closeBtn.setSize("14px");
+        setCenterV(closeBtn);
+        closeBtn.setTranslateX(70f);
+        closeBtn.setTranslateY(5.0d);
         closeBtn.setOnMouseEntered(e -> closeBtn.setOpacity(1.0f));
         closeBtn.setOnMouseExited(e -> closeBtn.setOpacity(0.70f));
         closeBtn.setOnMouseClicked(e -> System.exit(0));
-        closeBtn.setTranslateX(70f);
 
         fullscreenBtn.setFill(Color.WHITE);
         fullscreenBtn.setOpacity(0.70f);
         fullscreenBtn.setSize("14px");
+        setCenterV(fullscreenBtn);
+        fullscreenBtn.setTranslateX(48.0d);
+        fullscreenBtn.setTranslateY(5.0d);
         fullscreenBtn.setOnMouseEntered(e -> fullscreenBtn.setOpacity(1.0f));
         fullscreenBtn.setOnMouseExited(e -> fullscreenBtn.setOpacity(0.70f));
         fullscreenBtn.setOnMouseClicked(e -> this.panelManager.getStage().setMaximized(!this.panelManager.getStage().isMaximized()));
-        fullscreenBtn.setTranslateX(50.0d);
 
         minimizeBtn.setFill(Color.WHITE);
         minimizeBtn.setOpacity(0.70f);
         minimizeBtn.setSize("14px");
+        setCenterV(minimizeBtn);
+        minimizeBtn.setTranslateX(26.0d);
+        minimizeBtn.setTranslateY(2.0d);
         minimizeBtn.setOnMouseEntered(e -> minimizeBtn.setOpacity(1.0f));
         minimizeBtn.setOnMouseExited(e -> minimizeBtn.setOpacity(0.70f));
         minimizeBtn.setOnMouseClicked(e -> this.panelManager.getStage().setIconified(true));
-        minimizeBtn.setTranslateX(26.0d);
 
         topBarButton.getChildren().addAll(closeBtn, fullscreenBtn, minimizeBtn);
     }
