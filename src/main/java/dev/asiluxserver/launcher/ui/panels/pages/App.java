@@ -2,17 +2,21 @@ package dev.asiluxserver.launcher.ui.panels.pages;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import dev.asiluxserver.launcher.Launcher;
 import dev.asiluxserver.launcher.Main;
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.panel.Panel;
+import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.animation.Transition;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -36,7 +40,10 @@ import java.util.Objects;
 
 public class App extends Panel {
 
-    private GridPane centerPane = new GridPane();
+    GridPane centerPane = new GridPane();
+    Saver saver = Launcher.getInstance().getSaver();
+
+    Node activeLink = null;
 
     @Override
     public String getName() {
@@ -67,6 +74,45 @@ public class App extends Panel {
         setAlignment(this.centerPane, HPos.RIGHT, VPos.CENTER);
 
 
+
+        String avatarUrl = "https://minotar.net/avatar/MHF_Steve.png"; //+ Launcher.getInstance().getAuthProfile().getId() + ".png";
+        ImageView avatarView = new ImageView();
+        Image avatarImg = new Image(avatarUrl);
+        avatarView.setImage(avatarImg);
+        avatarView.setPreserveRatio(true);
+        avatarView.setFitHeight(50d);
+        avatarView.setStyle("");
+        avatarView.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.3), 7, 0.5, 0, 0));
+        setTop(avatarView);
+        setCanTakeAllSize(avatarView);
+        setCenterH(avatarView);
+        avatarView.setTranslateY(15d);
+
+        Transition animation = new Transition() {
+            {
+                setCycleDuration(Duration.millis(500));
+            }
+            @Override
+            protected void interpolate(double frac) {
+                avatarView.setFitHeight( (double) (avatarView.getFitHeight() + 0.1));
+                avatarView.setTranslateX(avatarView.getX() - 0.1);
+            }
+        };
+        avatarView.setOnMouseEntered(e-> animation.play());
+
+        Rectangle avatarRectangle = new Rectangle(0, 0, 64 ,64);
+        avatarRectangle.setFill(Color.valueOf("#91B848FF"));
+        avatarRectangle.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.2), 3, 0.3, 0, 0));
+        avatarRectangle.setArcWidth(12);
+        avatarRectangle.setArcHeight(12);
+        setTop(avatarRectangle);
+        setCanTakeAllSize(avatarRectangle);
+        setCenterH(avatarRectangle);
+        avatarRectangle.setTranslateY(8d);
+
+        leftBarPanel.getChildren().add(avatarRectangle);
+        leftBarPanel.getChildren().add(avatarView);
+
         /* ACCEUIL */
         ColumnConstraints mainContraints = new ColumnConstraints();
         mainContraints.setHalignment(HPos.RIGHT);
@@ -91,7 +137,7 @@ public class App extends Panel {
         actuMainMenuPanel.setMaxWidth(300);
         actuMainMenuPanel.setMinHeight(320);
         actuMainMenuPanel.setMaxHeight(320);
-        addToactuMainPanel(actuMainMenuPanel);
+        addNewsToMainPanel(actuMainMenuPanel);
 
         centerPane.add(mainMenuPanel, 0, 0);
         centerPane.add(actuMainMenuPanel, 1, 0);
@@ -175,11 +221,19 @@ public class App extends Panel {
 
         pane.getChildren().addAll(asiluxView, PlayButton, SettingsButtom);
     }
+    /*
+     * ELEMENTS DE LA PAGE D'ACCUEILLE
+     */
 
+    /* Barre de navigation */
+    private void leftBarNav(GridPane pane) {
 
-    private void addToactuMainPanel(GridPane pane) {
+    }
 
+    /* Tableau des News */
+    private void addNewsToMainPanel(GridPane pane) {
 
+        /* RECTANGLE BACKGROUND */
         Rectangle windowsBackground = new Rectangle();
         setGrow(windowsBackground);
         setAlignment(windowsBackground, HPos.CENTER, VPos.BOTTOM);
@@ -210,13 +264,13 @@ public class App extends Panel {
         newsPanel.setMaxHeight(1000);
         newsPanel.setTranslateY(45);
 
-        /* ScrollPane Style */
+        /* SCROLL PANE STYLE */
         ScrollPane scrollPane = new ScrollPane();
         setGrow(scrollPane);
         setAlignment(scrollPane, HPos.CENTER, VPos.CENTER);
         scrollPane.getStylesheets().addAll(Main.class.getResource("/css/scroll-pane.css").toExternalForm());
 
-        /* Scroll Bar */
+        /* SCROLL BAR */
         VBox vBox = new VBox();
         setGrow(vBox);
         vBox.setMinWidth(200);
@@ -226,6 +280,7 @@ public class App extends Panel {
         vBox.setAlignment(Pos.TOP_CENTER);
         vBox.setTranslateY(10);
 
+        /* TITLE */
         Label NewsTitle = new Label("NEWS!");
         setGrow(NewsTitle);
         setAlignment(NewsTitle, HPos.CENTER ,VPos.TOP);
@@ -234,6 +289,7 @@ public class App extends Panel {
         NewsTitle.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 6, 0, 0, 0));
         NewsTitle.setTranslateY(-35);
 
+        /* SEPARATOR */
         Separator separator1 = new Separator();
         setGrow(separator1);
         setAlignment(separator1, HPos.CENTER ,VPos.TOP);
@@ -256,6 +312,8 @@ public class App extends Panel {
         separator2.setMinWidth(195);
         separator2.setTranslateY(25);
 
+        /* LABEL NEWS */
+        //TODO: METHODE STRING BUILDER | Créer une méthode afin de lire un fichier (le fichier des news), qui va créer un string builder avec une longueur de chaine de caractère maximale de 18.
         Label newsLabel = new Label("[ANNONCE] BETA OUVERTE\n" +
                 "..................\n" +
                 "..................\n" +
@@ -288,9 +346,11 @@ public class App extends Panel {
         newsLabel.setTranslateX(2);
         newsLabel.setTranslateY(-45);
 
+        /* REGISTRY MAIN PANEL */
         windowsPanel.getChildren().addAll(NewsTitle, separator1, separator2);
         newsPanel.getChildren().add(newsLabel);
 
+        /* REGISTRY MAIN PANEL */
         windowsPanel.getChildren().add(scrollPane);
         scrollPane.setContent(vBox);
         vBox.getChildren().add(0, newsPanel);
@@ -302,7 +362,7 @@ public class App extends Panel {
 
     private void labelmainMenuPanel(GridPane pane) {
 
-        Label playMainMenuPanel = new Label("JOUER");
+        Label playMainMenuPanel = new Label("INSTALLER");
         setGrow(playMainMenuPanel);
         setAlignment(playMainMenuPanel, HPos.LEFT ,VPos.TOP);
         playMainMenuPanel.setStyle("-fx-font-size: 16;");
