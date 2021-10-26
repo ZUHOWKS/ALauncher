@@ -1,6 +1,7 @@
 package dev.asiluxserver.launcher.ui.panels.pages.content;
 
 import dev.asiluxserver.launcher.ui.panel.Panel;
+
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
 
