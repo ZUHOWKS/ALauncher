@@ -3,52 +3,58 @@ package dev.asiluxserver.launcher.ui.panels.pages;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import dev.asiluxserver.launcher.Launcher;
-import dev.asiluxserver.launcher.Main;
 import dev.asiluxserver.launcher.ui.PanelManager;
+import dev.asiluxserver.launcher.ui.panel.IPanel;
 import dev.asiluxserver.launcher.ui.panel.Panel;
+import dev.asiluxserver.launcher.ui.panels.pages.content.Home;
+import dev.asiluxserver.launcher.ui.panels.pages.content.Settings;
 import fr.theshark34.openlauncherlib.util.Saver;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.animation.Transition;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
-import javafx.scene.transform.Scale;
 import javafx.util.Duration;
-
-import java.util.Objects;
 
 public class App extends Panel {
 
-    GridPane centerPane = new GridPane();
-    Saver saver = Launcher.getInstance().getSaver();
+    private static App instance;
 
-    Node activeLink = null;
+    ColumnConstraints menuPainContraint = new ColumnConstraints();
+    GridPane centerPane = new GridPane();
+    GridPane leftBarPanel = new GridPane();
+
+    Label homeLabel = new Label(" Accueille");
+    Label newsLabel = new Label(" Nouveauté");
+    Label updateLabel = new Label(" Mise à jour");
+    Label settingsLabel = new Label(" Paramétre");
+    Rectangle userLocationRectangle = new Rectangle(10, 30);
+
+    Saver saver = Launcher.getInstance().getSaver();
+    Node prevUserInfoPose = homeLabel;
 
     @Override
     public String getName() {
         return null;
+    }
+
+    public App() {
+        this.instance = this;
+    }
+
+    public static App getInstance() {
+        return instance;
     }
 
     @Override
@@ -56,23 +62,20 @@ public class App extends Panel {
         super.init(panelManager);
 
         /* BASE PANEL */
-        ColumnConstraints menuPainContraint = new ColumnConstraints();
         menuPainContraint.setHalignment(HPos.LEFT);
-        menuPainContraint.setMinWidth(100);
-        menuPainContraint.setMaxWidth(100);
+        menuPainContraint.setMinWidth(140);
+        menuPainContraint.setMaxWidth(140);
         this.layout.getColumnConstraints().addAll(menuPainContraint, new ColumnConstraints());
 
-        GridPane leftBarPanel = new GridPane();
         setGrow(leftBarPanel);
         setAlignment(leftBarPanel, HPos.LEFT, VPos.CENTER);
         leftBarPanel.setMinWidth(140);
         leftBarPanel.setMaxWidth(140);
         leftBarPanel.setStyle("-fx-background-color: rgba(24,24,24,1);");
-        leftBarNav(leftBarPanel);
 
         this.layout.add(leftBarPanel, 0, 0);
-        this.layout.add(this.centerPane, 1, 0);
-        setGrow(this.centerPane);
+        this.layout.add(centerPane, 1, 0);
+        setGrow(centerPane);
         setAlignment(this.centerPane, HPos.RIGHT, VPos.CENTER);
 
         /* ACCEUIL */
@@ -89,7 +92,6 @@ public class App extends Panel {
         mainMenuPanel.setMaxWidth(700);
         mainMenuPanel.setMinHeight(700);
         mainMenuPanel.setMinHeight(700);
-        addTomainMenuPanel(mainMenuPanel);
 
         /* NEWS ACCEUIL */
         GridPane actuMainMenuPanel = new GridPane();
@@ -99,17 +101,23 @@ public class App extends Panel {
         actuMainMenuPanel.setMaxWidth(300);
         actuMainMenuPanel.setMinHeight(320);
         actuMainMenuPanel.setMaxHeight(320);
-        addNewsToMainPanel(actuMainMenuPanel);
 
         centerPane.add(mainMenuPanel, 0, 0);
         centerPane.add(actuMainMenuPanel, 1, 0);
     }
+
+    @Override
+    public void onShow() {
+        super.onShow();
+        setPage(new Home(), homeLabel); //Ouvre l'onglet Home
+    }
+
     /*
-     * ELEMENTS DE LA PAGE D'ACCUEILLE
+     * BAR DE NAVIGATION + GRID PANE DE L'ONGLET
      */
 
     /* Barre de navigation */
-    private void leftBarNav(GridPane pane) {
+    private void leftBarNav(GridPane pane, Node button) {
 
         /* USER AVATAR BACKGROUND */
         Rectangle avatarRectangle = new Rectangle(0, 0, 64 ,64);
@@ -123,10 +131,9 @@ public class App extends Panel {
         avatarRectangle.setTranslateY(8d);
 
         /* USER AVATAR */
-        String avatarUrl = "https://minotar.net/avatar/MHF_Steve.png"; //+ Launcher.getInstance().getAuthProfile().getId() + ".png";
+        String avatarUrl = "https://minotar.net/avatar/MHF_Steve.png"; //ou + Launcher.getInstance().getAuthInfos().getUuid() + ".png";
         ImageView avatarView = new ImageView();
-        Image avatarImg = new Image(avatarUrl);
-        avatarView.setImage(avatarImg);
+        avatarView.setImage(new Image(avatarUrl));
         avatarView.setPreserveRatio(true);
         avatarView.setFitHeight(50d);
         avatarView.setStyle("");
@@ -148,14 +155,14 @@ public class App extends Panel {
                     setCycleDuration(Duration.millis(500));
                 }
 
-                double n = 0.0001;
+                double n = 0.05;
 
                 @Override
                 protected void interpolate(double frac) {
                     if (n <= 0.05) {
-                        n = n + 0.001;
+                        n = n + 0.005;
                     } else {
-                        n = n - 0.0005;
+                        n = n - 0.0025;
                     }
 
                     if (avatarView.getFitHeight() < 58d) {
@@ -188,14 +195,14 @@ public class App extends Panel {
                     setCycleDuration(Duration.millis(500));
                 }
 
-                double n = 0.0001;
+                double n = 0.05;
 
                 @Override
                 protected void interpolate(double frac) {
                     if (n <= 0.05) {
-                        n = n + 0.001;
+                        n = n + 0.005;
                     } else {
-                        n = n - 0.0005;
+                        n = n - 0.0025;
                     }
 
                     if (avatarView.getFitHeight() > 50d) {
@@ -218,284 +225,154 @@ public class App extends Panel {
             }
         });
 
-        /* RECTANGLE INFO USER LOCATION */
-        Rectangle userLocationRectangle = new Rectangle(10, 30);
+        /* TITLE HOME */
+        FontAwesomeIconView homeIcone = new FontAwesomeIconView(FontAwesomeIcon.HOME);
+        homeIcone.setFill(Color.rgb(255,255,255));
+        homeIcone.setScaleX(1.15);
+        homeIcone.setScaleY(1.15);
+        homeLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        homeLabel.setTextFill(Color.rgb(255,255,255));
+        homeLabel.setGraphic(homeIcone);
+        homeLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        setGrow(homeLabel);
+        setTop(homeLabel);
+        setLeft(homeLabel);
+        homeLabel.setTranslateX(17);
+        homeLabel.setTranslateY(100);
+        homeLabel.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
+        homeLabel.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
+        homeLabel.setOnMouseClicked(e-> setPage(new Home(), homeLabel));
+
+        /* TITLE NEWS */
+        FontAwesomeIconView newsIcone = new FontAwesomeIconView(FontAwesomeIcon.BELL);
+        newsIcone.setFill(Color.rgb(255,255,255));
+        newsIcone.setScaleX(0.95);
+        newsIcone.setScaleY(0.95);
+        newsLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        newsLabel.setTextFill(Color.rgb(255,255,255));
+        newsLabel.setGraphic(newsIcone);
+        newsLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        setGrow(newsLabel);
+        setTop(newsLabel);
+        setLeft(newsLabel);
+        newsLabel.setTranslateX(17);
+        newsLabel.setTranslateY(150);
+
+        /* TITLE UPDATE */
+        FontAwesomeIconView updateIcone = new FontAwesomeIconView(FontAwesomeIcon.CODE);
+        updateIcone.setFill(Color.rgb(255,255,255));
+        updateIcone.setScaleX(1.1);
+        updateIcone.setScaleY(1.1);
+
+        updateLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        updateLabel.setTextFill(Color.rgb(255,255,255));
+        updateLabel.setGraphic(updateIcone);
+        updateLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        setGrow(updateLabel);
+        setTop(updateLabel);
+        setLeft(updateLabel);
+        updateLabel.setTranslateX(17);
+        updateLabel.setTranslateY(200);
+
+        /* TITLE SETTINGS */
+        FontAwesomeIconView settingsIcone = new FontAwesomeIconView(FontAwesomeIcon.GEARS);
+        settingsIcone.setFill(Color.rgb(255,255,255));
+        settingsIcone.setScaleX(1.05);
+        settingsIcone.setScaleY(1.05);
+        settingsLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        settingsLabel.setTextFill(Color.rgb(255,255,255));
+        settingsLabel.setGraphic(settingsIcone);
+        settingsLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        setGrow(settingsLabel);
+        setTop(settingsLabel);
+        setLeft(settingsLabel);
+        settingsLabel.setTranslateX(17);
+        settingsLabel.setTranslateY(250);
+        settingsLabel.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
+        settingsLabel.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
+        settingsLabel.setOnMouseClicked(e-> setPage(new Settings(), settingsLabel));
+
+        /* LOG OUT BUTTON */
+        FontAwesomeIconView logOutIcone = new FontAwesomeIconView(FontAwesomeIcon.SIGN_OUT);
+        logOutIcone.setFill(Color.rgb(255,255,255));
+        logOutIcone.setScaleX(0.9);
+        logOutIcone.setScaleY(0.9);
+        Button logOutBtn = new Button("Se déconnnecter");
+        logOutBtn.setMinWidth(120);
+        logOutBtn.setMinHeight(35);
+        logOutBtn.setMaxWidth(120);
+        logOutBtn.setMaxHeight(35);
+        logOutBtn.setStyle("-fx-background-color: #EE494E; -fx-font-size: 14; -fx-text-fill: rgba(255,255,255,1);");
+        logOutBtn.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 14));
+        logOutBtn.setTextFill(Color.rgb(255,255,255));
+        logOutBtn.setGraphic(logOutIcone);
+        logOutBtn.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(27, 27, 27, 0.3), 7, 3, 0, 0));
+        logOutBtn.setDisable(false);
+        setGrow(logOutBtn);
+        setBottom(logOutBtn);
+        setCenterH(logOutBtn);
+        logOutBtn.setTranslateY(-15d);
+        //TODO: DÉCONNECTION
+
+        /* USER INFO LOCATION */
         userLocationRectangle.setFill(Color.valueOf("#91B848FF"));
         userLocationRectangle.setArcWidth(8);
         userLocationRectangle.setArcHeight(8);
         setGrow(userLocationRectangle);
         setLeft(userLocationRectangle);
         setTop(userLocationRectangle);
+        //TODO: Animation avec userLocationRectangle
         userLocationRectangle.setTranslateX(2);
-        userLocationRectangle.setTranslateY(100);
+        userLocationRectangle.setTranslateY(prevUserInfoPose.getTranslateY() - 5);
+        Transition userLocationAnimation = new Transition() {
+            {
+                setCycleDuration(Duration.millis(800));
+            }
+            @Override
+            protected void interpolate(double frac) {
+                if (userLocationRectangle.getTranslateY() > button.getTranslateY()) {
+                    if (userLocationRectangle.getTranslateY() >= button.getTranslateY() - 5 && userLocationRectangle.getTranslateY() < 600) {
+                        userLocationRectangle.setTranslateY(userLocationRectangle.getTranslateY() - 5);
+                    }
+                } else {
+                    if (userLocationRectangle.getTranslateY() + 5 != button.getTranslateY() && userLocationRectangle.getTranslateY() < 600) {
+                        userLocationRectangle.setTranslateY(userLocationRectangle.getTranslateY() + 5);
+                    }
+                }
+            }
+        };
+        userLocationAnimation.setOnFinished(e-> userLocationRectangle.setTranslateY(button.getTranslateY() - 5));
+        userLocationAnimation.play();
+        prevUserInfoPose = button;
 
-        /* TITLE HOME */
-        Label homeLabel = new Label("Accueille");
-        homeLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
-        homeLabel.setTextFill(Color.rgb(255,255,255));
-        homeLabel.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.HOME));
-        homeLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
-        setGrow(homeLabel);
-        setTop(homeLabel);
-        setLeft(homeLabel);
-        homeLabel.setTranslateX(15);
-        homeLabel.setTranslateY(105);
-
-        /* TITLE NEWS */
-        Label newsLabel = new Label("Nouveauté");
-        newsLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
-        newsLabel.setTextFill(Color.rgb(255,255,255));
-        newsLabel.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.BELL));
-        newsLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
-        setGrow(newsLabel);
-        setTop(newsLabel);
-        setLeft(newsLabel);
-        newsLabel.setTranslateX(15);
-        newsLabel.setTranslateY(150);
-
-        /* TITLE UPDATE */
-        Label updateLabel = new Label("Mise à jour");
-        updateLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
-        updateLabel.setTextFill(Color.rgb(255,255,255));
-        updateLabel.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.CODE));
-        updateLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
-        setGrow(updateLabel);
-        setTop(updateLabel);
-        setLeft(updateLabel);
-        updateLabel.setTranslateX(15);
-        updateLabel.setTranslateY(195);
 
         /* REGISTERY @PANE PANEL */
-        pane.getChildren().addAll(avatarRectangle, avatarView, userLocationRectangle, homeLabel, newsLabel, updateLabel);
+        pane.getChildren().addAll(avatarRectangle, avatarView,
+                homeLabel, newsLabel, updateLabel, settingsLabel, logOutBtn,
+                userLocationRectangle
+        );
 
-    }
-
-    private void addTomainMenuPanel(GridPane pane) {
-
-        Image asiluxLogo = new Image("images/asilux-logo-500px.png");
-        ImageView asiluxView = new ImageView(asiluxLogo);
-        asiluxView.setFitWidth(500);
-        asiluxView.setFitHeight(250);
-        asiluxView.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(210, 210, 210, 0.2), 4, 0, 0, 0));
-        setGrow(asiluxView);
-        GridPane.setValignment(asiluxView, VPos.CENTER);
-        GridPane.setHalignment(asiluxView, HPos.CENTER);
-        asiluxView.setTranslateY(-25);
-
-        //TODO: Barre de chargement
-
-        Button PlayButton = new Button("INSTALLER");
-        setGrow(PlayButton);
-        setAlignment(PlayButton, HPos.CENTER ,VPos.CENTER);
-        PlayButton.setMinWidth(220);
-        PlayButton.setMinHeight(60);
-        PlayButton.setMaxWidth(220);
-        PlayButton.setMaxHeight(60);
-        PlayButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 32;  -fx-text-fill: rgba(255,255,255,1);");
-        PlayButton.setFont(Font.font("Arial", FontWeight.MEDIUM, 32));
-        PlayButton.setTextAlignment(TextAlignment.CENTER);
-        PlayButton.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.2), 3, 0.3, 0, 0));
-        PlayButton.setTranslateY(150);
-        PlayButton.setOnMouseEntered(e-> {
-            this.layout.setCursor(Cursor.HAND);
-        });
-        PlayButton.setOnMouseClicked(e-> {
-
-
-            Timeline clickedAnimation = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(PlayButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#74923AFF"), CornerRadii.EMPTY, Insets.EMPTY)))),
-                    new KeyFrame(Duration.millis(700), new KeyValue(PlayButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#91B248FF"), CornerRadii.EMPTY, Insets.EMPTY)))));
-            clickedAnimation.setOnFinished(ev -> {
-                PlayButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 32; -fx-text-fill: rgba(255,255,255,1);");
-            });
-            clickedAnimation.play();
-        });
-        PlayButton.setOnMouseExited(e-> {
-            this.layout.setCursor(Cursor.DEFAULT);
-        });
-
-        pane.getChildren().addAll(asiluxView, PlayButton);
-    }
-
-    /* Tableau des News */
-    private void addNewsToMainPanel(GridPane pane) {
-
-        /* RECTANGLE BACKGROUND */
-        Rectangle windowsBackground = new Rectangle();
-        setGrow(windowsBackground);
-        setAlignment(windowsBackground, HPos.CENTER, VPos.BOTTOM);
-        windowsBackground.setWidth(220);
-        windowsBackground.setHeight(340);
-        windowsBackground.setFill(Color.rgb(27,27,27,0.95));
-        windowsBackground.setArcHeight(25);
-        windowsBackground.setArcWidth(25);
-        windowsBackground.setSmooth(true);
-
-        /* PANEL NEWS MAIN */
-        GridPane windowsPanel = new GridPane();
-        setGrow(windowsPanel);
-        setAlignment(windowsPanel, HPos.CENTER, VPos.TOP);
-        windowsPanel.setMinWidth(200);
-        windowsPanel.setMaxWidth(220);
-        windowsPanel.setMinHeight(275);
-        windowsPanel.setMaxHeight(275);
-        windowsPanel.setTranslateY(45);
-
-        /* PANEL NEWS LABEL */
-        GridPane newsPanel = new GridPane();
-        setGrow(newsPanel);
-        setAlignment(newsPanel, HPos.LEFT, VPos.TOP);
-        newsPanel.setMinWidth(200);
-        newsPanel.setMaxWidth(220);
-        newsPanel.setMinHeight(250);
-        newsPanel.setMaxHeight(1000);
-        newsPanel.setTranslateY(45);
-
-        /* SCROLL PANE STYLE */
-        ScrollPane scrollPane = new ScrollPane();
-        setGrow(scrollPane);
-        setAlignment(scrollPane, HPos.CENTER, VPos.CENTER);
-        scrollPane.getStylesheets().addAll(Main.class.getResource("/css/scroll-pane.css").toExternalForm());
-
-        /* SCROLL BAR */
-        VBox vBox = new VBox();
-        setGrow(vBox);
-        vBox.setMinWidth(200);
-        vBox.setMaxWidth(300);
-        vBox.setMinHeight(250);
-        vBox.setMaxHeight(newsPanel.getMaxHeight());
-        vBox.setAlignment(Pos.TOP_CENTER);
-        vBox.setTranslateY(10);
-
-        /* TITLE */
-        Label NewsTitle = new Label("NEWS!");
-        setGrow(NewsTitle);
-        setAlignment(NewsTitle, HPos.CENTER ,VPos.TOP);
-        NewsTitle.setTextFill(Color.rgb(255,255,255));
-        NewsTitle.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
-        NewsTitle.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 6, 0, 0, 0));
-        NewsTitle.setTranslateY(-35);
-
-        /* SEPARATOR */
-        Separator separator1 = new Separator();
-        setGrow(separator1);
-        setAlignment(separator1, HPos.CENTER ,VPos.TOP);
-        separator1.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 12, 0, 0, 0));
-        separator1.setOpacity(10);
-        separator1.setMaxHeight(38);
-        separator1.setMinHeight(38);
-        separator1.setMaxWidth(195);
-        separator1.setMinWidth(195);
-        separator1.setTranslateY(-25);
-
-        Separator separator2 = new Separator();
-        setGrow(separator2);
-        setAlignment(separator2, HPos.CENTER ,VPos.BOTTOM);
-        separator2.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 12, 0, 0, 0));
-        separator2.setOpacity(10);
-        separator2.setMaxHeight(38);
-        separator2.setMinHeight(38);
-        separator2.setMaxWidth(195);
-        separator2.setMinWidth(195);
-        separator2.setTranslateY(25);
-
-        /* LABEL NEWS */
-        //TODO: METHODE STRING BUILDER | Créer une méthode afin de lire un fichier (le fichier des news), qui va créer un string builder avec une longueur de chaine de caractère maximale de 18.
-        Label newsLabel = new Label("[ANNONCE] BETA OUVERTE\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n" +
-                "..................\n");
-        setGrow(newsLabel);
-        setAlignment(newsLabel, HPos.CENTER ,VPos.TOP);
-        newsLabel.setStyle("-fx-font-size: 14;");
-        newsLabel.setTextFill(Color.rgb(255,255,255));
-        newsLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 6, 0, 0, 0));
-        newsLabel.setTranslateX(2);
-        newsLabel.setTranslateY(-45);
-
-        /* REGISTRY MAIN PANEL */
-        windowsPanel.getChildren().addAll(NewsTitle, separator1, separator2);
-        newsPanel.getChildren().add(newsLabel);
-
-        windowsPanel.getChildren().add(scrollPane);
-        scrollPane.setContent(vBox);
-        vBox.getChildren().add(0, newsPanel);
-
-        /* REGISTRY @PANE PANEL */
-        pane.getChildren().addAll(windowsBackground, windowsPanel);
-
-
-    }
-
-    private void labelmainMenuPanel(GridPane pane) {
-
-        Label playMainMenuPanel = new Label("INSTALLER");
-        setGrow(playMainMenuPanel);
-        setAlignment(playMainMenuPanel, HPos.LEFT ,VPos.TOP);
-        playMainMenuPanel.setStyle("-fx-font-size: 16;");
-        playMainMenuPanel.setTextFill(Color.rgb(255,255,255));
-        playMainMenuPanel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 6, 0, 0, 0));;
-        playMainMenuPanel.setTranslateY(-80);
-        playMainMenuPanel.setOnMouseEntered(e-> {
-
-            this.layout.setCursor(Cursor.HAND);
-
-        });
-        playMainMenuPanel.setOnMouseExited(e-> {
-
-            this.layout.setCursor(Cursor.DEFAULT);
-
-        });
-        playMainMenuPanel.setOnMouseClicked(e-> {
-            //TODO: METHODES ACTUALISATION DU MENU
-        });
-
-        Label actuMainMenuPanel = new Label("NEWS");
-        setGrow(actuMainMenuPanel);
-        setAlignment(actuMainMenuPanel, HPos.LEFT ,VPos.TOP);
-        actuMainMenuPanel.setStyle("-fx-font-size: 16;");
-        actuMainMenuPanel.setTextFill(Color.rgb(225,225,225));
-        actuMainMenuPanel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(225, 225, 225, 0.1), 6, 0, 0, 0));;
-        actuMainMenuPanel.setTranslateY(-80);
-        actuMainMenuPanel.setTranslateX(65);
-        actuMainMenuPanel.setOnMouseEntered(e -> {
-
-            this.layout.setCursor(Cursor.HAND);
-
-        });
-        actuMainMenuPanel.setOnMouseExited(e-> {
-
-            this.layout.setCursor(Cursor.DEFAULT);
-
-        });
-        actuMainMenuPanel.setOnMouseClicked(e-> {
-            //TODO: METHODES ACTUALISATION DU MENU
-        });
-
-        pane.getChildren().addAll(playMainMenuPanel, actuMainMenuPanel);
     }
 
     /* METHODES NAVIGATION */
-    //TODO: Navigation methode.
+    public void setPage(IPanel panel, Node navButton) {
+
+        this.centerPane.getChildren().clear();
+        this.leftBarPanel.getChildren().clear();
+
+        if (panel != null) {
+            this.centerPane.getChildren().add(panel.getLayout());
+            leftBarNav(leftBarPanel, navButton);
+            if (panel.getStyleSheetPath() != null) {
+                this.panelManager.getStage().getScene().getStylesheets().clear();
+                this.panelManager.getStage().getScene().getStylesheets().addAll(
+                        this.getStyleSheetPath(),
+                        panel.getStyleSheetPath()
+                );
+            }
+            panel.init(this.panelManager);
+            panel.onShow();
+        }
+    }
 
 }

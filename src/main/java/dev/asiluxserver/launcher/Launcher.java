@@ -9,8 +9,12 @@ import fr.flowarg.flowlogger.Logger;
 import fr.litarvan.openauth.AuthPoints;
 import fr.litarvan.openauth.AuthenticationException;
 import fr.litarvan.openauth.Authenticator;
+import fr.litarvan.openauth.microsoft.MicrosoftAuthResult;
+import fr.litarvan.openauth.microsoft.MicrosoftAuthenticationException;
+import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
 import fr.litarvan.openauth.model.AuthProfile;
 import fr.litarvan.openauth.model.response.RefreshResponse;
+import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -23,7 +27,7 @@ public class Launcher extends Application {
     private final ILogger logger;
     private final File launcherDir = Helpers.generateGamePath(".asiluxdev");
     private final Saver saver;
-    private AuthProfile authProfile = null;
+    private AuthInfos authInfos = null;
 
     public Launcher() {
         instance = this;
@@ -45,12 +49,13 @@ public class Launcher extends Application {
         this.panelManager.init();
 
         if (this.isUserAlreadyLoggedIn()) {
-            logger.info("Hello " + authProfile.getName());
+            logger.info("Hello " + authInfos.getUsername());
+            this.panelManager.showPanel(new App());
         } else {
             this.panelManager.showPanel(new Login());
         }
 
-        //TODO: TO DELETE WHEN App.class IS FINISHED
+        //TODO: À SUPPRIMER
         this.panelManager.showPanel(new App());
     }
 
@@ -59,11 +64,16 @@ public class Launcher extends Application {
             Authenticator authenticator = new Authenticator(Authenticator.MOJANG_AUTH_URL, AuthPoints.NORMAL_AUTH_POINTS);
 
             try {
-                RefreshResponse response  = authenticator.refresh(saver.get("accessToken"), saver.get("clientToken"));
+                RefreshResponse response = authenticator.refresh(saver.get("accessToken"), saver.get("clientToken"));
                 saver.set("accessToken", response.getAccessToken());
                 saver.set("clientToken", response.getClientToken());
                 saver.save();
-                this.authProfile = response.getSelectedProfile();
+                this.setAuthInfos(new AuthInfos(
+                        response.getSelectedProfile().getName(),
+                        response.getAccessToken(),
+                        response.getClientToken(),
+                        response.getSelectedProfile().getId()
+                ));
 
                 return true;
             } catch (AuthenticationException ignored) {
@@ -71,19 +81,37 @@ public class Launcher extends Application {
                 saver.remove("clientToken");
                 saver.save();
             }
+        } else if (saver.get("msAccessToken") != null && saver.get("msRefreshToken") != null) {
+            try {
+                MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
+                MicrosoftAuthResult response = authenticator.loginWithRefreshToken(saver.get("msRefreshToken"));
+
+                saver.set("msAccessToken", response.getAccessToken());
+                saver.set("msRefreshToken", response.getRefreshToken());
+                saver.save();
+                this.setAuthInfos(new AuthInfos(
+                        response.getProfile().getName(),
+                        response.getAccessToken(),
+                        response.getProfile().getId()
+                ));
+                return true;
+            } catch (MicrosoftAuthenticationException e) {
+                saver.remove("msAccessToken");
+                saver.remove("msRefreshToken");
+                saver.save();
+            }
         }
 
         return false;
     }
 
-    public void setAuthProfile(AuthProfile authProfile) {
-        this.authProfile = authProfile;
+    public void setAuthInfos(AuthInfos authInfos) {
+        this.authInfos = authInfos;
     }
 
-    public AuthProfile getAuthProfile() {
-        return authProfile;
+    public AuthInfos getAuthInfos() {
+        return authInfos;
     }
-
 
     public ILogger getLogger() {
         return logger;
