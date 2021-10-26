@@ -2,13 +2,18 @@ package dev.asiluxserver.launcher.ui.panels.pages;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+
 import dev.asiluxserver.launcher.Launcher;
 import dev.asiluxserver.launcher.ui.PanelManager;
+import dev.asiluxserver.launcher.ui.assets.Colors;
+import dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow;
 import dev.asiluxserver.launcher.ui.panel.IPanel;
 import dev.asiluxserver.launcher.ui.panel.Panel;
 import dev.asiluxserver.launcher.ui.panels.pages.content.Home;
 import dev.asiluxserver.launcher.ui.panels.pages.content.Settings;
+
 import fr.theshark34.openlauncherlib.util.Saver;
+
 import javafx.animation.Transition;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -16,8 +21,6 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.BlurType;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -31,14 +34,14 @@ public class App extends Panel {
 
     private static App instance;
 
-    ColumnConstraints menuPainContraint = new ColumnConstraints();
+    ColumnConstraints menuPainConstraint = new ColumnConstraints();
     GridPane centerPane = new GridPane();
     GridPane leftBarPanel = new GridPane();
 
-    Label homeLabel = new Label(" Accueille");
-    Label newsLabel = new Label(" Nouveauté");
-    Label updateLabel = new Label(" Mise à jour");
-    Label settingsLabel = new Label(" Paramétre");
+    Label homeLabel = new Label(" Accueil");
+    Label newsLabel = new Label(" Nouveautés");
+    Label updateLabel = new Label(" Mises à jour");
+    Label settingsLabel = new Label(" Paramètres");
     Rectangle userLocationRectangle = new Rectangle(10, 30);
 
     Saver saver = Launcher.getInstance().getSaver();
@@ -50,7 +53,7 @@ public class App extends Panel {
     }
 
     public App() {
-        this.instance = this;
+        App.instance = this;
     }
 
     public static App getInstance() {
@@ -62,10 +65,10 @@ public class App extends Panel {
         super.init(panelManager);
 
         /* BASE PANEL */
-        menuPainContraint.setHalignment(HPos.LEFT);
-        menuPainContraint.setMinWidth(140);
-        menuPainContraint.setMaxWidth(140);
-        this.layout.getColumnConstraints().addAll(menuPainContraint, new ColumnConstraints());
+        menuPainConstraint.setHalignment(HPos.LEFT);
+        menuPainConstraint.setMinWidth(140);
+        menuPainConstraint.setMaxWidth(140);
+        this.layout.getColumnConstraints().addAll(menuPainConstraint, new ColumnConstraints());
 
         setGrow(leftBarPanel);
         setAlignment(leftBarPanel, HPos.LEFT, VPos.CENTER);
@@ -78,12 +81,12 @@ public class App extends Panel {
         setGrow(centerPane);
         setAlignment(this.centerPane, HPos.RIGHT, VPos.CENTER);
 
-        /* ACCEUIL */
-        ColumnConstraints mainContraints = new ColumnConstraints();
-        mainContraints.setHalignment(HPos.RIGHT);
-        mainContraints.setMinWidth(800);
-        mainContraints.setMaxWidth(1800);
-        centerPane.getColumnConstraints().addAll(mainContraints, new ColumnConstraints());
+        /* ACCUEIL */
+        ColumnConstraints mainConstraints = new ColumnConstraints();
+        mainConstraints.setHalignment(HPos.RIGHT);
+        mainConstraints.setMinWidth(800);
+        mainConstraints.setMaxWidth(1800);
+        centerPane.getColumnConstraints().addAll(mainConstraints, new ColumnConstraints());
 
         GridPane mainMenuPanel = new GridPane();
         setGrow(mainMenuPanel);
@@ -93,17 +96,17 @@ public class App extends Panel {
         mainMenuPanel.setMinHeight(700);
         mainMenuPanel.setMinHeight(700);
 
-        /* NEWS ACCEUIL */
-        GridPane actuMainMenuPanel = new GridPane();
-        setGrow(actuMainMenuPanel);
-        setAlignment(actuMainMenuPanel, HPos.RIGHT, VPos.CENTER);
-        actuMainMenuPanel.setMinWidth(200);
-        actuMainMenuPanel.setMaxWidth(300);
-        actuMainMenuPanel.setMinHeight(320);
-        actuMainMenuPanel.setMaxHeight(320);
+        /* NEWS ACCUEIL */
+        GridPane newsMainMenuPanel = new GridPane();
+        setGrow(newsMainMenuPanel);
+        setAlignment(newsMainMenuPanel, HPos.RIGHT, VPos.CENTER);
+        newsMainMenuPanel.setMinWidth(200);
+        newsMainMenuPanel.setMaxWidth(300);
+        newsMainMenuPanel.setMinHeight(320);
+        newsMainMenuPanel.setMaxHeight(320);
 
         centerPane.add(mainMenuPanel, 0, 0);
-        centerPane.add(actuMainMenuPanel, 1, 0);
+        centerPane.add(newsMainMenuPanel, 1, 0);
     }
 
     @Override
@@ -122,7 +125,7 @@ public class App extends Panel {
         /* USER AVATAR BACKGROUND */
         Rectangle avatarRectangle = new Rectangle(0, 0, 64 ,64);
         avatarRectangle.setFill(Color.valueOf("#91B848FF"));
-        avatarRectangle.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.2), 3, 0.3, 0, 0));
+        avatarRectangle.setEffect(new BlurDropShadow(Colors.DARK_GREY_2, 3, 0.3));
         avatarRectangle.setArcWidth(12);
         avatarRectangle.setArcHeight(12);
         setTop(avatarRectangle);
@@ -131,13 +134,14 @@ public class App extends Panel {
         avatarRectangle.setTranslateY(8d);
 
         /* USER AVATAR */
-        String avatarUrl = "https://minotar.net/avatar/MHF_Steve.png"; //ou + Launcher.getInstance().getAuthInfos().getUuid() + ".png";
+        String avatarUrl = "https://minotar.net/avatar/MHF_Steve.png";
+        //ou + Launcher.getInstance().getAuthInfo().getUuid() + ".png";
         ImageView avatarView = new ImageView();
         avatarView.setImage(new Image(avatarUrl));
         avatarView.setPreserveRatio(true);
         avatarView.setFitHeight(50d);
         avatarView.setStyle("");
-        avatarView.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.3), 7, 0.5, 0, 0));
+        avatarView.setEffect(new BlurDropShadow(Colors.DARK_GREY_1, 7, 0.5));
         setTop(avatarView);
         setCanTakeAllSize(avatarView);
         setCenterH(avatarView);
@@ -226,14 +230,14 @@ public class App extends Panel {
         });
 
         /* TITLE HOME */
-        FontAwesomeIconView homeIcone = new FontAwesomeIconView(FontAwesomeIcon.HOME);
-        homeIcone.setFill(Color.rgb(255,255,255));
-        homeIcone.setScaleX(1.15);
-        homeIcone.setScaleY(1.15);
+        FontAwesomeIconView homeIcon = new FontAwesomeIconView(FontAwesomeIcon.HOME);
+        homeIcon.setFill(Color.rgb(255,255,255));
+        homeIcon.setScaleX(1.15);
+        homeIcon.setScaleY(1.15);
         homeLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
         homeLabel.setTextFill(Color.rgb(255,255,255));
-        homeLabel.setGraphic(homeIcone);
-        homeLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        homeLabel.setGraphic(homeIcon);
+        homeLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 4, 0));
         setGrow(homeLabel);
         setTop(homeLabel);
         setLeft(homeLabel);
@@ -244,14 +248,14 @@ public class App extends Panel {
         homeLabel.setOnMouseClicked(e-> setPage(new Home(), homeLabel));
 
         /* TITLE NEWS */
-        FontAwesomeIconView newsIcone = new FontAwesomeIconView(FontAwesomeIcon.BELL);
-        newsIcone.setFill(Color.rgb(255,255,255));
-        newsIcone.setScaleX(0.95);
-        newsIcone.setScaleY(0.95);
+        FontAwesomeIconView newsIcon = new FontAwesomeIconView(FontAwesomeIcon.BELL);
+        newsIcon.setFill(Color.rgb(255,255,255));
+        newsIcon.setScaleX(0.95);
+        newsIcon.setScaleY(0.95);
         newsLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
         newsLabel.setTextFill(Color.rgb(255,255,255));
-        newsLabel.setGraphic(newsIcone);
-        newsLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        newsLabel.setGraphic(newsIcon);
+        newsLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 4, 0));
         setGrow(newsLabel);
         setTop(newsLabel);
         setLeft(newsLabel);
@@ -259,15 +263,15 @@ public class App extends Panel {
         newsLabel.setTranslateY(150);
 
         /* TITLE UPDATE */
-        FontAwesomeIconView updateIcone = new FontAwesomeIconView(FontAwesomeIcon.CODE);
-        updateIcone.setFill(Color.rgb(255,255,255));
-        updateIcone.setScaleX(1.1);
-        updateIcone.setScaleY(1.1);
+        FontAwesomeIconView updateIcon = new FontAwesomeIconView(FontAwesomeIcon.CODE);
+        updateIcon.setFill(Color.rgb(255,255,255));
+        updateIcon.setScaleX(1.1);
+        updateIcon.setScaleY(1.1);
 
         updateLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
         updateLabel.setTextFill(Color.rgb(255,255,255));
-        updateLabel.setGraphic(updateIcone);
-        updateLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        updateLabel.setGraphic(updateIcon);
+        updateLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 4, 0));
         setGrow(updateLabel);
         setTop(updateLabel);
         setLeft(updateLabel);
@@ -275,14 +279,14 @@ public class App extends Panel {
         updateLabel.setTranslateY(200);
 
         /* TITLE SETTINGS */
-        FontAwesomeIconView settingsIcone = new FontAwesomeIconView(FontAwesomeIcon.GEARS);
-        settingsIcone.setFill(Color.rgb(255,255,255));
-        settingsIcone.setScaleX(1.05);
-        settingsIcone.setScaleY(1.05);
+        FontAwesomeIconView settingsIcon = new FontAwesomeIconView(FontAwesomeIcon.GEARS);
+        settingsIcon.setFill(Color.rgb(255,255,255));
+        settingsIcon.setScaleX(1.05);
+        settingsIcon.setScaleY(1.05);
         settingsLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
         settingsLabel.setTextFill(Color.rgb(255,255,255));
-        settingsLabel.setGraphic(settingsIcone);
-        settingsLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        settingsLabel.setGraphic(settingsIcon);
+        settingsLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 4, 0));
         setGrow(settingsLabel);
         setTop(settingsLabel);
         setLeft(settingsLabel);
@@ -293,20 +297,24 @@ public class App extends Panel {
         settingsLabel.setOnMouseClicked(e-> setPage(new Settings(), settingsLabel));
 
         /* LOG OUT BUTTON */
-        FontAwesomeIconView logOutIcone = new FontAwesomeIconView(FontAwesomeIcon.SIGN_OUT);
-        logOutIcone.setFill(Color.rgb(255,255,255));
-        logOutIcone.setScaleX(0.9);
-        logOutIcone.setScaleY(0.9);
+        FontAwesomeIconView logOutIcon = new FontAwesomeIconView(FontAwesomeIcon.SIGN_OUT);
+        logOutIcon.setFill(Color.rgb(255,255,255));
+        logOutIcon.setScaleX(0.9);
+        logOutIcon.setScaleY(0.9);
         Button logOutBtn = new Button("Se déconnnecter");
         logOutBtn.setMinWidth(120);
         logOutBtn.setMinHeight(35);
         logOutBtn.setMaxWidth(120);
         logOutBtn.setMaxHeight(35);
-        logOutBtn.setStyle("-fx-background-color: #EE494E; -fx-font-size: 14; -fx-text-fill: rgba(255,255,255,1);");
+        logOutBtn.setStyle(
+                "-fx-background-color: #EE494E;" +
+                        "-fx-font-size: 14;" +
+                        "-fx-text-fill: rgba(255,255,255,1);"
+        );
         logOutBtn.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 14));
         logOutBtn.setTextFill(Color.rgb(255,255,255));
-        logOutBtn.setGraphic(logOutIcone);
-        logOutBtn.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(27, 27, 27, 0.3), 7, 3, 0, 0));
+        logOutBtn.setGraphic(logOutIcon);
+        logOutBtn.setEffect(new BlurDropShadow(Colors.BLACK_1, 7, 3));
         logOutBtn.setDisable(false);
         setGrow(logOutBtn);
         setBottom(logOutBtn);
@@ -331,11 +339,13 @@ public class App extends Panel {
             @Override
             protected void interpolate(double frac) {
                 if (userLocationRectangle.getTranslateY() > button.getTranslateY()) {
-                    if (userLocationRectangle.getTranslateY() >= button.getTranslateY() - 5 && userLocationRectangle.getTranslateY() < 600) {
+                    if (userLocationRectangle.getTranslateY() >= button.getTranslateY() - 5
+                            && userLocationRectangle.getTranslateY() < 600) {
                         userLocationRectangle.setTranslateY(userLocationRectangle.getTranslateY() - 5);
                     }
                 } else {
-                    if (userLocationRectangle.getTranslateY() + 5 != button.getTranslateY() && userLocationRectangle.getTranslateY() < 600) {
+                    if (userLocationRectangle.getTranslateY() + 5 != button.getTranslateY()
+                            && userLocationRectangle.getTranslateY() < 600) {
                         userLocationRectangle.setTranslateY(userLocationRectangle.getTranslateY() + 5);
                     }
                 }
@@ -346,7 +356,7 @@ public class App extends Panel {
         prevUserInfoPose = button;
 
 
-        /* REGISTERY @PANE PANEL */
+        /* REGISTRY @PANE PANEL */
         pane.getChildren().addAll(avatarRectangle, avatarView,
                 homeLabel, newsLabel, updateLabel, settingsLabel, logOutBtn,
                 userLocationRectangle

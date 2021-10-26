@@ -1,17 +1,21 @@
 package dev.asiluxserver.launcher.ui.panels.pages;
 
 import dev.asiluxserver.launcher.Launcher;
-import dev.asiluxserver.launcher.Main;
 import dev.asiluxserver.launcher.ui.PanelManager;
+import dev.asiluxserver.launcher.ui.assets.Colors;
+import dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow;
 import dev.asiluxserver.launcher.ui.panel.Panel;
+
 import fr.litarvan.openauth.AuthPoints;
 import fr.litarvan.openauth.AuthenticationException;
 import fr.litarvan.openauth.Authenticator;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
 import fr.litarvan.openauth.model.AuthAgent;
 import fr.litarvan.openauth.model.response.AuthResponse;
+
 import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
 import fr.theshark34.openlauncherlib.util.Saver;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -37,15 +41,13 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Objects;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Login extends Panel {
 
     GridPane loginPanel = new GridPane();
     GridPane mainPanel = new GridPane();
-    GridPane middlePannel = new GridPane();
+    GridPane middlePanel = new GridPane();
     GridPane topPanel = new GridPane();
     GridPane topPanelContour = new GridPane();
     GridPane bottomPanel = new GridPane();
@@ -77,7 +79,10 @@ public class Login extends Panel {
         GridPane.setVgrow(loginPanel, Priority.ALWAYS);
         GridPane.setHalignment(loginPanel, HPos.CENTER);
         GridPane.setValignment(loginPanel, VPos.CENTER);
-        loginPanel.setStyle("-fx-background-color: rgba(0,0,0,0); -fx-opacity: 100%;");
+        loginPanel.setStyle(
+                "-fx-background-color: rgba(0,0,0,0);" +
+                        "-fx-opacity: 100%;"
+        );
 
         RowConstraints bottomConstraints = new RowConstraints();
         bottomConstraints.setValignment(VPos.BOTTOM);
@@ -100,7 +105,7 @@ public class Login extends Panel {
         middleConstraints.setValignment(VPos.TOP);
         mainPanel.getRowConstraints().addAll(new RowConstraints(), topConstraints);
         mainPanel.add(topPanelContour, 0, 0);
-        mainPanel.add(middlePannel, 0,1);
+        mainPanel.add(middlePanel, 0,1);
 
         topPanelContour.getRowConstraints().addAll(new RowConstraints(), middleConstraints);
         topPanelContour.add(topPanel, 0, 0);
@@ -125,13 +130,13 @@ public class Login extends Panel {
         topPanelContour.setTranslateY(23d);
 
         /* Middle Panel */
-        middlePannel.setMaxHeight(350);
-        middlePannel.setMinHeight(350);
-        middlePannel.setMaxWidth(280);
-        middlePannel.setMinWidth(280);
-        GridPane.setHgrow(middlePannel, Priority.ALWAYS);
-        GridPane.setVgrow(middlePannel, Priority.ALWAYS);
-        setAlignment(middlePannel, HPos.CENTER, VPos.TOP);
+        middlePanel.setMaxHeight(350);
+        middlePanel.setMinHeight(350);
+        middlePanel.setMaxWidth(280);
+        middlePanel.setMinWidth(280);
+        GridPane.setHgrow(middlePanel, Priority.ALWAYS);
+        GridPane.setVgrow(middlePanel, Priority.ALWAYS);
+        setAlignment(middlePanel, HPos.CENTER, VPos.TOP);
 
         /*
          * STYLE DES PANEL
@@ -149,12 +154,13 @@ public class Login extends Panel {
         /* Style Contour du Top Panel*/
         topPanelContour.setStyle("-fx-background-color: rgba(143, 168, 95, 0.5);");
         topPanelContour.setEffect(new GaussianBlur(5));
-        topPanelContour.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.17), 31, 0, 0, 0));
+
+        topPanelContour.setEffect(new BlurDropShadow(Colors.DARK_GREY_3, 31, 0));
 
         /* Style Middle Panel */
-        middlePannel.setEffect(new Bloom(18));
-        middlePannel.setEffect(new BoxBlur(10,10,5));
-        middlePannel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.15), 17, 0, 0, 0));
+        middlePanel.setEffect(new Bloom(18));
+        middlePanel.setEffect(new BoxBlur(10,10,5));
+        middlePanel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 17, 0));
 
 
         /*
@@ -166,7 +172,10 @@ public class Login extends Panel {
         setGrow(noAccount);
         setAlignment(noAccount, HPos.CENTER, VPos.TOP);
         noAccount.setTranslateY(6);
-        noAccount.setStyle("-fx-text-fill: #ffffff; -fx-font-size: 14px;");
+        noAccount.setStyle(
+                "-fx-text-fill: #ffffff;" +
+                        "-fx-font-size: 14px;"
+        );
 
         /* Text pour S'inscrire avec action */
         Label registerHere = new Label("S'inscrire");
@@ -174,18 +183,18 @@ public class Login extends Panel {
         setAlignment(registerHere, HPos.CENTER, VPos.BOTTOM);
         registerHere.setStyle("-fx-font-size: 14px;");
         registerHere.setTranslateY(-6);
-        registerHere.setTextFill(Color.rgb(143, 168, 95));
+        registerHere.setTextFill(Colors.LIGHT_GREEN_2.getColor());
         registerHere.setUnderline(true);
         registerHere.setOnMouseEntered(e-> {
 
             this.layout.setCursor(Cursor.HAND);
-            registerHere.setTextFill(Color.rgb(245, 255, 245));
+            registerHere.setTextFill(Colors.LIGHT_GREEN_1.getColor());
 
         });
         registerHere.setOnMouseExited(e-> {
 
             this.layout.setCursor(Cursor.DEFAULT);
-            registerHere.setTextFill(Color.rgb(143, 168, 95));
+            registerHere.setTextFill(Colors.LIGHT_GREEN_2.getColor());
 
         });
         registerHere.setOnMouseClicked(e-> {
@@ -207,8 +216,8 @@ public class Login extends Panel {
         /* Titre Connectez vous */
         Label connectionLabel = new Label("CONNECTEZ-VOUS");
         connectionLabel.setStyle("-fx-font-size: 26;");
-        connectionLabel.setTextFill(Color.rgb(255,255,255));
-        connectionLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 6, 0, 0, 0));
+        connectionLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
+        connectionLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_1, 6, 0));
         setGrow(connectionLabel);
         setAlignment(connectionLabel, HPos.CENTER ,VPos.CENTER);
 
@@ -221,8 +230,8 @@ public class Login extends Panel {
         /* Text Nom d'utilisateur */
         Label usernameLabel = new Label("Adresse mail");
         usernameLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
-        usernameLabel.setTextFill(Color.rgb(255,255,255));
-        usernameLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        usernameLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
+        usernameLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 4, 0));
         setGrow(usernameLabel);
         setAlignment(usernameLabel, HPos.LEFT ,VPos.TOP);
         usernameLabel.setTranslateX(7d);
@@ -231,8 +240,8 @@ public class Login extends Panel {
         /* Text Nom d'utilisateur Erreur */
         Label errorUsernameLabel = new Label("");
         errorUsernameLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
-        errorUsernameLabel.setTextFill(Color.rgb(225,53,53));
-        errorUsernameLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        errorUsernameLabel.setTextFill(Colors.RED_1.getColor());
+        errorUsernameLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 4, 0));
         setGrow(errorUsernameLabel);
         setAlignment(errorUsernameLabel, HPos.LEFT ,VPos.TOP);
         errorUsernameLabel.setTranslateX(7d);
@@ -242,7 +251,11 @@ public class Login extends Panel {
         /* Text Field Nom d'utilisateur + Separator */
         setGrow(usernameField);
         setAlignment(usernameField, HPos.LEFT ,VPos.TOP);
-        usernameField.setStyle("-fx-background-color: rgba(37, 37, 37, 0.8); -fx-font-size: 16; -fx-text-fill: rgba(255,255,255,1);");
+        usernameField.setStyle(
+                "-fx-background-color: rgba(37, 37, 37, 0.8);" +
+                        "-fx-font-size: 16;" +
+                        "-fx-text-fill: rgba(255,255,255,1);"
+        );
         usernameField.setMaxHeight(38);
         usernameField.setMinHeight(38);
         usernameField.setMaxWidth(268);
@@ -252,14 +265,12 @@ public class Login extends Panel {
         usernameField.focusedProperty().addListener((_a, oldValue, newValue) -> {
             if (!newValue) this.updateLoginBtnState(usernameField, null);
         });
-        usernameField.setOnKeyPressed(e-> {
-            updateLoginBtnState(usernameField, null);
-        });
+        usernameField.setOnKeyPressed(e-> updateLoginBtnState(usernameField, null));
 
         Separator usernameSeparator = new Separator();
         setGrow(usernameSeparator);
         setAlignment(usernameSeparator, HPos.LEFT ,VPos.TOP);
-        usernameSeparator.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
+        usernameSeparator.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_1, 4, 0));
         usernameSeparator.setMaxHeight(38);
         usernameSeparator.setMinHeight(38);
         usernameSeparator.setMaxWidth(268);
@@ -272,8 +283,8 @@ public class Login extends Panel {
         setGrow(passwordLabel);
         setAlignment(passwordLabel, HPos.LEFT ,VPos.TOP);
         passwordLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
-        passwordLabel.setTextFill(Color.rgb(255,255,255));
-        passwordLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        passwordLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
+        passwordLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 4, 0));
         passwordLabel.setTranslateX(7d);
         passwordLabel.setTranslateY(124d);
 
@@ -282,15 +293,19 @@ public class Login extends Panel {
         setGrow(errorPasswordLabel);
         setAlignment(errorPasswordLabel, HPos.LEFT ,VPos.TOP);
         errorPasswordLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
-        errorPasswordLabel.setTextFill(Color.rgb(225,53,53));
-        errorPasswordLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+        errorPasswordLabel.setTextFill(Colors.RED_1.getColor());
+        errorPasswordLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 4, 0));
         errorPasswordLabel.setTranslateX(7d);
         errorPasswordLabel.setTranslateY(211d);
 
         /* Text Field Nom d'utilisateur + Separator */
         setGrow(passwordField);
         setAlignment(passwordField, HPos.LEFT ,VPos.TOP);
-        passwordField.setStyle("-fx-background-color: rgba(37, 37, 37, 0.8); -fx-font-size: 16; -fx-text-fill: rgba(255,255,255,1);");
+        passwordField.setStyle(
+                "-fx-background-color: rgba(37, 37, 37, 0.8);" +
+                        "-fx-font-size: 16;" +
+                        "-fx-text-fill: rgba(255,255,255,1);"
+        );
         passwordField.setMaxHeight(38);
         passwordField.setMinHeight(38);
         passwordField.setMaxWidth(268);
@@ -300,14 +315,12 @@ public class Login extends Panel {
         passwordField.focusedProperty().addListener((_a, oldValue, newValue) -> {
             if (!newValue) this.updateLoginBtnState(passwordField, null);
         });
-        passwordField.setOnKeyPressed(e-> {
-            updateLoginBtnState(passwordField, null);
-        });
+        passwordField.setOnKeyPressed(e-> updateLoginBtnState(passwordField, null));
 
         Separator passwordSeparator = new Separator();
         setGrow(passwordSeparator);
         setAlignment(passwordSeparator, HPos.LEFT ,VPos.TOP);
-        passwordSeparator.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
+        passwordSeparator.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_1, 4, 0));
         passwordSeparator.setMaxHeight(38);
         passwordSeparator.setMinHeight(38);
         passwordSeparator.setMaxWidth(268);
@@ -316,27 +329,27 @@ public class Login extends Panel {
         passwordSeparator.setTranslateY(171d);
 
         /* Text Oublie de Mot de passe avec action */
-        Label forgotenpasswordLabel = new Label("Mot de passe oublié ?");
-        setGrow(forgotenpasswordLabel);
-        setAlignment(forgotenpasswordLabel, HPos.LEFT ,VPos.TOP);
-        forgotenpasswordLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 14));
-        forgotenpasswordLabel.setTextFill(Color.rgb(225,225,225));
-        forgotenpasswordLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(210, 210, 210, 0.2), 4, 0, 0, 0));
-        forgotenpasswordLabel.setTranslateX(6d);
-        forgotenpasswordLabel.setTranslateY(196d);
-        forgotenpasswordLabel.setOnMouseEntered(e-> {
+        Label forgottenPasswordLabel = new Label("Mot de passe oublié ?");
+        setGrow(forgottenPasswordLabel);
+        setAlignment(forgottenPasswordLabel, HPos.LEFT ,VPos.TOP);
+        forgottenPasswordLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 14));
+        forgottenPasswordLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
+        forgottenPasswordLabel.setEffect(new BlurDropShadow(Colors.GREY_1, 4, 0));
+        forgottenPasswordLabel.setTranslateX(6d);
+        forgottenPasswordLabel.setTranslateY(196d);
+        forgottenPasswordLabel.setOnMouseEntered(e-> {
 
             this.layout.setCursor(Cursor.HAND);
-            forgotenpasswordLabel.setTextFill(Color.rgb(245, 255, 245));
+            forgottenPasswordLabel.setTextFill(Colors.LIGHT_GREEN_1.getColor());
 
         });
-        forgotenpasswordLabel.setOnMouseExited(e-> {
+        forgottenPasswordLabel.setOnMouseExited(e-> {
 
             this.layout.setCursor(Cursor.DEFAULT);
-            forgotenpasswordLabel.setTextFill(Color.rgb(225, 225, 225));
+            forgottenPasswordLabel.setTextFill(Colors.WHITE_1.getColor());
 
         });
-        forgotenpasswordLabel.setOnMouseClicked(e-> {
+        forgottenPasswordLabel.setOnMouseClicked(e-> {
             if (connectWithMojang.get()) {
                 openUrl("https:///www.minecraft.net/fr-fr/password/forgot");
             }
@@ -350,10 +363,15 @@ public class Login extends Panel {
         /* Bouton pour se connecter*/
         setGrow(connectionButton);
         setAlignment(connectionButton, HPos.CENTER ,VPos.BOTTOM);
-        connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);");
+        connectionButton.setStyle(
+                "-fx-background-color: #91B848FF;" +
+                        "-fx-font-size: 20;" +
+                        "-fx-border-radius: 2px;" +
+                        "-fx-text-fill: rgba(255,255,255,1);"
+        );
         connectionButton.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
         connectionButton.setTextAlignment(TextAlignment.CENTER);
-        connectionButton.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.2), 3, 0.3, 0, 0));
+        connectionButton.setEffect(new BlurDropShadow(Colors.DARK_GREY_2, 3, 0.3));
         connectionButton.setMaxHeight(40);
         connectionButton.setMinHeight(40);
         connectionButton.setMaxWidth(268);
@@ -366,9 +384,39 @@ public class Login extends Panel {
 
             this.authenticate(usernameField.getText(), passwordField.getText());
             Timeline clickedAnimation = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(connectionButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#74923AFF"), CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY)))),
-                    new KeyFrame(Duration.millis(500), new KeyValue(connectionButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#91B848FF"), CornerRadii.EMPTY, Insets.EMPTY)))));
-            clickedAnimation.setOnFinished(ev -> connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);"));
+                    new KeyFrame(
+                            Duration.ZERO,
+                            new KeyValue(
+                                    connectionButton.backgroundProperty(),
+                                    new Background(
+                                            new BackgroundFill(
+                                                    Color.valueOf("#74923AFF"),
+                                                    CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY
+                                            )
+                                    )
+                            )
+                    ),
+                    new KeyFrame(
+                            Duration.millis(500),
+                            new KeyValue(
+                                    connectionButton.backgroundProperty(),
+                                    new Background(
+                                            new BackgroundFill(
+                                                    Color.valueOf("#91B848FF"),
+                                                    CornerRadii.EMPTY, Insets.EMPTY
+                                            )
+                                    )
+                            )
+                    )
+            );
+            clickedAnimation.setOnFinished(
+                    ev -> connectionButton.setStyle(
+                            "-fx-background-color: #91B848FF;" +
+                                    "-fx-font-size: 20;" +
+                                    "-fx-border-radius: 2px;" +
+                                    "-fx-text-fill: rgba(255,255,255,1);"
+                    )
+            );
             clickedAnimation.play();
 
         });
@@ -381,7 +429,7 @@ public class Login extends Panel {
         Separator connectionChoseS1 = new Separator();
         setGrow(connectionChoseS1);
         setAlignment(connectionChoseS1, HPos.CENTER ,VPos.BOTTOM);
-        connectionChoseS1.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
+        connectionChoseS1.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_1, 4, 0));
         connectionChoseS1.setMaxHeight(38);
         connectionChoseS1.setMinHeight(38);
         connectionChoseS1.setMaxWidth(268);
@@ -391,7 +439,7 @@ public class Login extends Panel {
         Separator connectionChoseS2 = new Separator();
         setGrow(connectionChoseS2);
         setAlignment(connectionChoseS2, HPos.LEFT ,VPos.BOTTOM);
-        connectionChoseS2.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
+        connectionChoseS2.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_1, 4, 0));
         connectionChoseS2.setMaxHeight(38);
         connectionChoseS2.setMinHeight(38);
         connectionChoseS2.setMaxWidth(70);
@@ -402,7 +450,7 @@ public class Login extends Panel {
         Separator connectionChoseS3 = new Separator();
         setGrow(connectionChoseS3);
         setAlignment(connectionChoseS3, HPos.RIGHT ,VPos.BOTTOM);
-        connectionChoseS3.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
+        connectionChoseS3.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_1, 4, 0));
         connectionChoseS3.setMaxHeight(38);
         connectionChoseS3.setMinHeight(38);
         connectionChoseS3.setMaxWidth(70);
@@ -411,13 +459,13 @@ public class Login extends Panel {
         connectionChoseS3.setTranslateY(-30d);
 
         /* Label se connecter */
-        Label connectionwithLabel = new Label("CONNEXION AVEC");
-        setGrow(connectionwithLabel);
-        setAlignment(connectionwithLabel, HPos.CENTER ,VPos.BOTTOM);
-        connectionwithLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 18));
-        connectionwithLabel.setTextFill(Color.rgb(225,225,225));
-        connectionwithLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(210, 210, 210, 0.2), 4, 0, 0, 0));
-        connectionwithLabel.setTranslateY(-37d);
+        Label connectionWithLabel = new Label("CONNEXION AVEC");
+        setGrow(connectionWithLabel);
+        setAlignment(connectionWithLabel, HPos.CENTER ,VPos.BOTTOM);
+        connectionWithLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 18));
+        connectionWithLabel.setTextFill(Colors.WHITE_1.getColor());
+        connectionWithLabel.setEffect(new BlurDropShadow(Colors.DARK_GREY_2, 4, 0));
+        connectionWithLabel.setTranslateY(-37d);
 
         /* Bouttons mode de connection + Microsoft */
         ImageView microsoftImage = new ImageView(new Image("images/icone/microsoft.png"));
@@ -450,13 +498,16 @@ public class Login extends Panel {
         asiluxImage.setTranslateY(40d);
 
         /*
-        * REGISTERY HANDLERS
+        * REGISTRY HANDLERS
         */
         topPanel.getChildren().addAll(connectionLabel);
         bottomPanel.getChildren().addAll(noAccount, registerHere);
-        middlePannel.getChildren().addAll(usernameLabel, usernameField, usernameSeparator, errorUsernameLabel,
-                passwordLabel, passwordField, passwordSeparator, errorPasswordLabel, forgotenpasswordLabel, connectionButton,
-                connectionChoseS2, connectionChoseS3, connectionwithLabel, microsoftImage, mojangImage, asiluxImage);
+        middlePanel.getChildren().addAll(
+                usernameLabel, usernameField, usernameSeparator, errorUsernameLabel,
+                passwordLabel, passwordField, passwordSeparator, errorPasswordLabel,
+                forgottenPasswordLabel, connectionButton, connectionChoseS2,
+                connectionChoseS3, connectionWithLabel, microsoftImage, mojangImage, asiluxImage
+        );
         this.layout.getChildren().add(loginPanel);
 
     }
@@ -486,25 +537,29 @@ public class Login extends Panel {
     public void authenticate(String user, String password) {
 
         if (connectWithMojang.get()) {
-            Authenticator authenticator = new Authenticator(Authenticator.MOJANG_AUTH_URL, AuthPoints.NORMAL_AUTH_POINTS);
+            Authenticator authenticator = new Authenticator(
+                    Authenticator.MOJANG_AUTH_URL, AuthPoints.NORMAL_AUTH_POINTS
+            );
 
             try {
-                AuthResponse response = authenticator.authenticate(AuthAgent.MINECRAFT, user, password, null);
+                AuthResponse response = authenticator.authenticate(
+                        AuthAgent.MINECRAFT, user, password, null
+                );
 
                 saver.set("accessToken", response.getAccessToken());
                 saver.set("clientToken", response.getClientToken());
                 saver.save();
 
-                AuthInfos infos = new AuthInfos(
+                AuthInfos info = new AuthInfos(
                         response.getSelectedProfile().getName(),
                         response.getAccessToken(),
                         response.getClientToken(),
                         response.getSelectedProfile().getId()
                 );
 
-                Launcher.getInstance().setAuthInfos(infos);
+                Launcher.getInstance().setAuthInfo(info);
 
-                this.logger.info("Hello " + infos.getUsername());
+                this.logger.info("Hello " + info.getUsername());
 
                 panelManager.showPanel(new App());
             } catch (AuthenticationException e) {
@@ -531,7 +586,7 @@ public class Login extends Panel {
             saver.set("msAccessToken", response.getAccessToken());
             saver.set("msRefreshToken", response.getRefreshToken());
             saver.save();
-            Launcher.getInstance().setAuthInfos(new AuthInfos(
+            Launcher.getInstance().setAuthInfo(new AuthInfos(
                     response.getProfile().getName(),
                     response.getAccessToken(),
                     response.getProfile().getId()

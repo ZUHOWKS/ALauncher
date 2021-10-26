@@ -3,8 +3,10 @@ package dev.asiluxserver.launcher.ui.panels.partials;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.panel.Panel;
+
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -86,7 +88,11 @@ public class TopBar extends Panel {
         fullscreenBtn.setTranslateY(5.0d);
         fullscreenBtn.setOnMouseEntered(e -> fullscreenBtn.setOpacity(1.0f));
         fullscreenBtn.setOnMouseExited(e -> fullscreenBtn.setOpacity(0.70f));
-        fullscreenBtn.setOnMouseClicked(e -> this.panelManager.getStage().setMaximized(!this.panelManager.getStage().isMaximized()));
+        fullscreenBtn.setOnMouseClicked(
+                e -> this.panelManager.getStage().setMaximized(
+                        !this.panelManager.getStage().isMaximized()
+                )
+        );
 
         minimizeBtn.setFill(Color.WHITE);
         minimizeBtn.setOpacity(0.70f);

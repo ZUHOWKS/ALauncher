@@ -4,18 +4,21 @@ import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.panels.pages.App;
 import dev.asiluxserver.launcher.ui.panels.pages.Login;
 import dev.asiluxserver.launcher.utils.Helpers;
+
 import fr.flowarg.flowlogger.ILogger;
 import fr.flowarg.flowlogger.Logger;
+
 import fr.litarvan.openauth.AuthPoints;
 import fr.litarvan.openauth.AuthenticationException;
 import fr.litarvan.openauth.Authenticator;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthResult;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticationException;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
-import fr.litarvan.openauth.model.AuthProfile;
 import fr.litarvan.openauth.model.response.RefreshResponse;
+
 import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
 import fr.theshark34.openlauncherlib.util.Saver;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -68,7 +71,7 @@ public class Launcher extends Application {
                 saver.set("accessToken", response.getAccessToken());
                 saver.set("clientToken", response.getClientToken());
                 saver.save();
-                this.setAuthInfos(new AuthInfos(
+                this.setAuthInfo(new AuthInfos(
                         response.getSelectedProfile().getName(),
                         response.getAccessToken(),
                         response.getClientToken(),
@@ -89,7 +92,7 @@ public class Launcher extends Application {
                 saver.set("msAccessToken", response.getAccessToken());
                 saver.set("msRefreshToken", response.getRefreshToken());
                 saver.save();
-                this.setAuthInfos(new AuthInfos(
+                this.setAuthInfo(new AuthInfos(
                         response.getProfile().getName(),
                         response.getAccessToken(),
                         response.getProfile().getId()
@@ -105,11 +108,11 @@ public class Launcher extends Application {
         return false;
     }
 
-    public void setAuthInfos(AuthInfos authInfos) {
+    public void setAuthInfo(AuthInfos authInfos) {
         this.authInfos = authInfos;
     }
 
-    public AuthInfos getAuthInfos() {
+    public AuthInfos getAuthInfo() {
         return authInfos;
     }
 
