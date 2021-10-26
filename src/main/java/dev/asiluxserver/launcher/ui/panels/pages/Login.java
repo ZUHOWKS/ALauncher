@@ -7,8 +7,10 @@ import dev.asiluxserver.launcher.ui.panel.Panel;
 import fr.litarvan.openauth.AuthPoints;
 import fr.litarvan.openauth.AuthenticationException;
 import fr.litarvan.openauth.Authenticator;
+import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
 import fr.litarvan.openauth.model.AuthAgent;
 import fr.litarvan.openauth.model.response.AuthResponse;
+import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -51,6 +53,7 @@ public class Login extends Panel {
     TextField usernameField = new TextField();
     PasswordField passwordField = new PasswordField();
     Button connectionButton = new Button("SE CONNECTER");
+    AtomicBoolean connectWithMojang = new AtomicBoolean(true);
 
     Saver saver = Launcher.getInstance().getSaver();
 
@@ -60,15 +63,10 @@ public class Login extends Panel {
     }
 
     @Override
-    public String getStyleSheetPath() {
-        return "css/login.css";
-    }
-
-    @Override
     public void init(PanelManager panelManager) {
         super.init(panelManager);
 
-        AtomicBoolean connectWithMojang = new AtomicBoolean(false);
+
         AtomicBoolean antiSpamConnection = new AtomicBoolean(false);
 
         loginPanel.setMaxWidth(400);
@@ -252,7 +250,10 @@ public class Login extends Panel {
         usernameField.setTranslateX(6d);
         usernameField.setTranslateY(45d);
         usernameField.focusedProperty().addListener((_a, oldValue, newValue) -> {
-            if (!newValue) this.updateLoginBtnState(passwordField, errorUsernameLabel);
+            if (!newValue) this.updateLoginBtnState(usernameField, null);
+        });
+        usernameField.setOnKeyPressed(e-> {
+            updateLoginBtnState(usernameField, null);
         });
 
         Separator usernameSeparator = new Separator();
@@ -297,7 +298,10 @@ public class Login extends Panel {
         passwordField.setTranslateX(6d);
         passwordField.setTranslateY(152d);
         passwordField.focusedProperty().addListener((_a, oldValue, newValue) -> {
-            if (!newValue) this.updateLoginBtnState(passwordField, errorPasswordLabel);
+            if (!newValue) this.updateLoginBtnState(passwordField, null);
+        });
+        passwordField.setOnKeyPressed(e-> {
+            updateLoginBtnState(passwordField, null);
         });
 
         Separator passwordSeparator = new Separator();
@@ -356,14 +360,16 @@ public class Login extends Panel {
         connectionButton.setMinWidth(268);
         connectionButton.setTranslateY(-76d);
         connectionButton.setDisable(true);
+        connectionButton.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
+        connectionButton.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
         connectionButton.setOnMouseClicked(e-> {
+
             this.authenticate(usernameField.getText(), passwordField.getText());
             Timeline clickedAnimation = new Timeline(
                     new KeyFrame(Duration.ZERO, new KeyValue(connectionButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#74923AFF"), CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY)))),
                     new KeyFrame(Duration.millis(500), new KeyValue(connectionButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#91B848FF"), CornerRadii.EMPTY, Insets.EMPTY)))));
             clickedAnimation.setOnFinished(ev -> connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);"));
             clickedAnimation.play();
-
 
         });
 
@@ -388,8 +394,9 @@ public class Login extends Panel {
         connectionChoseS2.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
         connectionChoseS2.setMaxHeight(38);
         connectionChoseS2.setMinHeight(38);
-        connectionChoseS2.setMaxWidth(50);
-        connectionChoseS2.setMinWidth(50);
+        connectionChoseS2.setMaxWidth(70);
+        connectionChoseS2.setMinWidth(70);
+        connectionChoseS2.setTranslateX(-20d);
         connectionChoseS2.setTranslateY(-30d);
 
         Separator connectionChoseS3 = new Separator();
@@ -398,8 +405,9 @@ public class Login extends Panel {
         connectionChoseS3.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 4, 0, 0, 0));
         connectionChoseS3.setMaxHeight(38);
         connectionChoseS3.setMinHeight(38);
-        connectionChoseS3.setMaxWidth(50);
-        connectionChoseS3.setMinWidth(50);
+        connectionChoseS3.setMaxWidth(70);
+        connectionChoseS3.setMinWidth(70);
+        connectionChoseS3.setTranslateX(20d);
         connectionChoseS3.setTranslateY(-30d);
 
         /* Label se connecter */
@@ -412,15 +420,43 @@ public class Login extends Panel {
         connectionwithLabel.setTranslateY(-37d);
 
         /* Bouttons mode de connection + Microsoft */
+        ImageView microsoftImage = new ImageView(new Image("images/icone/microsoft.png"));
+        microsoftImage.setFitHeight(55);
+        microsoftImage.setFitWidth(55);
+        setCanTakeAllSize(microsoftImage);
+        setBottom(microsoftImage);
+        setLeft(microsoftImage);
+        microsoftImage.setTranslateX(25d);
+        microsoftImage.setTranslateY(30d);
+        microsoftImage.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
+        microsoftImage.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
+        microsoftImage.setOnMouseClicked(e-> this.authenticateMS());
 
+        ImageView mojangImage = new ImageView(new Image("images/icone/mojang-icone.png"));
+        mojangImage.setFitHeight(55);
+        mojangImage.setFitWidth(55);
+        setCanTakeAllSize(mojangImage);
+        setBottom(mojangImage);
+        setCenterH(mojangImage);
+        mojangImage.setTranslateY(30d);
+
+        ImageView asiluxImage = new ImageView(new Image("images/asilux-icone.png"));
+        asiluxImage.setFitHeight(75);
+        asiluxImage.setFitWidth(75);
+        setCanTakeAllSize(asiluxImage);
+        setBottom(asiluxImage);
+        setRight(asiluxImage);
+        asiluxImage.setTranslateX(-15d);
+        asiluxImage.setTranslateY(40d);
 
         /*
         * REGISTERY HANDLERS
         */
         topPanel.getChildren().addAll(connectionLabel);
         bottomPanel.getChildren().addAll(noAccount, registerHere);
-        middlePannel.getChildren().addAll(usernameLabel, usernameField, usernameSeparator, errorUsernameLabel, passwordLabel, passwordField, passwordSeparator, errorPasswordLabel,forgotenpasswordLabel, connectionButton,
-                connectionChoseS2, connectionChoseS3, connectionwithLabel);
+        middlePannel.getChildren().addAll(usernameLabel, usernameField, usernameSeparator, errorUsernameLabel,
+                passwordLabel, passwordField, passwordSeparator, errorPasswordLabel, forgotenpasswordLabel, connectionButton,
+                connectionChoseS2, connectionChoseS3, connectionwithLabel, microsoftImage, mojangImage, asiluxImage);
         this.layout.getChildren().add(loginPanel);
 
     }
@@ -435,35 +471,72 @@ public class Login extends Panel {
 
     private void updateLoginBtnState(TextField textField, Label errorLabel) {
         if (textField.getText().length() == 0) {
-            errorLabel.setText("Le champs ne peux être vide");
+            if (errorLabel != null) {
+                errorLabel.setText("Le champs ne peux être vide");
+            }
         } else {
-            errorLabel.setText("");
-        }
+            if (errorLabel != null) {
+                errorLabel.setText("");
+            }
 
+        }
         connectionButton.setDisable(!(usernameField.getText().length() > 0 && passwordField.getText().length() > 0));
     }
 
     public void authenticate(String user, String password) {
-        Authenticator authenticator = new Authenticator(Authenticator.MOJANG_AUTH_URL, AuthPoints.NORMAL_AUTH_POINTS);
 
-        try {
-            AuthResponse response = authenticator.authenticate(AuthAgent.MINECRAFT, user, password, null);
+        if (connectWithMojang.get()) {
+            Authenticator authenticator = new Authenticator(Authenticator.MOJANG_AUTH_URL, AuthPoints.NORMAL_AUTH_POINTS);
 
-            saver.set("accessToken", response.getAccessToken());
-            saver.set("clientToken", response.getClientToken());
-            saver.save();
+            try {
+                AuthResponse response = authenticator.authenticate(AuthAgent.MINECRAFT, user, password, null);
 
-            Launcher.getInstance().setAuthProfile(response.getSelectedProfile());
+                saver.set("accessToken", response.getAccessToken());
+                saver.set("clientToken", response.getClientToken());
+                saver.save();
 
-            this.logger.info("Hello " + response.getSelectedProfile().getName());
-            // TODO: redirect the user to the homepage
+                AuthInfos infos = new AuthInfos(
+                        response.getSelectedProfile().getName(),
+                        response.getAccessToken(),
+                        response.getClientToken(),
+                        response.getSelectedProfile().getId()
+                );
 
-        } catch (AuthenticationException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setHeaderText("Une erreur est survenu lors de la connexion");
-            alert.setContentText(e.getMessage());
-            alert.show();
+                Launcher.getInstance().setAuthInfos(infos);
+
+                this.logger.info("Hello " + infos.getUsername());
+
+                panelManager.showPanel(new App());
+            } catch (AuthenticationException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Une erreur est survenu lors de la connexion");
+                alert.setContentText(e.getMessage());
+                alert.show();
+            }
         }
+    }
+
+    public void authenticateMS() {
+        MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
+        authenticator.loginWithAsyncWebview().whenComplete((response, error) -> {
+            if (error != null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setContentText(error.getMessage());
+                alert.show();
+                return;
+            }
+
+            saver.set("msAccessToken", response.getAccessToken());
+            saver.set("msRefreshToken", response.getRefreshToken());
+            saver.save();
+            Launcher.getInstance().setAuthInfos(new AuthInfos(
+                    response.getProfile().getName(),
+                    response.getAccessToken(),
+                    response.getProfile().getId()
+            ));
+            this.logger.info("Hello " + response.getProfile().getName());
+        });
     }
 }
