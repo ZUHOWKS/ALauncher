@@ -231,11 +231,11 @@ public class App extends Panel {
 
         /* TITLE HOME */
         FontAwesomeIconView homeIcon = new FontAwesomeIconView(FontAwesomeIcon.HOME);
-        homeIcon.setFill(Color.rgb(255,255,255));
+        homeIcon.setFill(Colors.DEFAULT_WHITE.getColor());
         homeIcon.setScaleX(1.15);
         homeIcon.setScaleY(1.15);
         homeLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
-        homeLabel.setTextFill(Color.rgb(255,255,255));
+        homeLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
         homeLabel.setGraphic(homeIcon);
         homeLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 4, 0));
         setGrow(homeLabel);
@@ -249,11 +249,11 @@ public class App extends Panel {
 
         /* TITLE NEWS */
         FontAwesomeIconView newsIcon = new FontAwesomeIconView(FontAwesomeIcon.BELL);
-        newsIcon.setFill(Color.rgb(255,255,255));
+        newsIcon.setFill(Colors.DEFAULT_WHITE.getColor());
         newsIcon.setScaleX(0.95);
         newsIcon.setScaleY(0.95);
         newsLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
-        newsLabel.setTextFill(Color.rgb(255,255,255));
+        newsLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
         newsLabel.setGraphic(newsIcon);
         newsLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 4, 0));
         setGrow(newsLabel);
@@ -264,12 +264,12 @@ public class App extends Panel {
 
         /* TITLE UPDATE */
         FontAwesomeIconView updateIcon = new FontAwesomeIconView(FontAwesomeIcon.CODE);
-        updateIcon.setFill(Color.rgb(255,255,255));
+        updateIcon.setFill(Colors.DEFAULT_WHITE.getColor());
         updateIcon.setScaleX(1.1);
         updateIcon.setScaleY(1.1);
 
         updateLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
-        updateLabel.setTextFill(Color.rgb(255,255,255));
+        updateLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
         updateLabel.setGraphic(updateIcon);
         updateLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 4, 0));
         setGrow(updateLabel);
@@ -280,11 +280,11 @@ public class App extends Panel {
 
         /* TITLE SETTINGS */
         FontAwesomeIconView settingsIcon = new FontAwesomeIconView(FontAwesomeIcon.GEARS);
-        settingsIcon.setFill(Color.rgb(255,255,255));
+        settingsIcon.setFill(Colors.DEFAULT_WHITE.getColor());
         settingsIcon.setScaleX(1.05);
         settingsIcon.setScaleY(1.05);
         settingsLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
-        settingsLabel.setTextFill(Color.rgb(255,255,255));
+        settingsLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
         settingsLabel.setGraphic(settingsIcon);
         settingsLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 4, 0));
         setGrow(settingsLabel);
@@ -298,7 +298,7 @@ public class App extends Panel {
 
         /* LOG OUT BUTTON */
         FontAwesomeIconView logOutIcon = new FontAwesomeIconView(FontAwesomeIcon.SIGN_OUT);
-        logOutIcon.setFill(Color.rgb(255,255,255));
+        logOutIcon.setFill(Colors.DEFAULT_WHITE.getColor());
         logOutIcon.setScaleX(0.9);
         logOutIcon.setScaleY(0.9);
         Button logOutBtn = new Button("Se déconnnecter");
@@ -312,7 +312,7 @@ public class App extends Panel {
                         "-fx-text-fill: rgba(255,255,255,1);"
         );
         logOutBtn.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 14));
-        logOutBtn.setTextFill(Color.rgb(255,255,255));
+        logOutBtn.setTextFill(Colors.DEFAULT_WHITE.getColor());
         logOutBtn.setGraphic(logOutIcon);
         logOutBtn.setEffect(new BlurDropShadow(Colors.BLACK_1, 7, 3));
         logOutBtn.setDisable(false);
