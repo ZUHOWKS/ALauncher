@@ -1,32 +1,36 @@
+dev/asiluxserver/launcher/ui/panels/pages/content/ContentPanel.java
+ dev.asiluxserver.launcher.ui.panels.pages.content.ContentPanel
+dev/asiluxserver/launcher/ui/assets/effects/BlurDropShadow.java
+ dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow
+dev/asiluxserver/launcher/ui/assets/Colors.java
+ dev.asiluxserver.launcher.ui.assets.Colors
+dev/asiluxserver/launcher/utils/Helpers.java
+ dev.asiluxserver.launcher.utils.Helpers
+ dev.asiluxserver.launcher.utils.Helpers$1
+dev/asiluxserver/launcher/ui/panel/ITakePLace.java
+ dev.asiluxserver.launcher.ui.panel.ITakePLace
+dev/asiluxserver/launcher/ui/panel/IMovable.java
+ dev.asiluxserver.launcher.ui.panel.IMovable
 dev/asiluxserver/launcher/ui/panels/pages/content/Home.java
  dev.asiluxserver.launcher.ui.panels.pages.content.Home
 dev/asiluxserver/launcher/ui/panel/Panel.java
  dev.asiluxserver.launcher.ui.panel.Panel
-dev/asiluxserver/launcher/utils/Helpers.java
- dev.asiluxserver.launcher.utils.Helpers
- dev.asiluxserver.launcher.utils.Helpers$1
-dev/asiluxserver/launcher/Main.java
- dev.asiluxserver.launcher.Main
-dev/asiluxserver/launcher/ui/panel/IMovable.java
- dev.asiluxserver.launcher.ui.panel.IMovable
-dev/asiluxserver/launcher/ui/panels/pages/content/ContentPanel.java
- dev.asiluxserver.launcher.ui.panels.pages.content.ContentPanel
 dev/asiluxserver/launcher/ui/PanelManager.java
  dev.asiluxserver.launcher.ui.PanelManager
-dev/asiluxserver/launcher/ui/panel/ITakePLace.java
- dev.asiluxserver.launcher.ui.panel.ITakePLace
 dev/asiluxserver/launcher/ui/panels/partials/TopBar.java
  dev.asiluxserver.launcher.ui.panels.partials.TopBar
 dev/asiluxserver/launcher/ui/panel/IPanel.java
  dev.asiluxserver.launcher.ui.panel.IPanel
-dev/asiluxserver/launcher/ui/panels/pages/content/Settings.java
- dev.asiluxserver.launcher.ui.panels.pages.content.Settings
 dev/asiluxserver/launcher/Launcher.java
  dev.asiluxserver.launcher.Launcher
 dev/asiluxserver/launcher/ui/panels/pages/Login.java
  dev.asiluxserver.launcher.ui.panels.pages.Login
+dev/asiluxserver/launcher/Main.java
+ dev.asiluxserver.launcher.Main
 dev/asiluxserver/launcher/ui/panels/pages/App.java
  dev.asiluxserver.launcher.ui.panels.pages.App
  dev.asiluxserver.launcher.ui.panels.pages.App$1
  dev.asiluxserver.launcher.ui.panels.pages.App$2
  dev.asiluxserver.launcher.ui.panels.pages.App$3
+dev/asiluxserver/launcher/ui/panels/pages/content/Settings.java
+ dev.asiluxserver.launcher.ui.panels.pages.content.Settings

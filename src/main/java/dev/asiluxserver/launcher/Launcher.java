@@ -23,6 +23,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.nio.file.Paths;
 
 public class Launcher extends Application {
     private PanelManager panelManager;
@@ -34,14 +35,14 @@ public class Launcher extends Application {
 
     public Launcher() {
         instance = this;
-        this.logger = new Logger("[Asilux]", new File(this.launcherDir, "launcher.log"));
-        if (!this.launcherDir.exists()) {
-            if (!this.launcherDir.mkdir()) {
-                this.logger.err("Unable to create launcher folder");
+        logger = new Logger("[Asilux]", Paths.get(launcherDir.getName(), "launcher.log"));
+        System.out.println(Paths.get(launcherDir.getName(), "launcher.log"));
+        if (!launcherDir.exists()) {
+            if (!launcherDir.mkdir()) {
+                logger.err("Unable to create launcher folder");
             }
         }
-
-        saver = new Saver(new File(launcherDir, "config.properties"));
+        saver = new Saver(Paths.get(launcherDir.getName(), "config.properties"));
         saver.load();
     }
 
