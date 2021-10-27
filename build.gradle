@@ -25,7 +25,7 @@ dependencies {
     implementation 'fr.litarvan:openauth:1+'
     implementation 'de.jensd:fontawesomefx-fontawesome:4+'
 
-    implementation 'fr.flowarg:flowupdater:1+'
+    implementation 'fr.flowarg:flowupdater:1.4+'
     implementation 'fr.flowarg:flowupdater-curseforgeplugin:2+'
     implementation 'fr.flowarg:flowupdater-optifineplugin:2+'
     implementation 'fr.flowarg:openlauncherlib:3+'

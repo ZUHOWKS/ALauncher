@@ -18,32 +18,32 @@ import oshi.SystemInfo;
 import oshi.hardware.GlobalMemory;
 
 public class Settings extends ContentPanel {
-
     private final Saver saver = Launcher.getInstance().getSaver();
     GridPane contentPane = new GridPane();
 
     @Override
     public String getName() {
-        return null;
+        return "settings";
     }
 
     @Override
     public void init(PanelManager panelManager) {
         super.init(panelManager);
+
         // Background
-        this.layout.getStyleClass().add("settings-layout");
+        this.layout.setStyle("-fx-background-color: rgb(215, 220, 220);");
         this.layout.setPadding(new Insets(40));
         setCanTakeAllSize(this.layout);
 
         // Content
-        contentPane.getStyleClass().add("content-pane");
+        contentPane.setStyle("-fx-background-color: transparent;");
         setCanTakeAllSize(contentPane);
         this.layout.getChildren().add(contentPane);
 
         // Titre
         Label title = new Label("Paramètres");
         title.setFont(Font.font("Consolas", FontWeight.BOLD, FontPosture.REGULAR, 25f));
-        title.getStyleClass().add("settings-title");
+        title.setStyle("-fx-text-fill: rgb(255, 255, 255);");
         setLeft(title);
         setCanTakeAllSize(title);
         setTop(title);
@@ -54,7 +54,7 @@ public class Settings extends ContentPanel {
 
         // RAM
         Label ramLabel = new Label("Mémoire max");
-        ramLabel.getStyleClass().add("settings-labels");
+        ramLabel.setStyle("-fx-text-fill: rgb(255, 255, 255); -fx-text-size: 25;");
         setLeft(ramLabel);
         setCanTakeAllSize(ramLabel);
         setTop(ramLabel);
@@ -68,15 +68,15 @@ public class Settings extends ContentPanel {
         GlobalMemory memory = systemInfo.getHardware().getMemory();
 
         ComboBox<String> comboBox = new ComboBox<>();
-        comboBox.getStyleClass().add("ram-selector");
+        comboBox.setStyle("-fx-text-fill: rgb(20, 25, 25); -fx-font-size: 12px;");
         for(int i = 512; i <= Math.ceil(memory.getTotal() / Math.pow(1024, 2)); i+=512) {
             comboBox.getItems().add(i/1024.0+" Go");
         }
 
-        double val = 1024;
+        int val = 1024;
         try {
             if (saver.get("maxRam") != null) {
-                val = Double.parseDouble(saver.get("maxRam")) * 1024;
+                val = Integer.parseInt(saver.get("maxRam"));
             } else {
                 throw new NumberFormatException();
             }
@@ -102,14 +102,18 @@ public class Settings extends ContentPanel {
          * Save Button
          */
         Button saveBtn = new Button("Enregistrer");
-        saveBtn.getStyleClass().add("save-btn");
+        saveBtn.setStyle("-fx-background-color: #91B248FF; -fx-text-fill: rgb(255, 255, 255); -fx-text-size: 25;");
         FontAwesomeIconView iconView = new FontAwesomeIconView(FontAwesomeIcon.SAVE);
         iconView.getStyleClass().add("save-icon");
         saveBtn.setGraphic(iconView);
         setCanTakeAllSize(saveBtn);
         setBottom(saveBtn);
         setCenterH(saveBtn);
-        saveBtn.setOnMouseClicked(e -> saver.set("maxRam", comboBox.getValue().replace(" Go", "")));
+        saveBtn.setOnMouseClicked(e -> {
+            double _val = Double.parseDouble(comboBox.getValue().replace(" Go", ""));
+            _val *= 1024;
+            saver.set("maxRam", String.valueOf((int) _val));
+        });
         contentPane.getChildren().add(saveBtn);
     }
 }

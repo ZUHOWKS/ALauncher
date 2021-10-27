@@ -1,9 +1,12 @@
 package dev.asiluxserver.launcher;
 
+
+
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.panels.pages.App;
 import dev.asiluxserver.launcher.ui.panels.pages.Login;
-import dev.asiluxserver.launcher.utils.Helpers;
+import dev.asiluxserver.launcher.ui.panels.pages.content.Home;
+import dev.asiluxserver.launcher.ui.panels.pages.content.Settings;
 import fr.flowarg.flowlogger.ILogger;
 import fr.flowarg.flowlogger.Logger;
 import fr.litarvan.openauth.AuthPoints;
@@ -12,33 +15,34 @@ import fr.litarvan.openauth.Authenticator;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthResult;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticationException;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
-import fr.litarvan.openauth.model.AuthProfile;
 import fr.litarvan.openauth.model.response.RefreshResponse;
 import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
+import fr.theshark34.openlauncherlib.minecraft.util.GameDirGenerator;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
-import java.io.File;
+import java.nio.file.Path;
 
 public class Launcher extends Application {
-    private PanelManager panelManager;
     private static Launcher instance;
     private final ILogger logger;
-    private final File launcherDir = Helpers.generateGamePath(".asiluxdev");
+    private final Path launcherDir = GameDirGenerator.createGameDir("asiluxdev", true);
     private final Saver saver;
+    private PanelManager panelManager;
     private AuthInfos authInfos = null;
 
     public Launcher() {
         instance = this;
-        this.logger = new Logger("[Asilux]", new File(this.launcherDir, "launcher.log"));
-        if (!this.launcherDir.exists()) {
-            if (!this.launcherDir.mkdir()) {
+        this.logger = new Logger("[AsiluxDev]", this.launcherDir.resolve("launcher.log"));
+        if (!this.launcherDir.toFile().exists()) {
+            if (!this.launcherDir.toFile().mkdir()) {
                 this.logger.err("Unable to create launcher folder");
             }
         }
 
-        saver = new Saver(new File(launcherDir, "config.properties"));
+        saver = new Saver(this.launcherDir.resolve("config.properties"));
         saver.load();
     }
 
@@ -54,9 +58,6 @@ public class Launcher extends Application {
         } else {
             this.panelManager.showPanel(new Login());
         }
-
-        //TODO: À SUPPRIMER
-        this.panelManager.showPanel(new App());
     }
 
     public boolean isUserAlreadyLoggedIn() {
@@ -123,5 +124,9 @@ public class Launcher extends Application {
 
     public Saver getSaver() {
         return saver;
+    }
+
+    public Path getLauncherDir() {
+        return launcherDir;
     }
 }
