@@ -1,19 +1,34 @@
 package dev.asiluxserver.launcher.ui.panels.pages.content;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import dev.asiluxserver.launcher.Launcher;
 import dev.asiluxserver.launcher.Main;
+import dev.asiluxserver.launcher.game.MinecraftInfos;
 import dev.asiluxserver.launcher.ui.PanelManager;
+import fr.flowarg.flowupdater.FlowUpdater;
+import fr.flowarg.flowupdater.download.IProgressCallback;
+import fr.flowarg.flowupdater.download.Step;
+import fr.flowarg.flowupdater.download.json.CurseFileInfos;
+import fr.flowarg.flowupdater.download.json.Mod;
+import fr.flowarg.flowupdater.utils.UpdaterOptions;
+import fr.flowarg.flowupdater.versions.AbstractForgeVersion;
+import fr.flowarg.flowupdater.versions.ForgeVersionBuilder;
+import fr.flowarg.flowupdater.versions.VanillaVersion;
+import fr.theshark34.openlauncherlib.external.ExternalLaunchProfile;
+import fr.theshark34.openlauncherlib.external.ExternalLauncher;
+import fr.theshark34.openlauncherlib.minecraft.*;
+import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
+import javafx.scene.control.*;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -26,9 +41,23 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
+import java.nio.file.Path;
+import java.text.DecimalFormat;
+import java.util.List;
+
 public class Home extends ContentPanel{
 
+    private final Saver saver = Launcher.getInstance().getSaver();
+    ProgressBar progressBar = new ProgressBar();
+
     GridPane contentPane = new GridPane();
+    GridPane mainMenuPanel = new GridPane();
+
+    Button playButton = new Button("Jouer");
+    Label stepLabel = new Label();
+    Label fileLabel = new Label();
+
+    boolean isDownloading = false;
 
     @Override
     public String getName() {
@@ -51,7 +80,6 @@ public class Home extends ContentPanel{
         mainContraints.setMaxWidth(1800);
         contentPane.getColumnConstraints().addAll(mainContraints, new ColumnConstraints());
 
-        GridPane mainMenuPanel = new GridPane();
         setGrow(mainMenuPanel);
         setAlignment(mainMenuPanel, HPos.RIGHT, VPos.TOP);
         mainMenuPanel.setMinWidth(700);
@@ -86,39 +114,65 @@ public class Home extends ContentPanel{
         GridPane.setHalignment(asiluxView, HPos.CENTER);
         asiluxView.setTranslateY(-25);
 
-        //TODO: Barre de chargement
 
-        Button PlayButton = new Button("INSTALLER");
-        setGrow(PlayButton);
-        setAlignment(PlayButton, HPos.CENTER ,VPos.CENTER);
-        PlayButton.setMinWidth(220);
-        PlayButton.setMinHeight(60);
-        PlayButton.setMaxWidth(220);
-        PlayButton.setMaxHeight(60);
-        PlayButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 32;  -fx-text-fill: rgba(255,255,255,1);");
-        PlayButton.setFont(Font.font("Arial", FontWeight.MEDIUM, 32));
-        PlayButton.setTextAlignment(TextAlignment.CENTER);
-        PlayButton.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.2), 3, 0.3, 0, 0));
-        PlayButton.setTranslateY(150);
-        PlayButton.setOnMouseEntered(e-> {
+
+        stepLabel.setStyle("-fx-text-alignment: center; -fx-text-fill: rgb(255, 255, 255);");
+        setAlignment(stepLabel, HPos.CENTER ,VPos.CENTER);
+        setCanTakeAllSize(stepLabel);
+        stepLabel.setTranslateY(75);
+
+
+        fileLabel.setStyle("-fx-text-alignment: center; -fx-text-fill: rgb(255, 255, 255);");
+        setCenterH(fileLabel);
+        setAlignment(fileLabel, HPos.CENTER ,VPos.CENTER);
+        setCanTakeAllSize(fileLabel);
+        fileLabel.setTranslateY(90);
+
+        //TODO: Barre de chargement
+        progressBar.setMinWidth(450);
+        progressBar.setMinHeight(18);
+        progressBar.setMaxWidth(450);
+        progressBar.setMaxHeight(18);
+        progressBar.getStylesheets().addAll(Main.class.getResource("/css/content/progress-bar.css").toExternalForm());
+        setAlignment(progressBar, HPos.CENTER ,VPos.CENTER);
+        progressBar.setTranslateY(103);
+
+        FontAwesomeIconView playIcone = new FontAwesomeIconView(FontAwesomeIcon.GAMEPAD);
+        playIcone.setFill(Color.rgb(255,255,255));
+        playIcone.setScaleX(1.1);
+        playIcone.setScaleY(1.1);
+        playButton.setMinWidth(220);
+        playButton.setMinHeight(60);
+        playButton.setMaxWidth(220);
+        playButton.setMaxHeight(60);
+        playButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 32;  -fx-text-fill: rgba(255,255,255,1);");
+        playButton.setGraphic(playIcone);
+        playButton.setFont(Font.font("Arial", FontWeight.MEDIUM, 32));
+        playButton.setTextAlignment(TextAlignment.CENTER);
+        playButton.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.2), 3, 0.3, 0, 0));
+        setGrow(playButton);
+        setAlignment(playButton, HPos.CENTER ,VPos.CENTER);
+        playButton.setTranslateY(160);
+        playButton.setOnMouseEntered(e-> {
             this.layout.setCursor(Cursor.HAND);
         });
-        PlayButton.setOnMouseClicked(e-> {
-
-
+        playButton.setOnMouseClicked(e-> {
             Timeline clickedAnimation = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(PlayButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#74923AFF"), CornerRadii.EMPTY, Insets.EMPTY)))),
-                    new KeyFrame(Duration.millis(700), new KeyValue(PlayButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#91B248FF"), CornerRadii.EMPTY, Insets.EMPTY)))));
+                    new KeyFrame(Duration.ZERO, new KeyValue(playButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#74923AFF"), CornerRadii.EMPTY, Insets.EMPTY)))),
+                    new KeyFrame(Duration.millis(700), new KeyValue(playButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#91B248FF"), CornerRadii.EMPTY, Insets.EMPTY)))));
             clickedAnimation.setOnFinished(ev -> {
-                PlayButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 32; -fx-text-fill: rgba(255,255,255,1);");
+                playButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 32; -fx-text-fill: rgba(255,255,255,1);");
             });
             clickedAnimation.play();
+            if (!isDownloading())
+                this.play();
         });
-        PlayButton.setOnMouseExited(e-> {
+        playButton.setOnMouseExited(e-> {
             this.layout.setCursor(Cursor.DEFAULT);
         });
 
-        pane.getChildren().addAll(asiluxView, PlayButton);
+
+        pane.getChildren().addAll(asiluxView, playButton);
     }
 
     /* Tableau des News */
@@ -251,51 +305,160 @@ public class Home extends ContentPanel{
 
     }
 
-    private void labelmainMenuPanel(GridPane pane) {
+    private void play() {
+        isDownloading = true;
+        setProgress(0, 0);
+        mainMenuPanel.getChildren().addAll(progressBar, stepLabel, fileLabel);
 
-        Label playMainMenuPanel = new Label("INSTALLER");
-        setGrow(playMainMenuPanel);
-        setAlignment(playMainMenuPanel, HPos.LEFT ,VPos.TOP);
-        playMainMenuPanel.setStyle("-fx-font-size: 16;");
-        playMainMenuPanel.setTextFill(Color.rgb(255,255,255));
-        playMainMenuPanel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 6, 0, 0, 0));;
-        playMainMenuPanel.setTranslateY(-80);
-        playMainMenuPanel.setOnMouseEntered(e-> {
+        Platform.runLater(() -> new Thread(this::update).start());
+    }
 
-            this.layout.setCursor(Cursor.HAND);
+    public void update() {
+        IProgressCallback callback = new IProgressCallback() {
+            private final DecimalFormat decimalFormat = new DecimalFormat("#.#");
+            private String stepTxt = "";
+            private String percentTxt = "0.0%";
 
-        });
-        playMainMenuPanel.setOnMouseExited(e-> {
+            @Override
+            public void step(Step step) {
+                Platform.runLater(() -> {
+                    stepTxt = StepInfo.valueOf(step.name()).getDetails();
+                    setStatus(String.format("%s (%s)", stepTxt, percentTxt));
+                });
+            }
 
-            this.layout.setCursor(Cursor.DEFAULT);
+            @Override
+            public void update(long downloaded, long max) {
+                Platform.runLater(() -> {
+                    percentTxt = decimalFormat.format(downloaded * 100.d / max) + "%";
+                    setStatus(String.format("%s (%s)", stepTxt, percentTxt));
+                    setProgress(downloaded, max);
+                });
+            }
 
-        });
-        playMainMenuPanel.setOnMouseClicked(e-> {
-            //TODO: METHODES ACTUALISATION DU MENU
-        });
+            @Override
+            public void onFileDownloaded(Path path) {
+                Platform.runLater(() -> {
+                    String p = path.toString();
+                    fileLabel.setText("..." + p.replace(Launcher.getInstance().getLauncherDir().toFile().getAbsolutePath(), ""));
+                });
+            }
+        };
 
-        Label actuMainMenuPanel = new Label("NEWS");
-        setGrow(actuMainMenuPanel);
-        setAlignment(actuMainMenuPanel, HPos.LEFT ,VPos.TOP);
-        actuMainMenuPanel.setStyle("-fx-font-size: 16;");
-        actuMainMenuPanel.setTextFill(Color.rgb(225,225,225));
-        actuMainMenuPanel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(225, 225, 225, 0.1), 6, 0, 0, 0));
-        actuMainMenuPanel.setTranslateY(-80);
-        actuMainMenuPanel.setTranslateX(65);
-        actuMainMenuPanel.setOnMouseEntered(e -> {
+        try {
+            final VanillaVersion vanillaVersion = new VanillaVersion.VanillaVersionBuilder()
+                    .withName(MinecraftInfos.GAME_VERSION)
+                    .withVersionType(MinecraftInfos.VERSION_TYPE)
+                    .build();
+            final UpdaterOptions options = new UpdaterOptions.UpdaterOptionsBuilder()
+                    .withEnableCurseForgePlugin(true)
+                    .withEnableOptifineDownloaderPlugin(true)
+                    .build();
 
-            this.layout.setCursor(Cursor.HAND);
+            List<CurseFileInfos> curseMods = CurseFileInfos.getFilesFromJson(MinecraftInfos.CURSE_MODS_LIST_URL);
+            List<Mod> mods = Mod.getModsFromJson(MinecraftInfos.MODS_LIST_URL);
 
-        });
-        actuMainMenuPanel.setOnMouseExited(e-> {
+            final AbstractForgeVersion forge = new ForgeVersionBuilder(MinecraftInfos.FORGE_VERSION_TYPE)
+                    .withForgeVersion(MinecraftInfos.FORGE_VERSION)
+                    .withCurseMods(curseMods)
+                    .withMods(mods)
+                    .build();
 
-            this.layout.setCursor(Cursor.DEFAULT);
+            final FlowUpdater updater = new FlowUpdater.FlowUpdaterBuilder()
+                    .withVersion(vanillaVersion)
+                    .withForgeVersion(forge)
+                    .withLogger(Launcher.getInstance().getLogger())
+                    .withProgressCallback(callback)
+                    .withUpdaterOptions(options)
+                    .build();
 
-        });
-        actuMainMenuPanel.setOnMouseClicked(e-> {
-            //TODO: METHODES ACTUALISATION DU MENU
-        });
+            updater.update(Launcher.getInstance().getLauncherDir());
+            this.startGame(updater.getVersion().getName());
+        } catch (Exception exception) {
+            Launcher.getInstance().getLogger().err(exception.toString());
+            exception.printStackTrace();
+            Platform.runLater(() -> panelManager.getStage().show());
+        }
+    }
 
-        pane.getChildren().addAll(playMainMenuPanel, actuMainMenuPanel);
+    public void startGame(String gameVersion) {
+        GameInfos infos = new GameInfos(
+                "asiluxdev",
+                true,
+                new GameVersion(gameVersion, MinecraftInfos.OLL_GAME_TYPE.setNFVD(MinecraftInfos.OLL_FORGE_DISCRIMINATOR)),
+                new GameTweak[]{}
+        );
+
+        try {
+            ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(infos, GameFolder.FLOW_UPDATER, Launcher.getInstance().getAuthInfos());
+            profile.getVmArgs().add(this.getRamArgsFromSaver());
+            ExternalLauncher launcher = new ExternalLauncher(profile);
+
+            Platform.runLater(() -> panelManager.getStage().hide());
+
+            Process p = launcher.launch();
+
+            Platform.runLater(() -> {
+                try {
+                    p.waitFor();
+                    Platform.exit();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            Launcher.getInstance().getLogger().err(exception.toString());
+        }
+    }
+
+    public String getRamArgsFromSaver() {
+        int val = 1024;
+        try {
+            if (saver.get("maxRam") != null) {
+                val = Integer.parseInt(saver.get("maxRam"));
+            } else {
+                throw new NumberFormatException();
+            }
+        } catch (NumberFormatException error) {
+            saver.set("maxRam", String.valueOf(val));
+            saver.save();
+        }
+
+        return "-Xmx" + val + "M";
+    }
+
+    public void setStatus(String status) {
+        this.stepLabel.setText(status);
+    }
+
+    public void setProgress(double current, double max) {
+        this.progressBar.setProgress(current / max);
+    }
+
+    public boolean isDownloading() {
+        return isDownloading;
+    }
+
+    public enum StepInfo {
+        READ("Lecture du fichier json..."),
+        DL_LIBS("Téléchargement des libraries..."),
+        DL_ASSETS("Téléchargement des ressources..."),
+        EXTRACT_NATIVES("Extraction des natives..."),
+        FORGE("Installation de forge..."),
+        FABRIC("Installation de fabric..."),
+        MODS("Téléchargement des mods..."),
+        EXTERNAL_FILES("Téléchargement des fichier externes..."),
+        POST_EXECUTIONS("Exécution post-installation..."),
+        END("Finit !");
+        String details;
+
+        StepInfo(String details) {
+            this.details = details;
+        }
+
+        public String getDetails() {
+            return details;
+        }
     }
 }

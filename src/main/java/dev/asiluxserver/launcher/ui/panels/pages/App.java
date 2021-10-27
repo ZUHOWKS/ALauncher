@@ -6,10 +6,12 @@ import dev.asiluxserver.launcher.Launcher;
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.panel.IPanel;
 import dev.asiluxserver.launcher.ui.panel.Panel;
+import dev.asiluxserver.launcher.ui.panels.pages.content.ContentPanel;
 import dev.asiluxserver.launcher.ui.panels.pages.content.Home;
 import dev.asiluxserver.launcher.ui.panels.pages.content.Settings;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.animation.Transition;
+import javafx.beans.property.DoubleProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
@@ -43,18 +45,17 @@ public class App extends Panel {
 
     Saver saver = Launcher.getInstance().getSaver();
     Node prevUserInfoPose = homeLabel;
+    Node activeLink = null;
+    ContentPanel currentPage = null;
 
     @Override
     public String getName() {
         return null;
     }
 
-    public App() {
-        this.instance = this;
-    }
-
-    public static App getInstance() {
-        return instance;
+    @Override
+    public String getStyleSheetPath() {
+        return super.getStyleSheetPath();
     }
 
     @Override
@@ -77,33 +78,6 @@ public class App extends Panel {
         this.layout.add(centerPane, 1, 0);
         setGrow(centerPane);
         setAlignment(this.centerPane, HPos.RIGHT, VPos.CENTER);
-
-        /* ACCEUIL */
-        ColumnConstraints mainContraints = new ColumnConstraints();
-        mainContraints.setHalignment(HPos.RIGHT);
-        mainContraints.setMinWidth(800);
-        mainContraints.setMaxWidth(1800);
-        centerPane.getColumnConstraints().addAll(mainContraints, new ColumnConstraints());
-
-        GridPane mainMenuPanel = new GridPane();
-        setGrow(mainMenuPanel);
-        setAlignment(mainMenuPanel, HPos.RIGHT, VPos.TOP);
-        mainMenuPanel.setMinWidth(700);
-        mainMenuPanel.setMaxWidth(700);
-        mainMenuPanel.setMinHeight(700);
-        mainMenuPanel.setMinHeight(700);
-
-        /* NEWS ACCEUIL */
-        GridPane actuMainMenuPanel = new GridPane();
-        setGrow(actuMainMenuPanel);
-        setAlignment(actuMainMenuPanel, HPos.RIGHT, VPos.CENTER);
-        actuMainMenuPanel.setMinWidth(200);
-        actuMainMenuPanel.setMaxWidth(300);
-        actuMainMenuPanel.setMinHeight(320);
-        actuMainMenuPanel.setMaxHeight(320);
-
-        centerPane.add(mainMenuPanel, 0, 0);
-        centerPane.add(actuMainMenuPanel, 1, 0);
     }
 
     @Override
@@ -321,27 +295,41 @@ public class App extends Panel {
         setGrow(userLocationRectangle);
         setLeft(userLocationRectangle);
         setTop(userLocationRectangle);
-        //TODO: Animation avec userLocationRectangle
+
         userLocationRectangle.setTranslateX(2);
         userLocationRectangle.setTranslateY(prevUserInfoPose.getTranslateY() - 5);
         Transition userLocationAnimation = new Transition() {
             {
-                setCycleDuration(Duration.millis(800));
+                setCycleDuration(Duration.millis(600));
             }
+
             @Override
             protected void interpolate(double frac) {
-                if (userLocationRectangle.getTranslateY() > button.getTranslateY()) {
-                    if (userLocationRectangle.getTranslateY() >= button.getTranslateY() - 5 && userLocationRectangle.getTranslateY() < 600) {
-                        userLocationRectangle.setTranslateY(userLocationRectangle.getTranslateY() - 5);
+                if (button.getTranslateY() - userLocationRectangle.getTranslateY() <= 0) {
+                    if (userLocationRectangle.getScaleY() < 1.6 && (userLocationRectangle.getTranslateY() > button.getTranslateY() * 1.5)) {
+                        userLocationRectangle.setScaleY(userLocationRectangle.getScaleY() + 0.05);
+                    } else if (userLocationRectangle.getScaleY() > 1){
+                        userLocationRectangle.setScaleY(userLocationRectangle.getScaleY() - 0.05);
                     }
-                } else {
-                    if (userLocationRectangle.getTranslateY() + 5 != button.getTranslateY() && userLocationRectangle.getTranslateY() < 600) {
-                        userLocationRectangle.setTranslateY(userLocationRectangle.getTranslateY() + 5);
+                    userLocationRectangle.setTranslateY(userLocationRectangle.getTranslateY() - 5);
+
+                } else if (button.getTranslateY() - userLocationRectangle.getTranslateY() > 5) {
+                    if (userLocationRectangle.getScaleY() < 1.6 && (userLocationRectangle.getTranslateY() < button.getTranslateY() * 0.5)) {
+                        userLocationRectangle.setScaleY(userLocationRectangle.getScaleY() + 0.05);
+                    } else if (userLocationRectangle.getScaleY() > 1){
+                        userLocationRectangle.setScaleY(userLocationRectangle.getScaleY() - 0.05);
                     }
+                    userLocationRectangle.setTranslateY(userLocationRectangle.getTranslateY() + 5);
+
                 }
             }
         };
-        userLocationAnimation.setOnFinished(e-> userLocationRectangle.setTranslateY(button.getTranslateY() - 5));
+        userLocationAnimation.setOnFinished(e-> {
+
+            userLocationRectangle.setTranslateY(button.getTranslateY() - 5);
+            userLocationRectangle.setScaleY(1);
+
+        });
         userLocationAnimation.play();
         prevUserInfoPose = button;
 
@@ -355,14 +343,21 @@ public class App extends Panel {
     }
 
     /* METHODES NAVIGATION */
-    public void setPage(IPanel panel, Node navButton) {
+    public void setPage(ContentPanel panel, Node navButton) {
+        if (currentPage instanceof Home && ((Home) currentPage).isDownloading()) {
+            return;
+        }
+        if (activeLink != null)
+            activeLink.getStyleClass().remove("active");
+        activeLink = navButton;
+        activeLink.getStyleClass().add("active");
 
-        this.centerPane.getChildren().clear();
         this.leftBarPanel.getChildren().clear();
-
+        leftBarNav(leftBarPanel, navButton);
+        this.centerPane.getChildren().clear();
         if (panel != null) {
             this.centerPane.getChildren().add(panel.getLayout());
-            leftBarNav(leftBarPanel, navButton);
+            currentPage = panel;
             if (panel.getStyleSheetPath() != null) {
                 this.panelManager.getStage().getScene().getStylesheets().clear();
                 this.panelManager.getStage().getScene().getStylesheets().addAll(
@@ -374,5 +369,4 @@ public class App extends Panel {
             panel.onShow();
         }
     }
-
 }
