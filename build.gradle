@@ -1,11 +1,9 @@
 plugins {
     id 'idea'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
     id 'java'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.9'
 }
-
-apply plugin: 'org.openjfx.javafxplugin'
 
 group 'com.github.zuhowks'
 version '1.0.0'
@@ -22,21 +20,16 @@ repositories {
 }
 
 dependencies {
-    implementation 'fr.litarvan:openauth:1+'
-    implementation 'de.jensd:fontawesomefx-fontawesome:4+'
 
-    implementation 'fr.flowarg:flowupdater:1.4+'
-    implementation 'fr.flowarg:flowupdater-curseforgeplugin:2+'
-    implementation 'fr.flowarg:flowupdater-optifineplugin:2+'
+    implementation 'fr.litarvan:openauth:1+'
+    implementation 'de.jensd:fontawesomefx:8.9'
+
+    implementation 'fr.flowarg:flowupdater:1.5+'
     implementation 'fr.flowarg:openlauncherlib:3+'
 
-    implementation 'com.github.goxr3plus:FX-BorderlessScene:4+'
     implementation 'com.github.oshi:oshi-core:5+'
-}
 
-javafx {
-    version = 12
-    modules = ['javafx.controls']
+    implementation group: 'com.github.goxr3plus', name: 'FX-BorderlessScene', version: '4.4.0'
 }
 
 application {
@@ -45,14 +38,4 @@ application {
 
 compileJava {
     options.encoding = "UTF-8"
-}
-
-jar {
-    manifest.attributes.put('Main-Class', 'dev.asiluxserver.launcher.Main')
-
-    from {
-        configurations.compileClasspath.collect {
-            it.isDirectory() ? it : zipTree(it)
-        }
-    }
 }

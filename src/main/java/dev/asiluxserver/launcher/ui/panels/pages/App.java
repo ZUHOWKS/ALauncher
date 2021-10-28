@@ -10,6 +10,7 @@ import dev.asiluxserver.launcher.ui.panels.pages.content.ContentPanel;
 import dev.asiluxserver.launcher.ui.panels.pages.content.Home;
 import dev.asiluxserver.launcher.ui.panels.pages.content.Settings;
 import fr.theshark34.openlauncherlib.util.Saver;
+import javafx.animation.ScaleTransition;
 import javafx.animation.Transition;
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.HPos;
@@ -64,14 +65,14 @@ public class App extends Panel {
 
         /* BASE PANEL */
         menuPainContraint.setHalignment(HPos.LEFT);
-        menuPainContraint.setMinWidth(140);
-        menuPainContraint.setMaxWidth(140);
+        menuPainContraint.setMinWidth(160);
+        menuPainContraint.setMaxWidth(160);
         this.layout.getColumnConstraints().addAll(menuPainContraint, new ColumnConstraints());
 
         setGrow(leftBarPanel);
         setAlignment(leftBarPanel, HPos.LEFT, VPos.CENTER);
-        leftBarPanel.setMinWidth(140);
-        leftBarPanel.setMaxWidth(140);
+        leftBarPanel.setMinWidth(160);
+        leftBarPanel.setMaxWidth(160);
         leftBarPanel.setStyle("-fx-background-color: rgba(24,24,24,1);");
 
         this.layout.add(leftBarPanel, 0, 0);
@@ -105,7 +106,7 @@ public class App extends Panel {
         avatarRectangle.setTranslateY(8d);
 
         /* USER AVATAR */
-        String avatarUrl = "https://minotar.net/avatar/MHF_Steve.png"; //ou + Launcher.getInstance().getAuthInfos().getUuid() + ".png";
+        String avatarUrl = "https://minotar.net/avatar/" + Launcher.getInstance().getAuthInfos().getUuid() + ".png";
         ImageView avatarView = new ImageView();
         avatarView.setImage(new Image(avatarUrl));
         avatarView.setPreserveRatio(true);
@@ -129,32 +130,29 @@ public class App extends Panel {
                     setCycleDuration(Duration.millis(500));
                 }
 
-                double n = 0.05;
+                double n = 0.0005;
 
                 @Override
                 protected void interpolate(double frac) {
-                    if (n <= 0.05) {
-                        n = n + 0.005;
+                    if (n <= 0.05 && frac < 400) {
+                        n = n + 0.001;
                     } else {
-                        n = n - 0.0025;
+                        n = n - 0.0005;
                     }
 
-                    if (avatarView.getFitHeight() < 58d) {
-                        avatarView.setFitHeight(avatarView.getFitHeight() + 0.05 + n);
-                        if (avatarView.getTranslateY() > 11d) {
-                            avatarView.setTranslateY(avatarView.getTranslateY() - 0.025 - 0.5 * n);
-                        } else {
-                            avatarView.setTranslateY(11d);
-                        }
+                    if (avatarView.getScaleX() < 1.17 && avatarView.getScaleY() < 1.17) {
+                        avatarView.setScaleX(avatarView.getScaleX() + 0.001 + n);
+                        avatarView.setScaleY(avatarView.getScaleY() + 0.001 + n);
                     } else {
                         n = 0.0001;
-                        avatarView.setFitHeight(58d);
-                        avatarView.setTranslateY(11d);
+                        avatarView.setScaleX(1.17);
+                        avatarView.setScaleY(1.17);
+                        avatarView.setTranslateY(15d);
                     }
                 }
             };
 
-            if (avatarView.getFitHeight() < 58d) {
+            if (avatarView.getScaleX() < 1.17d && avatarView.getScaleY() < 1.17d) {
                 avatarUpScale.play();
             }
         });
@@ -169,32 +167,29 @@ public class App extends Panel {
                     setCycleDuration(Duration.millis(500));
                 }
 
-                double n = 0.05;
+                double n = 0.0005;
 
                 @Override
                 protected void interpolate(double frac) {
-                    if (n <= 0.05) {
-                        n = n + 0.005;
+                    if (n <= 0.05 && frac < 400) {
+                        n = n + 0.001;
                     } else {
-                        n = n - 0.0025;
+                        n = n - 0.0005;
                     }
 
-                    if (avatarView.getFitHeight() > 50d) {
-                        avatarView.setFitHeight(avatarView.getFitHeight() - 0.05 - n);
-                        if (avatarView.getTranslateY() < 15d) {
-                            avatarView.setTranslateY(avatarView.getTranslateY() + 0.025 + 0.5 * n);
-                        } else {
-                            avatarView.setTranslateY(15d);
-                        }
+                    if (avatarView.getScaleX() > 1 && avatarView.getScaleY() > 1) {
+                        avatarView.setScaleX(avatarView.getScaleX() - 0.001 - n);
+                        avatarView.setScaleY(avatarView.getScaleY() - 0.001 - n);
                     } else {
                         n = 0.0001;
-                        avatarView.setFitHeight(50d);
+                        avatarView.setScaleX(1);
+                        avatarView.setScaleY(1);
                         avatarView.setTranslateY(15d);
                     }
                 }
             };
 
-            if (avatarView.getFitHeight() > 50d) {
+            if (avatarView.getScaleX() > 1 && avatarView.getScaleY() > 1) {
                 avatarDownScale.play();
             }
         });
@@ -202,75 +197,139 @@ public class App extends Panel {
         /* TITLE HOME */
         FontAwesomeIconView homeIcone = new FontAwesomeIconView(FontAwesomeIcon.HOME);
         homeIcone.setFill(Color.rgb(255,255,255));
-        homeIcone.setScaleX(1.15);
-        homeIcone.setScaleY(1.15);
-        homeLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        homeIcone.setScaleX(1.5);
+        homeIcone.setScaleY(1.5);
+        homeLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
         homeLabel.setTextFill(Color.rgb(255,255,255));
         homeLabel.setGraphic(homeIcone);
         homeLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
         setGrow(homeLabel);
         setTop(homeLabel);
         setLeft(homeLabel);
-        homeLabel.setTranslateX(17);
+        homeLabel.setTranslateX(18);
         homeLabel.setTranslateY(100);
-        homeLabel.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
-        homeLabel.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
+        homeLabel.setOnMouseEntered(e-> {
+            this.layout.setCursor(Cursor.HAND);
+            homeLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.35), 5, 0, 0, 0));
+            Transition transitionScale = scaleUp(homeLabel, Duration.millis(500), 1.125, 0.003, 0.05, 0);
+            Transition ttX = translateX(homeLabel, Duration.millis(500), 28, 0.4);
+            ttX.play();
+            transitionScale.play();
+        });
+        homeLabel.setOnMouseExited(e-> {
+            this.layout.setCursor(Cursor.DEFAULT);
+            homeLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+            Transition transition = scaleDown(homeLabel, Duration.millis(650), 1, 0.0025);
+            Transition ttX = translateX(homeLabel, Duration.millis(650), 18, 0.25);
+            ttX.play();
+            transition.play();
+
+        });
         homeLabel.setOnMouseClicked(e-> setPage(new Home(), homeLabel));
 
         /* TITLE NEWS */
         FontAwesomeIconView newsIcone = new FontAwesomeIconView(FontAwesomeIcon.BELL);
         newsIcone.setFill(Color.rgb(255,255,255));
-        newsIcone.setScaleX(0.95);
-        newsIcone.setScaleY(0.95);
-        newsLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        newsIcone.setScaleX(1.3);
+        newsIcone.setScaleY(1.3);
+        newsLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
         newsLabel.setTextFill(Color.rgb(255,255,255));
         newsLabel.setGraphic(newsIcone);
         newsLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
         setGrow(newsLabel);
         setTop(newsLabel);
         setLeft(newsLabel);
-        newsLabel.setTranslateX(17);
+        newsLabel.setTranslateX(18);
         newsLabel.setTranslateY(150);
+        newsLabel.setOnMouseEntered(e-> {
+            this.layout.setCursor(Cursor.HAND);
+            newsLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.35), 5, 0, 0, 0));
+            Transition transitionScale = scaleUp(newsLabel, Duration.millis(500), 1.125, 0.003, 0.05, 0);
+            Transition ttX = translateX(newsLabel, Duration.millis(500), 28, 0.4);
+            ttX.play();
+            transitionScale.play();
+        });
+        newsLabel.setOnMouseExited(e-> {
+            this.layout.setCursor(Cursor.DEFAULT);
+            newsLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+            Transition transition = scaleDown(newsLabel, Duration.millis(650), 1, 0.0025);
+            Transition ttX = translateX(newsLabel, Duration.millis(650), 18, 0.25);
+            ttX.play();
+            transition.play();
+
+        });
 
         /* TITLE UPDATE */
         FontAwesomeIconView updateIcone = new FontAwesomeIconView(FontAwesomeIcon.CODE);
         updateIcone.setFill(Color.rgb(255,255,255));
-        updateIcone.setScaleX(1.1);
-        updateIcone.setScaleY(1.1);
+        updateIcone.setScaleX(1.4);
+        updateIcone.setScaleY(1.4);
 
-        updateLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        updateLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
         updateLabel.setTextFill(Color.rgb(255,255,255));
         updateLabel.setGraphic(updateIcone);
         updateLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
         setGrow(updateLabel);
         setTop(updateLabel);
         setLeft(updateLabel);
-        updateLabel.setTranslateX(17);
+        updateLabel.setTranslateX(18);
         updateLabel.setTranslateY(200);
+        updateLabel.setOnMouseEntered(e-> {
+            this.layout.setCursor(Cursor.HAND);
+            updateLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.35), 5, 0, 0, 0));
+            Transition transitionScale = scaleUp(updateLabel, Duration.millis(500), 1.125, 0.003, 0.05, 0);
+            Transition ttX = translateX(updateLabel, Duration.millis(500), 28, 0.4);
+            ttX.play();
+            transitionScale.play();
+        });
+        updateLabel.setOnMouseExited(e-> {
+            this.layout.setCursor(Cursor.DEFAULT);
+            updateLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+            Transition transition = scaleDown(updateLabel, Duration.millis(650), 1, 0.0025);
+            Transition ttX = translateX(updateLabel, Duration.millis(650), 18, 0.25);
+            ttX.play();
+            transition.play();
+
+        });
 
         /* TITLE SETTINGS */
         FontAwesomeIconView settingsIcone = new FontAwesomeIconView(FontAwesomeIcon.GEARS);
         settingsIcone.setFill(Color.rgb(255,255,255));
-        settingsIcone.setScaleX(1.05);
-        settingsIcone.setScaleY(1.05);
-        settingsLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        settingsIcone.setScaleX(1.4);
+        settingsIcone.setScaleY(1.4);
+        settingsLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
         settingsLabel.setTextFill(Color.rgb(255,255,255));
         settingsLabel.setGraphic(settingsIcone);
         settingsLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
         setGrow(settingsLabel);
         setTop(settingsLabel);
         setLeft(settingsLabel);
-        settingsLabel.setTranslateX(17);
+        settingsLabel.setTranslateX(18);
         settingsLabel.setTranslateY(250);
-        settingsLabel.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
-        settingsLabel.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
+        settingsLabel.setOnMouseEntered(e-> {
+            this.layout.setCursor(Cursor.HAND);
+            settingsLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.35), 5, 0, 0, 0));
+            Transition transitionScale = scaleUp(settingsLabel, Duration.millis(500), 1.125, 0.003, 0.05, 0);
+            Transition ttX = translateX(settingsLabel, Duration.millis(500), 28, 0.4);
+            ttX.play();
+            transitionScale.play();
+        });
+        settingsLabel.setOnMouseExited(e-> {
+            this.layout.setCursor(Cursor.DEFAULT);
+            settingsLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
+            Transition transition = scaleDown(settingsLabel, Duration.millis(650), 1, 0.0025);
+            Transition ttX = translateX(settingsLabel, Duration.millis(650), 18, 0.25);
+            ttX.play();
+            transition.play();
+
+        });
         settingsLabel.setOnMouseClicked(e-> setPage(new Settings(), settingsLabel));
 
         /* LOG OUT BUTTON */
         FontAwesomeIconView logOutIcone = new FontAwesomeIconView(FontAwesomeIcon.SIGN_OUT);
         logOutIcone.setFill(Color.rgb(255,255,255));
-        logOutIcone.setScaleX(0.9);
-        logOutIcone.setScaleY(0.9);
+        logOutIcone.setScaleX(1.25);
+        logOutIcone.setScaleY(1.25);
         Button logOutBtn = new Button("Se déconnnecter");
         logOutBtn.setMinWidth(120);
         logOutBtn.setMinHeight(35);
@@ -285,8 +344,21 @@ public class App extends Panel {
         setGrow(logOutBtn);
         setBottom(logOutBtn);
         setCenterH(logOutBtn);
-        logOutBtn.setTranslateY(-15d);
-        //TODO: DÉCONNECTION
+        logOutBtn.setTranslateY(-25d);
+        logOutBtn.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
+        logOutBtn.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
+        logOutBtn.setOnMouseClicked(e-> {
+            if (currentPage instanceof Home && ((Home) currentPage).isDownloading()) {
+                return;
+            }
+            saver.remove("accessToken");
+            saver.remove("clientToken");
+            saver.remove("msAccessToken");
+            saver.remove("msRefreshToken");
+            saver.save();
+            Launcher.getInstance().setAuthInfos(null);
+            this.panelManager.showPanel(new Login());
+        });
 
         /* USER INFO LOCATION */
         userLocationRectangle.setFill(Color.valueOf("#91B848FF"));
@@ -368,5 +440,68 @@ public class App extends Panel {
             panel.init(this.panelManager);
             panel.onShow();
         }
+    }
+
+    private Transition scaleUp(Node element, Duration duration, double MaxSize, double speed, double XSuppl, double YSuppl) {
+        Transition transition = new Transition() {
+            {
+                setCycleDuration(duration);
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+
+                if (element.getScaleX() + XSuppl < MaxSize )
+                    element.setScaleX(element.getScaleX() + speed + XSuppl * 0.25);
+
+                if (element.getScaleY() + YSuppl < MaxSize)
+                    element.setScaleY(element.getScaleY() + speed + YSuppl * 0.25);
+            }
+        };
+        return transition;
+    }
+
+    private Transition scaleDown(Node element, Duration duration, double MinSize, double speed) {
+        Transition transition = new Transition() {
+            {
+                setCycleDuration(duration);
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+
+                if (element.getScaleX() > MinSize && element.getScaleY() > MinSize) {
+                    element.setScaleX(element.getScaleX() - speed);
+                    element.setScaleY(element.getScaleY() - speed);
+                } else {
+                    element.setScaleX(MinSize);
+                    element.setScaleY(MinSize);
+                }
+            }
+        };
+        transition.setOnFinished(e-> {
+            element.setScaleX(MinSize);
+            element.setScaleY(MinSize);
+        });
+        return transition;
+    }
+
+    private Transition translateX(Node element, Duration duration, double EndX, double speed) {
+        Transition transition = new Transition() {
+            {
+                setCycleDuration(duration);
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+                if (EndX < element.getTranslateX()) {
+                    element.setTranslateX(element.getTranslateX() - speed);
+                } else {
+                    element.setTranslateX(element.getTranslateX() + speed);
+                }
+            }
+        };
+        transition.setOnFinished(e-> element.setTranslateX(EndX));
+        return transition;
     }
 }

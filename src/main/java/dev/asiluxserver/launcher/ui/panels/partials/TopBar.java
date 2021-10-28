@@ -63,9 +63,9 @@ public class TopBar extends Panel {
         /*
          * TopBar buttons configuration
          */
-        FontAwesomeIconView closeBtn = new FontAwesomeIconView(FontAwesomeIcon.WINDOW_CLOSE);
-        FontAwesomeIconView fullscreenBtn = new FontAwesomeIconView(FontAwesomeIcon.WINDOW_MAXIMIZE);
-        FontAwesomeIconView minimizeBtn = new FontAwesomeIconView(FontAwesomeIcon.WINDOW_MINIMIZE);
+        FontAwesomeIconView closeBtn = new FontAwesomeIconView(FontAwesomeIcon.CLOSE);
+        FontAwesomeIconView fullscreenBtn = new FontAwesomeIconView(FontAwesomeIcon.EXPAND);
+        FontAwesomeIconView minimizeBtn = new FontAwesomeIconView(FontAwesomeIcon.MINUS);
         setCanTakeAllWidth(closeBtn, fullscreenBtn, minimizeBtn);
 
         closeBtn.setFill(Color.WHITE);
@@ -86,14 +86,21 @@ public class TopBar extends Panel {
         fullscreenBtn.setTranslateY(5.0d);
         fullscreenBtn.setOnMouseEntered(e -> fullscreenBtn.setOpacity(1.0f));
         fullscreenBtn.setOnMouseExited(e -> fullscreenBtn.setOpacity(0.70f));
-        fullscreenBtn.setOnMouseClicked(e -> this.panelManager.getStage().setMaximized(!this.panelManager.getStage().isMaximized()));
+        fullscreenBtn.setOnMouseClicked(e -> {
+            this.panelManager.getStage().setMaximized(!this.panelManager.getStage().isMaximized());
+            if (this.panelManager.getStage().isMaximized()) {
+                fullscreenBtn.setIcon(FontAwesomeIcon.COMPRESS);
+            } else {
+                fullscreenBtn.setIcon(FontAwesomeIcon.EXPAND);
+            }
+        });
 
         minimizeBtn.setFill(Color.WHITE);
         minimizeBtn.setOpacity(0.70f);
         minimizeBtn.setSize("14px");
         setCenterV(minimizeBtn);
         minimizeBtn.setTranslateX(26.0d);
-        minimizeBtn.setTranslateY(2.0d);
+        minimizeBtn.setTranslateY(6.0d);
         minimizeBtn.setOnMouseEntered(e -> minimizeBtn.setOpacity(1.0f));
         minimizeBtn.setOnMouseExited(e -> minimizeBtn.setOpacity(0.70f));
         minimizeBtn.setOnMouseClicked(e -> this.panelManager.getStage().setIconified(true));
