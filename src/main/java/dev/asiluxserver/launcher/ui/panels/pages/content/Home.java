@@ -9,9 +9,7 @@ import dev.asiluxserver.launcher.ui.PanelManager;
 import fr.flowarg.flowupdater.FlowUpdater;
 import fr.flowarg.flowupdater.download.IProgressCallback;
 import fr.flowarg.flowupdater.download.Step;
-import fr.flowarg.flowupdater.download.json.CurseFileInfos;
 import fr.flowarg.flowupdater.download.json.Mod;
-import fr.flowarg.flowupdater.download.json.OptifineInfo;
 import fr.flowarg.flowupdater.utils.ModFileDeleter;
 import fr.flowarg.flowupdater.utils.UpdaterOptions;
 import fr.flowarg.flowupdater.versions.AbstractForgeVersion;
@@ -55,7 +53,7 @@ public class Home extends ContentPanel{
     GridPane contentPane = new GridPane();
     GridPane mainMenuPanel = new GridPane();
 
-    Button playButton = new Button("Jouer");
+    Button playButton = new Button("");
     Label stepLabel = new Label();
     Label fileLabel = new Label();
 
@@ -78,8 +76,8 @@ public class Home extends ContentPanel{
         /* ACCEUIL */
         ColumnConstraints mainContraints = new ColumnConstraints();
         mainContraints.setHalignment(HPos.RIGHT);
-        mainContraints.setMinWidth(800);
-        mainContraints.setMaxWidth(1800);
+        mainContraints.setMinWidth(480);
+        mainContraints.setMaxWidth(1760);
         contentPane.getColumnConstraints().addAll(mainContraints, new ColumnConstraints());
 
         setGrow(mainMenuPanel);
@@ -121,14 +119,14 @@ public class Home extends ContentPanel{
         stepLabel.setStyle("-fx-text-alignment: center; -fx-text-fill: rgb(255, 255, 255);");
         setAlignment(stepLabel, HPos.CENTER ,VPos.CENTER);
         setCanTakeAllSize(stepLabel);
-        stepLabel.setTranslateY(75);
+        stepLabel.setTranslateY(80);
 
 
         fileLabel.setStyle("-fx-text-alignment: center; -fx-text-fill: rgb(255, 255, 255);");
         setCenterH(fileLabel);
         setAlignment(fileLabel, HPos.CENTER ,VPos.CENTER);
         setCanTakeAllSize(fileLabel);
-        fileLabel.setTranslateY(90);
+        fileLabel.setTranslateY(94);
 
         //TODO: Barre de chargement
         progressBar.setMinWidth(450);
@@ -137,26 +135,58 @@ public class Home extends ContentPanel{
         progressBar.setMaxHeight(18);
         progressBar.getStylesheets().addAll(Main.class.getResource("/css/content/progress-bar.css").toExternalForm());
         setAlignment(progressBar, HPos.CENTER ,VPos.CENTER);
-        progressBar.setTranslateY(103);
+        progressBar.setTranslateY(112);
 
-        FontAwesomeIconView playIcone = new FontAwesomeIconView(FontAwesomeIcon.GAMEPAD);
+
+
+        FontAwesomeIconView playIcone = new FontAwesomeIconView(FontAwesomeIcon.PLAY);
         playIcone.setFill(Color.rgb(255,255,255));
-        playIcone.setScaleX(1.1);
-        playIcone.setScaleY(1.1);
+        playIcone.setScaleX(2.7);
+        playIcone.setScaleY(2.7);
+        playIcone.setTranslateX(-15);
+
+        Label playLabel = new Label("JOUER");
+        playLabel.setStyle("-fx-font-size: 42;");
+        playLabel.setTextFill(Color.rgb(255,255,255));
+        playLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 6, 0, 0, 0));
+        playLabel.setGraphic(playIcone);
+        setGrow(playLabel);
+        setAlignment(playLabel, HPos.CENTER ,VPos.CENTER);
+        playLabel.setTranslateY(170);
+        playLabel.setTranslateX(15);
+        playLabel.setOnMouseEntered(e-> {
+            this.layout.setCursor(Cursor.HAND);
+        });
+        playLabel.setOnMouseExited(e-> {
+            this.layout.setCursor(Cursor.DEFAULT);
+        });
+        playLabel.setOnMouseClicked(e-> {
+            Timeline clickedAnimation = new Timeline(
+                    new KeyFrame(Duration.ZERO, new KeyValue(playButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#74923AFF"), CornerRadii.EMPTY, Insets.EMPTY)))),
+                    new KeyFrame(Duration.millis(700), new KeyValue(playButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#91B248FF"), CornerRadii.EMPTY, Insets.EMPTY)))));
+            clickedAnimation.setOnFinished(ev -> {
+                playButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 32; -fx-text-fill: rgba(255,255,255,1);");
+            });
+            clickedAnimation.play();
+            if (!isDownloading())
+                this.play();
+        });
+
         playButton.setMinWidth(220);
         playButton.setMinHeight(60);
         playButton.setMaxWidth(220);
         playButton.setMaxHeight(60);
-        playButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 32;  -fx-text-fill: rgba(255,255,255,1);");
-        playButton.setGraphic(playIcone);
-        playButton.setFont(Font.font("Arial", FontWeight.MEDIUM, 32));
+        playButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 34;  -fx-text-fill: rgba(255,255,255,1);");
         playButton.setTextAlignment(TextAlignment.CENTER);
         playButton.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.2), 3, 0.3, 0, 0));
         setGrow(playButton);
         setAlignment(playButton, HPos.CENTER ,VPos.CENTER);
-        playButton.setTranslateY(160);
+        playButton.setTranslateY(170);
         playButton.setOnMouseEntered(e-> {
             this.layout.setCursor(Cursor.HAND);
+        });
+        playButton.setOnMouseExited(e-> {
+            this.layout.setCursor(Cursor.DEFAULT);
         });
         playButton.setOnMouseClicked(e-> {
             Timeline clickedAnimation = new Timeline(
@@ -169,12 +199,9 @@ public class Home extends ContentPanel{
             if (!isDownloading())
                 this.play();
         });
-        playButton.setOnMouseExited(e-> {
-            this.layout.setCursor(Cursor.DEFAULT);
-        });
 
 
-        pane.getChildren().addAll(asiluxView, playButton);
+        pane.getChildren().addAll(asiluxView, playButton, playLabel);
     }
 
     /* Tableau des News */
@@ -352,33 +379,27 @@ public class Home extends ContentPanel{
                     .withName(MinecraftInfos.GAME_VERSION)
                     .withVersionType(MinecraftInfos.VERSION_TYPE)
                     .build();
-            final UpdaterOptions options = new UpdaterOptions.UpdaterOptionsBuilder()
-                    .withEnableCurseForgePlugin(false)
-                    .withEnableOptifineDownloaderPlugin(false)
-                    .build();
 
             //List<CurseFileInfos> curseMods = CurseFileInfos.getFilesFromJson(MinecraftInfos.CURSE_MODS_LIST_URL);
             List<Mod> mods = Mod.getModsFromJson(MinecraftInfos.MODS_LIST_URL);
 
             final AbstractForgeVersion forge = new ForgeVersionBuilder(MinecraftInfos.FORGE_VERSION_TYPE)
                     .withForgeVersion(MinecraftInfos.FORGE_VERSION)
-                    .withLogger(Launcher.getInstance().getLogger())
-                    .withFileDeleter(new ModFileDeleter(true, "jei.jar"))
                     .withMods(mods)
                     .build();
+                    //.withFileDeleter(new ModFileDeleter(true, "jei.jar"))
                     //.withCurseMods(curseMods)
 
 
             final FlowUpdater updater = new FlowUpdater.FlowUpdaterBuilder()
-                    .withForgeVersion(forge)
                     .withVanillaVersion(vanillaVersion)
+                    .withForgeVersion(forge)
                     .withLogger(Launcher.getInstance().getLogger())
                     .withProgressCallback(callback)
-                    .withUpdaterOptions(options)
                     .build();
 
             updater.update(Launcher.getInstance().getLauncherDir());
-            this.startGame(updater.getVersion().getName());
+            this.startGame(updater.getVanillaVersion().getName());
         } catch (Exception exception) {
             Launcher.getInstance().getLogger().err(exception.toString());
             exception.printStackTrace();
@@ -388,7 +409,7 @@ public class Home extends ContentPanel{
 
     public void startGame(String gameVersion) {
         GameInfos infos = new GameInfos(
-                "asiluxdev",
+                MinecraftInfos.SERVER_NAME,
                 Launcher.getInstance().getLauncherDir(),
                 new GameVersion(gameVersion, MinecraftInfos.OLL_GAME_TYPE),
                 new GameTweak[]{GameTweak.FORGE}
@@ -455,6 +476,7 @@ public class Home extends ContentPanel{
         MODS("Téléchargement des mods..."),
         EXTERNAL_FILES("Téléchargement des fichier externes..."),
         POST_EXECUTIONS("Exécution post-installation..."),
+        INTEGRATION("Chargement des intégrations"),
         END("Finit !");
         String details;
 

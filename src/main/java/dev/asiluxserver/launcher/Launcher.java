@@ -5,8 +5,6 @@ package dev.asiluxserver.launcher;
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.panels.pages.App;
 import dev.asiluxserver.launcher.ui.panels.pages.Login;
-import dev.asiluxserver.launcher.ui.panels.pages.content.Home;
-import dev.asiluxserver.launcher.ui.panels.pages.content.Settings;
 import fr.flowarg.flowlogger.ILogger;
 import fr.flowarg.flowlogger.Logger;
 import fr.litarvan.openauth.AuthPoints;

@@ -1,5 +1,6 @@
 package dev.asiluxserver.launcher.ui.panels.pages;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import dev.asiluxserver.launcher.Launcher;
 import dev.asiluxserver.launcher.Main;
 import dev.asiluxserver.launcher.ui.PanelManager;
@@ -7,6 +8,8 @@ import dev.asiluxserver.launcher.ui.panel.Panel;
 import fr.litarvan.openauth.AuthPoints;
 import fr.litarvan.openauth.AuthenticationException;
 import fr.litarvan.openauth.Authenticator;
+import fr.litarvan.openauth.microsoft.MicrosoftAuthResult;
+import fr.litarvan.openauth.microsoft.MicrosoftAuthenticationException;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
 import fr.litarvan.openauth.model.AuthAgent;
 import fr.litarvan.openauth.model.response.AuthResponse;
@@ -39,6 +42,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Login extends Panel {
@@ -54,6 +58,7 @@ public class Login extends Panel {
     PasswordField passwordField = new PasswordField();
     Button connectionButton = new Button("SE CONNECTER");
     AtomicBoolean connectWithMojang = new AtomicBoolean(true);
+    AtomicBoolean connectWithMicrosoft = new AtomicBoolean(false);
 
     Saver saver = Launcher.getInstance().getSaver();
 
@@ -219,7 +224,7 @@ public class Login extends Panel {
 
 
         /* Text Nom d'utilisateur */
-        Label usernameLabel = new Label("Adresse mail");
+        Label usernameLabel = new Label("Adresse mail:");
         usernameLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
         usernameLabel.setTextFill(Color.rgb(255,255,255));
         usernameLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.2), 4, 0, 0, 0));
@@ -268,7 +273,7 @@ public class Login extends Panel {
         usernameSeparator.setTranslateY(64d);
 
         /* Text Mot de passe */
-        Label passwordLabel = new Label("Mots de passes");
+        Label passwordLabel = new Label("Mots de passes:");
         setGrow(passwordLabel);
         setAlignment(passwordLabel, HPos.LEFT ,VPos.TOP);
         passwordLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
@@ -288,13 +293,13 @@ public class Login extends Panel {
         errorPasswordLabel.setTranslateY(211d);
 
         /* Text Field Nom d'utilisateur + Separator */
-        setGrow(passwordField);
-        setAlignment(passwordField, HPos.LEFT ,VPos.TOP);
-        passwordField.setStyle("-fx-background-color: rgba(37, 37, 37, 0.8); -fx-font-size: 16; -fx-text-fill: rgba(255,255,255,1);");
         passwordField.setMaxHeight(38);
         passwordField.setMinHeight(38);
         passwordField.setMaxWidth(268);
         passwordField.setMinWidth(268);
+        passwordField.setStyle("-fx-background-color: rgba(37, 37, 37, 0.8); -fx-font-size: 16; -fx-text-fill: rgba(255,255,255,1);");
+        setGrow(passwordField);
+        setAlignment(passwordField, HPos.LEFT ,VPos.TOP);
         passwordField.setTranslateX(6d);
         passwordField.setTranslateY(152d);
         passwordField.focusedProperty().addListener((_a, oldValue, newValue) -> {
@@ -347,24 +352,46 @@ public class Login extends Panel {
 
         });
 
+        /* ICONES CONNECTION API */
+        ImageView mojangIcone = new ImageView(new Image("/images/icone/mojang-icone.png"));
+        mojangIcone.setFitHeight(23);
+        mojangIcone.setFitWidth(23);
+        mojangIcone.setTranslateX(-5);
+        mojangIcone.setTranslateY(2);
+
+        ImageView microsoftIcone = new ImageView(new Image("/images/icone/microsoft.png"));
+        microsoftIcone.setFitHeight(23);
+        microsoftIcone.setFitWidth(23);
+        microsoftIcone.setTranslateX(-5);
+        microsoftIcone.setTranslateY(2);
+
+        ImageView asiluxIcone = new ImageView(new Image("images/asilux-icone.png"));
+        asiluxIcone.setFitHeight(37);
+        asiluxIcone.setFitWidth(37);
+        asiluxIcone.setTranslateX(-5);
+
         /* Bouton pour se connecter*/
-        setGrow(connectionButton);
-        setAlignment(connectionButton, HPos.CENTER ,VPos.BOTTOM);
-        connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);");
-        connectionButton.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
-        connectionButton.setTextAlignment(TextAlignment.CENTER);
-        connectionButton.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.2), 3, 0.3, 0, 0));
         connectionButton.setMaxHeight(40);
         connectionButton.setMinHeight(40);
         connectionButton.setMaxWidth(268);
         connectionButton.setMinWidth(268);
+        connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);");
+        connectionButton.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
+        connectionButton.setGraphic(mojangIcone);
+        connectionButton.setTextAlignment(TextAlignment.CENTER);
+        connectionButton.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.2), 3, 0.3, 0, 0));
+        setGrow(connectionButton);
+        setAlignment(connectionButton, HPos.CENTER ,VPos.BOTTOM);
         connectionButton.setTranslateY(-76d);
         connectionButton.setDisable(true);
         connectionButton.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
         connectionButton.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
         connectionButton.setOnMouseClicked(e-> {
-
-            this.authenticate(usernameField.getText(), passwordField.getText());
+            if (connectWithMojang.get()) {
+                this.authenticate(usernameField.getText(), passwordField.getText());
+            } else if (connectWithMicrosoft.get()) {
+                this.authenticateMS(usernameField.getText(), passwordField.getText());
+            }
             Timeline clickedAnimation = new Timeline(
                     new KeyFrame(Duration.ZERO, new KeyValue(connectionButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#74923AFF"), CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY)))),
                     new KeyFrame(Duration.millis(500), new KeyValue(connectionButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#91B848FF"), CornerRadii.EMPTY, Insets.EMPTY)))));
@@ -430,7 +457,11 @@ public class Login extends Panel {
         microsoftImage.setTranslateY(30d);
         microsoftImage.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
         microsoftImage.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
-        microsoftImage.setOnMouseClicked(e-> this.authenticateMS());
+        microsoftImage.setOnMouseClicked(e-> {
+            connectionButton.setGraphic(microsoftIcone);
+            connectWithMojang.set(false);
+            connectWithMicrosoft.set(true);
+        });
 
         ImageView mojangImage = new ImageView(new Image("images/icone/mojang-icone.png"));
         mojangImage.setFitHeight(55);
@@ -439,6 +470,14 @@ public class Login extends Panel {
         setBottom(mojangImage);
         setCenterH(mojangImage);
         mojangImage.setTranslateY(30d);
+        mojangImage.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
+        mojangImage.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
+        mojangImage.setOnMouseClicked(e-> {
+            connectionButton.setGraphic(mojangIcone);
+            connectWithMicrosoft.set(false);
+            connectWithMojang.set(true);
+
+        });
 
         ImageView asiluxImage = new ImageView(new Image("images/asilux-icone.png"));
         asiluxImage.setFitHeight(75);
@@ -495,16 +534,14 @@ public class Login extends Panel {
                 saver.set("clientToken", response.getClientToken());
                 saver.save();
 
-                AuthInfos infos = new AuthInfos(
+                Launcher.getInstance().setAuthInfos(new AuthInfos(
                         response.getSelectedProfile().getName(),
                         response.getAccessToken(),
                         response.getClientToken(),
                         response.getSelectedProfile().getId()
-                );
+                ));
 
-                Launcher.getInstance().setAuthInfos(infos);
-
-                this.logger.info("Hello " + infos.getUsername());
+                this.logger.info("Hello " + response.getSelectedProfile().getName());
 
                 panelManager.showPanel(new App());
             } catch (AuthenticationException e) {
@@ -517,27 +554,29 @@ public class Login extends Panel {
         }
     }
 
-    public void authenticateMS() {
+    public void authenticateMS(String email, String password) {
         MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
-        authenticator.loginWithAsyncWebview().whenComplete((response, error) -> {
-            if (error != null) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Erreur");
-                alert.setContentText(error.getMessage());
-                alert.show();
-                return;
-            }
-
-            saver.set("msAccessToken", response.getAccessToken());
-            saver.set("msRefreshToken", response.getRefreshToken());
+        try {
+            MicrosoftAuthResult result = authenticator.loginWithCredentials(email, password);
+            saver.set("msAccessToken", result.getAccessToken());
+            saver.set("msRefreshToken", result.getRefreshToken());
             saver.save();
             Launcher.getInstance().setAuthInfos(new AuthInfos(
-                    response.getProfile().getName(),
-                    response.getAccessToken(),
-                    response.getProfile().getId()
+                    result.getProfile().getName(),
+                    result.getAccessToken(),
+                    result.getProfile().getId()
             ));
-            this.logger.info("Hello " + response.getProfile().getName());
+
+            this.logger.info("Hello " + result.getProfile().getName());
+
             panelManager.showPanel(new App());
-        });
+
+        } catch (MicrosoftAuthenticationException error) {
+            Launcher.getInstance().getLogger().err(error.toString());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setContentText(error.getMessage());
+            alert.show();
+        }
     }
 }

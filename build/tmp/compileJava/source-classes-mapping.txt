@@ -1,27 +1,27 @@
-dev/asiluxserver/launcher/ui/panels/pages/content/Settings.java
- dev.asiluxserver.launcher.ui.panels.pages.content.Settings
-dev/asiluxserver/launcher/ui/panel/Panel.java
- dev.asiluxserver.launcher.ui.panel.Panel
+dev/asiluxserver/launcher/ui/panel/IMovable.java
+ dev.asiluxserver.launcher.ui.panel.IMovable
+dev/asiluxserver/launcher/ui/panel/ITakePLace.java
+ dev.asiluxserver.launcher.ui.panel.ITakePLace
 dev/asiluxserver/launcher/game/MinecraftInfos.java
  dev.asiluxserver.launcher.game.MinecraftInfos
 dev/asiluxserver/launcher/Main.java
  dev.asiluxserver.launcher.Main
-dev/asiluxserver/launcher/ui/panel/IMovable.java
- dev.asiluxserver.launcher.ui.panel.IMovable
+dev/asiluxserver/launcher/ui/panels/pages/Login.java
+ dev.asiluxserver.launcher.ui.panels.pages.Login
 dev/asiluxserver/launcher/ui/panels/pages/content/ContentPanel.java
  dev.asiluxserver.launcher.ui.panels.pages.content.ContentPanel
+dev/asiluxserver/launcher/ui/panel/Panel.java
+ dev.asiluxserver.launcher.ui.panel.Panel
 dev/asiluxserver/launcher/ui/PanelManager.java
  dev.asiluxserver.launcher.ui.PanelManager
-dev/asiluxserver/launcher/ui/panel/ITakePLace.java
- dev.asiluxserver.launcher.ui.panel.ITakePLace
 dev/asiluxserver/launcher/ui/panels/partials/TopBar.java
  dev.asiluxserver.launcher.ui.panels.partials.TopBar
 dev/asiluxserver/launcher/ui/panel/IPanel.java
  dev.asiluxserver.launcher.ui.panel.IPanel
+dev/asiluxserver/launcher/ui/panels/pages/content/Settings.java
+ dev.asiluxserver.launcher.ui.panels.pages.content.Settings
 dev/asiluxserver/launcher/Launcher.java
  dev.asiluxserver.launcher.Launcher
-dev/asiluxserver/launcher/ui/panels/pages/Login.java
- dev.asiluxserver.launcher.ui.panels.pages.Login
 dev/asiluxserver/launcher/ui/panels/pages/content/Home.java
  dev.asiluxserver.launcher.ui.panels.pages.content.Home
  dev.asiluxserver.launcher.ui.panels.pages.content.Home$1
@@ -31,3 +31,6 @@ dev/asiluxserver/launcher/ui/panels/pages/App.java
  dev.asiluxserver.launcher.ui.panels.pages.App$1
  dev.asiluxserver.launcher.ui.panels.pages.App$2
  dev.asiluxserver.launcher.ui.panels.pages.App$3
+ dev.asiluxserver.launcher.ui.panels.pages.App$4
+ dev.asiluxserver.launcher.ui.panels.pages.App$5
+ dev.asiluxserver.launcher.ui.panels.pages.App$6

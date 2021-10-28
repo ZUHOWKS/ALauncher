@@ -18,6 +18,7 @@ import oshi.SystemInfo;
 import oshi.hardware.GlobalMemory;
 
 public class Settings extends ContentPanel {
+
     private final Saver saver = Launcher.getInstance().getSaver();
     GridPane contentPane = new GridPane();
 
@@ -37,6 +38,8 @@ public class Settings extends ContentPanel {
 
         // Content
         contentPane.setStyle("-fx-background-color: transparent;");
+        contentPane.setMinWidth(480);
+        contentPane.setMaxWidth(1760);
         setCanTakeAllSize(contentPane);
         this.layout.getChildren().add(contentPane);
 
