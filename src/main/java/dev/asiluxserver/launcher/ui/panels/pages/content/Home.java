@@ -11,6 +11,8 @@ import fr.flowarg.flowupdater.download.IProgressCallback;
 import fr.flowarg.flowupdater.download.Step;
 import fr.flowarg.flowupdater.download.json.CurseFileInfos;
 import fr.flowarg.flowupdater.download.json.Mod;
+import fr.flowarg.flowupdater.download.json.OptifineInfo;
+import fr.flowarg.flowupdater.utils.ModFileDeleter;
 import fr.flowarg.flowupdater.utils.UpdaterOptions;
 import fr.flowarg.flowupdater.versions.AbstractForgeVersion;
 import fr.flowarg.flowupdater.versions.ForgeVersionBuilder;
@@ -351,22 +353,25 @@ public class Home extends ContentPanel{
                     .withVersionType(MinecraftInfos.VERSION_TYPE)
                     .build();
             final UpdaterOptions options = new UpdaterOptions.UpdaterOptionsBuilder()
-                    .withEnableCurseForgePlugin(true)
-                    .withEnableOptifineDownloaderPlugin(true)
+                    .withEnableCurseForgePlugin(false)
+                    .withEnableOptifineDownloaderPlugin(false)
                     .build();
 
-            List<CurseFileInfos> curseMods = CurseFileInfos.getFilesFromJson(MinecraftInfos.CURSE_MODS_LIST_URL);
+            //List<CurseFileInfos> curseMods = CurseFileInfos.getFilesFromJson(MinecraftInfos.CURSE_MODS_LIST_URL);
             List<Mod> mods = Mod.getModsFromJson(MinecraftInfos.MODS_LIST_URL);
 
             final AbstractForgeVersion forge = new ForgeVersionBuilder(MinecraftInfos.FORGE_VERSION_TYPE)
                     .withForgeVersion(MinecraftInfos.FORGE_VERSION)
-                    .withCurseMods(curseMods)
+                    .withLogger(Launcher.getInstance().getLogger())
+                    .withFileDeleter(new ModFileDeleter(true, "jei.jar"))
                     .withMods(mods)
                     .build();
+                    //.withCurseMods(curseMods)
+
 
             final FlowUpdater updater = new FlowUpdater.FlowUpdaterBuilder()
-                    .withVersion(vanillaVersion)
                     .withForgeVersion(forge)
+                    .withVanillaVersion(vanillaVersion)
                     .withLogger(Launcher.getInstance().getLogger())
                     .withProgressCallback(callback)
                     .withUpdaterOptions(options)
@@ -384,9 +389,9 @@ public class Home extends ContentPanel{
     public void startGame(String gameVersion) {
         GameInfos infos = new GameInfos(
                 "asiluxdev",
-                true,
-                new GameVersion(gameVersion, MinecraftInfos.OLL_GAME_TYPE.setNFVD(MinecraftInfos.OLL_FORGE_DISCRIMINATOR)),
-                new GameTweak[]{}
+                Launcher.getInstance().getLauncherDir(),
+                new GameVersion(gameVersion, MinecraftInfos.OLL_GAME_TYPE),
+                new GameTweak[]{GameTweak.FORGE}
         );
 
         try {

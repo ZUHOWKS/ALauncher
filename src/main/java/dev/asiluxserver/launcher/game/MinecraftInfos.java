@@ -15,11 +15,6 @@ public class MinecraftInfos {
     public static final String OPTIFINE_VERSION = "1.12.2_HD_U_G5";
 
     public static final GameType OLL_GAME_TYPE = GameType.V1_8_HIGHER;
-    public static final NewForgeVersionDiscriminator OLL_FORGE_DISCRIMINATOR = new NewForgeVersionDiscriminator(
-            "14.23.5.2855",
-            MinecraftInfos.GAME_VERSION,
-            ""
-    );
 
     public static final String CURSE_MODS_LIST_URL = "https://zuhowks.github.io/mods.json";
     public static final String MODS_LIST_URL = "https://zuhowks.github.io/mods.json";
