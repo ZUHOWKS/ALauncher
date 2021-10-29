@@ -461,6 +461,7 @@ public class Login extends Panel {
             connectionButton.setGraphic(microsoftIcone);
             connectWithMojang.set(false);
             connectWithMicrosoft.set(true);
+            //authenticateMS();
         });
 
         ImageView mojangImage = new ImageView(new Image("images/icone/mojang-icone.png"));
@@ -578,5 +579,31 @@ public class Login extends Panel {
             alert.setContentText(error.getMessage());
             alert.show();
         }
+    }
+
+    public void authenticateWebMS() {
+        MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
+        authenticator.loginWithAsyncWebview().whenComplete((response, error) -> {
+            if (error != null) {
+                Launcher.getInstance().getLogger().err(error.toString());
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setContentText(error.getMessage());
+                alert.show();
+                return;
+            }
+
+            saver.set("msAccessToken", response.getAccessToken());
+            saver.set("msRefreshToken", response.getRefreshToken());
+            saver.save();
+            Launcher.getInstance().setAuthInfos(new AuthInfos(
+                    response.getProfile().getName(),
+                    response.getAccessToken(),
+                    response.getProfile().getId()
+            ));
+            this.logger.info("Hello " + response.getProfile().getName());
+
+            panelManager.showPanel(new App());
+        });
     }
 }

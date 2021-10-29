@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'com.github.zuhowks'
-version '1.0.0'
+version '1.0.0-beta'
 
 repositories {
     mavenCentral()
@@ -33,9 +33,19 @@ dependencies {
 }
 
 application {
-    getMainClass().set('dev.asiluxserver.launcher.Main')
+    mainClass = 'dev.asiluxserver.launcher.Main'
 }
 
 compileJava {
     options.encoding = "UTF-8"
+}
+
+jar {
+    manifest.attributes.put('Main-Class', 'dev.asiluxserver.launcher.Main')
+
+    from {
+        configurations.compileClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
 }
