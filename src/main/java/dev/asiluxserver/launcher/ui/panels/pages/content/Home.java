@@ -6,12 +6,11 @@ import dev.asiluxserver.launcher.Launcher;
 import dev.asiluxserver.launcher.Main;
 import dev.asiluxserver.launcher.game.MinecraftInfos;
 import dev.asiluxserver.launcher.ui.PanelManager;
+import dev.asiluxserver.launcher.utils.ZProgressBar;
 import fr.flowarg.flowupdater.FlowUpdater;
 import fr.flowarg.flowupdater.download.IProgressCallback;
 import fr.flowarg.flowupdater.download.Step;
 import fr.flowarg.flowupdater.download.json.Mod;
-import fr.flowarg.flowupdater.utils.ModFileDeleter;
-import fr.flowarg.flowupdater.utils.UpdaterOptions;
 import fr.flowarg.flowupdater.versions.AbstractForgeVersion;
 import fr.flowarg.flowupdater.versions.ForgeVersionBuilder;
 import fr.flowarg.flowupdater.versions.VanillaVersion;
@@ -35,6 +34,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -48,7 +50,7 @@ import java.util.List;
 public class Home extends ContentPanel{
 
     private final Saver saver = Launcher.getInstance().getSaver();
-    ProgressBar progressBar = new ProgressBar();
+    ZProgressBar progressBar;
 
     GridPane contentPane = new GridPane();
     GridPane mainMenuPanel = new GridPane();
@@ -115,7 +117,6 @@ public class Home extends ContentPanel{
         asiluxView.setTranslateY(-25);
 
 
-
         stepLabel.setStyle("-fx-text-alignment: center; -fx-text-fill: rgb(255, 255, 255);");
         setAlignment(stepLabel, HPos.CENTER ,VPos.CENTER);
         setCanTakeAllSize(stepLabel);
@@ -128,15 +129,16 @@ public class Home extends ContentPanel{
         setCanTakeAllSize(fileLabel);
         fileLabel.setTranslateY(94);
 
-        //TODO: Barre de chargement
-        progressBar.setMinWidth(450);
-        progressBar.setMinHeight(18);
-        progressBar.setMaxWidth(450);
-        progressBar.setMaxHeight(18);
-        progressBar.getStylesheets().addAll(Main.class.getResource("/css/content/progress-bar.css").toExternalForm());
-        setAlignment(progressBar, HPos.CENTER ,VPos.CENTER);
-        progressBar.setTranslateY(112);
 
+        progressBar = new ZProgressBar(450, 18);
+        setGrow(progressBar);
+        setAlignment(progressBar, HPos.CENTER ,VPos.CENTER);
+        progressBar.setBackgroundColor(Color.rgb(67,67,67,0.4));
+        Stop[] stops = new Stop[]{new Stop(0, Color.rgb(100, 142, 56)), new Stop(1, Color.rgb(155, 190, 82))};
+        LinearGradient lg = new LinearGradient(0,0,1,0,true, CycleMethod.NO_CYCLE, stops);
+        progressBar.setForegroundColor(lg);
+        progressBar.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(67, 67, 67, 0.15), 12, 0, 0, 0));
+        progressBar.setTranslateY(112);
 
 
         FontAwesomeIconView playIcone = new FontAwesomeIconView(FontAwesomeIcon.PLAY);
@@ -201,7 +203,7 @@ public class Home extends ContentPanel{
         });
 
 
-        pane.getChildren().addAll(asiluxView, playButton, playLabel);
+        pane.getChildren().addAll(asiluxView, playButton, playLabel, progressBar);
     }
 
     /* Tableau des News */
@@ -337,7 +339,7 @@ public class Home extends ContentPanel{
     private void play() {
         isDownloading = true;
         setProgress(0, 0);
-        mainMenuPanel.getChildren().addAll(progressBar, stepLabel, fileLabel);
+        mainMenuPanel.getChildren().addAll(stepLabel, fileLabel);
 
         Platform.runLater(() -> new Thread(this::update).start());
     }
@@ -459,7 +461,7 @@ public class Home extends ContentPanel{
     }
 
     public void setProgress(double current, double max) {
-        this.progressBar.setProgress(current / max);
+        this.progressBar.setProgress(current, max);
     }
 
     public boolean isDownloading() {

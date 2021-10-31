@@ -31,11 +31,6 @@ public class Settings extends ContentPanel {
     public void init(PanelManager panelManager) {
         super.init(panelManager);
 
-        // Background
-        this.layout.setStyle("-fx-background-color: rgb(215, 220, 220);");
-        this.layout.setPadding(new Insets(40));
-        setCanTakeAllSize(this.layout);
-
         // Content
         contentPane.setStyle("-fx-background-color: transparent;");
         contentPane.setMinWidth(480);
