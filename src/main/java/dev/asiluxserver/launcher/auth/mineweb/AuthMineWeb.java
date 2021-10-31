@@ -2,6 +2,7 @@ package dev.asiluxserver.launcher.auth.mineweb;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import dev.asiluxserver.launcher.Launcher;
 import dev.asiluxserver.launcher.Main;
 
 import java.io.BufferedReader;
@@ -32,13 +33,13 @@ public class AuthMineWeb {
             while ((inputLine = in.readLine()) != null){
                 switch (inputLine){
                     case "success_ok":
-                        Main.Logger.log("Connexion OK.");
+                        Launcher.getInstance().getLogger().info("Connexion OK.");
                         setHash(getSHA256(password));
                         setPseudo(pseudo);
                         setConnected(true);
                         break;
                     case "error_password":
-                        Main.Logger.log("Erreur: invalid Password / Username.");
+                        Launcher.getInstance().getLogger().info("Erreur: invalid Password / Username.");
                     default:
                         break;
                 }
@@ -47,7 +48,7 @@ public class AuthMineWeb {
             in.close();
 
         } catch (Exception e){
-            Main.Logger.warn(e.getMessage());
+            Launcher.getInstance().getLogger().warn(e.getMessage());
         }
     }
 
@@ -65,11 +66,11 @@ public class AuthMineWeb {
                     return String.valueOf(jsonObject.get(info)).replaceAll("\"", "");
                 }
             } catch (Exception e) {
-                Main.Logger.warn(e.getMessage());
+                Launcher.getInstance().getLogger().warn(e.getMessage());
             }
         }
         else{
-            Main.Logger.warn("Vous n'êtes pas connecté.");
+            Launcher.getInstance().getLogger().warn("Vous n'êtes pas connecté.");
         }
         return "";
     }
