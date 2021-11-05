@@ -1,9 +1,9 @@
 package dev.asiluxserver.launcher.auth.mineweb;
 
-import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+
 import dev.asiluxserver.launcher.Launcher;
-import dev.asiluxserver.launcher.Main;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -13,7 +13,6 @@ import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class AuthMineWeb {
@@ -62,8 +61,10 @@ public class AuthMineWeb {
                 BufferedReader in = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
                 String inputLine;
                 while ((inputLine = in.readLine()) != null) {
-                    JsonObject jsonObject = (JsonObject) new JsonParser().parse(inputLine);
-                    return String.valueOf(jsonObject.get(info)).replaceAll("\"", "");
+                    JsonElement jsonElement = JsonParser.parseString(inputLine);
+                    return String.valueOf(
+                            jsonElement.getAsJsonObject().get(info))
+                            .replaceAll("\"", "");
                 }
             } catch (Exception e) {
                 Launcher.getInstance().getLogger().warn(e.getMessage());

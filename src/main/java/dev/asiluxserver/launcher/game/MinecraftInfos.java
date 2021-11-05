@@ -2,7 +2,7 @@ package dev.asiluxserver.launcher.game;
 
 import fr.flowarg.flowupdater.versions.ForgeVersionBuilder;
 import fr.flowarg.flowupdater.versions.VersionType;
-import fr.flowarg.openlauncherlib.NewForgeVersionDiscriminator;
+
 import fr.theshark34.openlauncherlib.minecraft.GameType;
 
 public class MinecraftInfos {
