@@ -1,10 +1,11 @@
 package dev.asiluxserver.launcher.ui.panels.partials;
 
-
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.panel.Panel;
+
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -39,7 +40,7 @@ public class TopBar extends Panel {
          */
         // TopBar: left side
         ImageView imageView = new ImageView();
-        imageView.setImage(new Image("images/asilux-icone.png"));
+        imageView.setImage(new Image("images/asilux-icon.png"));
         imageView.setPreserveRatio(true);
         imageView.setFitHeight(25);
         setLeft(imageView);

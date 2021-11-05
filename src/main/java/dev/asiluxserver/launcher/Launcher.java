@@ -1,7 +1,5 @@
 package dev.asiluxserver.launcher;
 
-
-
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.panels.pages.App;
 import dev.asiluxserver.launcher.ui.panels.pages.Login;
@@ -18,7 +16,6 @@ import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
 import fr.theshark34.openlauncherlib.minecraft.util.GameDirGenerator;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.nio.file.Path;

@@ -8,7 +8,6 @@ import dev.asiluxserver.launcher.ui.PanelManager;
 
 import fr.theshark34.openlauncherlib.util.Saver;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;

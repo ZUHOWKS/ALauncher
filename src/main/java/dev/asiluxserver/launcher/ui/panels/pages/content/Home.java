@@ -2,11 +2,15 @@ package dev.asiluxserver.launcher.ui.panels.pages.content;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+
 import dev.asiluxserver.launcher.Launcher;
 import dev.asiluxserver.launcher.Main;
 import dev.asiluxserver.launcher.game.MinecraftInfos;
 import dev.asiluxserver.launcher.ui.PanelManager;
+import dev.asiluxserver.launcher.ui.assets.Colors;
+import dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow;
 import dev.asiluxserver.launcher.utils.ZProgressBar;
+
 import fr.flowarg.flowupdater.FlowUpdater;
 import fr.flowarg.flowupdater.download.IProgressCallback;
 import fr.flowarg.flowupdater.download.Step;
@@ -14,10 +18,12 @@ import fr.flowarg.flowupdater.download.json.Mod;
 import fr.flowarg.flowupdater.versions.AbstractForgeVersion;
 import fr.flowarg.flowupdater.versions.ForgeVersionBuilder;
 import fr.flowarg.flowupdater.versions.VanillaVersion;
+
 import fr.theshark34.openlauncherlib.external.ExternalLaunchProfile;
 import fr.theshark34.openlauncherlib.external.ExternalLauncher;
 import fr.theshark34.openlauncherlib.minecraft.*;
 import fr.theshark34.openlauncherlib.util.Saver;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -43,6 +49,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
+import java.net.URL;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -75,7 +82,7 @@ public class Home extends ContentPanel{
         setCanTakeAllSize(contentPane);
         this.layout.getChildren().add(contentPane);
 
-        /* ACCEUIL */
+        /* ACCUEIL */
         ColumnConstraints mainContraints = new ColumnConstraints();
         mainContraints.setHalignment(HPos.RIGHT);
         mainContraints.setMinWidth(480);
@@ -90,7 +97,7 @@ public class Home extends ContentPanel{
         mainMenuPanel.setMinHeight(700);
         addToMainMenuPanel(mainMenuPanel);
 
-        /* NEWS ACCEUIL */
+        /* NEWS ACCUEIL */
         GridPane actuMainMenuPanel = new GridPane();
         setGrow(actuMainMenuPanel);
         setAlignment(actuMainMenuPanel, HPos.RIGHT, VPos.CENTER);
@@ -110,7 +117,7 @@ public class Home extends ContentPanel{
         ImageView asiluxView = new ImageView(asiluxLogo);
         asiluxView.setFitWidth(500);
         asiluxView.setFitHeight(250);
-        asiluxView.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(210, 210, 210, 0.2), 4, 0, 0, 0));
+        asiluxView.setEffect(new BlurDropShadow(Colors.GREY_2, 4, 0));
         setGrow(asiluxView);
         GridPane.setValignment(asiluxView, VPos.CENTER);
         GridPane.setHalignment(asiluxView, HPos.CENTER);
@@ -133,42 +140,42 @@ public class Home extends ContentPanel{
         progressBar = new ZProgressBar(450, 18);
         setGrow(progressBar);
         setAlignment(progressBar, HPos.CENTER ,VPos.CENTER);
-        progressBar.setBackgroundColor(Color.rgb(67,67,67,0.4));
-        Stop[] stops = new Stop[]{new Stop(0, Color.rgb(100, 142, 56)), new Stop(1, Color.rgb(155, 190, 82))};
-        LinearGradient lg = new LinearGradient(0,0,1,0,true, CycleMethod.NO_CYCLE, stops);
+        progressBar.setBackgroundColor(Colors.DARK_GREY_1.getColor());
+        Stop[] stops = new Stop[]{
+                new Stop(0, Colors.LIGHT_GREEN_2.getColor()),
+                new Stop(1, Colors.LIGHT_GREEN_4.getColor())
+        };
+        LinearGradient lg = new LinearGradient(
+                0,0,1,0,true,
+                CycleMethod.NO_CYCLE, stops
+        );
         progressBar.setForegroundColor(lg);
-        progressBar.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(67, 67, 67, 0.15), 12, 0, 0, 0));
+        progressBar.setEffect(new BlurDropShadow(Colors.DARK_GREY_2, 12, 0));
         progressBar.setTranslateY(112);
 
 
-        FontAwesomeIconView playIcone = new FontAwesomeIconView(FontAwesomeIcon.PLAY);
-        playIcone.setFill(Color.rgb(255,255,255));
-        playIcone.setScaleX(2.7);
-        playIcone.setScaleY(2.7);
-        playIcone.setTranslateX(-15);
+        FontAwesomeIconView playIcon = new FontAwesomeIconView(FontAwesomeIcon.PLAY);
+        playIcon.setFill(Colors.DEFAULT_WHITE.getColor());
+        playIcon.setScaleX(2.7);
+        playIcon.setScaleY(2.7);
+        playIcon.setTranslateX(-15);
 
         Label playLabel = new Label("JOUER");
         playLabel.setStyle("-fx-font-size: 42;");
-        playLabel.setTextFill(Color.rgb(255,255,255));
-        playLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 6, 0, 0, 0));
-        playLabel.setGraphic(playIcone);
+        playLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
+        playLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 6, 0));
+        playLabel.setGraphic(playIcon);
         setGrow(playLabel);
         setAlignment(playLabel, HPos.CENTER ,VPos.CENTER);
         playLabel.setTranslateY(170);
         playLabel.setTranslateX(15);
-        playLabel.setOnMouseEntered(e-> {
-            this.layout.setCursor(Cursor.HAND);
-        });
-        playLabel.setOnMouseExited(e-> {
-            this.layout.setCursor(Cursor.DEFAULT);
-        });
+        playLabel.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
+        playLabel.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
         playLabel.setOnMouseClicked(e-> {
             Timeline clickedAnimation = new Timeline(
                     new KeyFrame(Duration.ZERO, new KeyValue(playButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#74923AFF"), CornerRadii.EMPTY, Insets.EMPTY)))),
                     new KeyFrame(Duration.millis(700), new KeyValue(playButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#91B248FF"), CornerRadii.EMPTY, Insets.EMPTY)))));
-            clickedAnimation.setOnFinished(ev -> {
-                playButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 32; -fx-text-fill: rgba(255,255,255,1);");
-            });
+            clickedAnimation.setOnFinished(ev -> playButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 32; -fx-text-fill: rgba(255,255,255,1);"));
             clickedAnimation.play();
             if (!isDownloading())
                 this.play();
@@ -180,23 +187,17 @@ public class Home extends ContentPanel{
         playButton.setMaxHeight(60);
         playButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 34;  -fx-text-fill: rgba(255,255,255,1);");
         playButton.setTextAlignment(TextAlignment.CENTER);
-        playButton.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(37, 37, 37, 0.2), 3, 0.3, 0, 0));
+        playButton.setEffect(new BlurDropShadow(Colors.DARK_GREY_4, 3, 0.3));
         setGrow(playButton);
         setAlignment(playButton, HPos.CENTER ,VPos.CENTER);
         playButton.setTranslateY(170);
-        playButton.setOnMouseEntered(e-> {
-            this.layout.setCursor(Cursor.HAND);
-        });
-        playButton.setOnMouseExited(e-> {
-            this.layout.setCursor(Cursor.DEFAULT);
-        });
+        playButton.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
+        playButton.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
         playButton.setOnMouseClicked(e-> {
             Timeline clickedAnimation = new Timeline(
                     new KeyFrame(Duration.ZERO, new KeyValue(playButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#74923AFF"), CornerRadii.EMPTY, Insets.EMPTY)))),
                     new KeyFrame(Duration.millis(700), new KeyValue(playButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#91B248FF"), CornerRadii.EMPTY, Insets.EMPTY)))));
-            clickedAnimation.setOnFinished(ev -> {
-                playButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 32; -fx-text-fill: rgba(255,255,255,1);");
-            });
+            clickedAnimation.setOnFinished(ev -> playButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 32; -fx-text-fill: rgba(255,255,255,1);"));
             clickedAnimation.play();
             if (!isDownloading())
                 this.play();
@@ -215,7 +216,7 @@ public class Home extends ContentPanel{
         setAlignment(windowsBackground, HPos.CENTER, VPos.BOTTOM);
         windowsBackground.setWidth(220);
         windowsBackground.setHeight(340);
-        windowsBackground.setFill(Color.rgb(27,27,27,0.95));
+        windowsBackground.setFill(Colors.BLACK_1.getColor());
         windowsBackground.setArcHeight(25);
         windowsBackground.setArcWidth(25);
         windowsBackground.setSmooth(true);
@@ -244,7 +245,10 @@ public class Home extends ContentPanel{
         ScrollPane scrollPane = new ScrollPane();
         setGrow(scrollPane);
         setAlignment(scrollPane, HPos.CENTER, VPos.CENTER);
-        scrollPane.getStylesheets().addAll(Main.class.getResource("/css/scroll-pane.css").toExternalForm());
+        URL resource = Main.class.getResource("/css/scroll-pane.css");
+        if (resource != null) {
+            scrollPane.getStylesheets().addAll(resource.toExternalForm());
+        }
 
         /* SCROLL BAR */
         VBox vBox = new VBox();
@@ -260,16 +264,16 @@ public class Home extends ContentPanel{
         Label NewsTitle = new Label("PATCH NOTE");
         setGrow(NewsTitle);
         setAlignment(NewsTitle, HPos.CENTER ,VPos.TOP);
-        NewsTitle.setTextFill(Color.rgb(255,255,255));
+        NewsTitle.setTextFill(Colors.DEFAULT_WHITE.getColor());
         NewsTitle.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
-        NewsTitle.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 6, 0, 0, 0));
+        NewsTitle.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 6, 0));
         NewsTitle.setTranslateY(-35);
 
         /* SEPARATOR */
         Separator separator1 = new Separator();
         setGrow(separator1);
         setAlignment(separator1, HPos.CENTER ,VPos.TOP);
-        separator1.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 12, 0, 0, 0));
+        separator1.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 12, 0));
         separator1.setOpacity(10);
         separator1.setMaxHeight(38);
         separator1.setMinHeight(38);
@@ -280,7 +284,7 @@ public class Home extends ContentPanel{
         Separator separator2 = new Separator();
         setGrow(separator2);
         setAlignment(separator2, HPos.CENTER ,VPos.BOTTOM);
-        separator2.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 12, 0, 0, 0));
+        separator2.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 12, 0));
         separator2.setOpacity(10);
         separator2.setMaxHeight(38);
         separator2.setMinHeight(38);
@@ -289,7 +293,8 @@ public class Home extends ContentPanel{
         separator2.setTranslateY(25);
 
         /* LABEL NEWS */
-        //TODO: METHODE STRING BUILDER | Créer une méthode afin de lire un fichier (le fichier des news), qui va créer un string builder avec une longueur de chaine de caractère maximale de 18.
+        //TODO: METHODE STRING BUILDER | Créer une méthode afin de lire un fichier (le fichier des news),
+        // qui va créer un string builder avec une longueur de chaine de caractère maximale de 18.
         Label newsLabel = new Label("[ANNONCE] BETA OUVERTE\n" +
                 "..................\n" +
                 "..................\n" +
@@ -317,8 +322,8 @@ public class Home extends ContentPanel{
         setGrow(newsLabel);
         setAlignment(newsLabel, HPos.CENTER ,VPos.TOP);
         newsLabel.setStyle("-fx-font-size: 14;");
-        newsLabel.setTextFill(Color.rgb(255,255,255));
-        newsLabel.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.rgb(255, 255, 255, 0.3), 6, 0, 0, 0));
+        newsLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
+        newsLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 6, 0));
         newsLabel.setTranslateX(2);
         newsLabel.setTranslateY(-45);
 
