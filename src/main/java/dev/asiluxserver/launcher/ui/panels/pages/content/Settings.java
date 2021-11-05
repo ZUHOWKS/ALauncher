@@ -55,7 +55,10 @@ public class Settings extends ContentPanel {
 
         // RAM
         Label ramLabel = new Label("Mémoire max");
-        ramLabel.setStyle("-fx-text-fill: rgb(255, 255, 255); -fx-text-size: 25;");
+        ramLabel.setStyle(
+                "-fx-text-fill: rgb(255, 255, 255);" +
+                        "-fx-text-size: 25;"
+        );
         setLeft(ramLabel);
         setCanTakeAllSize(ramLabel);
         setTop(ramLabel);
@@ -69,7 +72,10 @@ public class Settings extends ContentPanel {
         GlobalMemory memory = systemInfo.getHardware().getMemory();
 
         ComboBox<String> comboBox = new ComboBox<>();
-        comboBox.setStyle("-fx-text-fill: rgb(20, 25, 25); -fx-font-size: 12px;");
+        comboBox.setStyle(
+                "-fx-text-fill: rgb(20, 25, 25);" +
+                        "-fx-font-size: 12px;"
+        );
         for(int i = 512; i <= Math.ceil(memory.getTotal() / Math.pow(1024, 2)); i+=512) {
             comboBox.getItems().add(i/1024.0+" Go");
         }
@@ -103,7 +109,11 @@ public class Settings extends ContentPanel {
          * Save Button
          */
         Button saveBtn = new Button("Enregistrer");
-        saveBtn.setStyle("-fx-background-color: #91B248FF; -fx-text-fill: rgb(255, 255, 255); -fx-text-size: 25;");
+        saveBtn.setStyle(
+                "-fx-background-color: #91B248FF;" +
+                        "-fx-text-fill: rgb(255, 255, 255);" +
+                        "-fx-text-size: 25;"
+        );
         FontAwesomeIconView iconView = new FontAwesomeIconView(FontAwesomeIcon.SAVE);
         iconView.getStyleClass().add("save-icon");
         saveBtn.setGraphic(iconView);

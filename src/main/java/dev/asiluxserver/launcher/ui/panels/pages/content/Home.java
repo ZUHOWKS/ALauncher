@@ -124,13 +124,19 @@ public class Home extends ContentPanel{
         asiluxView.setTranslateY(-25);
 
 
-        stepLabel.setStyle("-fx-text-alignment: center; -fx-text-fill: rgb(255, 255, 255);");
+        stepLabel.setStyle(
+                "-fx-text-alignment: center;" +
+                        "-fx-text-fill: rgb(255, 255, 255);"
+        );
         setAlignment(stepLabel, HPos.CENTER ,VPos.CENTER);
         setCanTakeAllSize(stepLabel);
         stepLabel.setTranslateY(80);
 
 
-        fileLabel.setStyle("-fx-text-alignment: center; -fx-text-fill: rgb(255, 255, 255);");
+        fileLabel.setStyle(
+                "-fx-text-alignment: center;" +
+                        "-fx-text-fill: rgb(255, 255, 255);"
+        );
         setCenterH(fileLabel);
         setAlignment(fileLabel, HPos.CENTER ,VPos.CENTER);
         setCanTakeAllSize(fileLabel);
@@ -173,9 +179,35 @@ public class Home extends ContentPanel{
         playLabel.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
         playLabel.setOnMouseClicked(e-> {
             Timeline clickedAnimation = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(playButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#74923AFF"), CornerRadii.EMPTY, Insets.EMPTY)))),
-                    new KeyFrame(Duration.millis(700), new KeyValue(playButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#91B248FF"), CornerRadii.EMPTY, Insets.EMPTY)))));
-            clickedAnimation.setOnFinished(ev -> playButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 32; -fx-text-fill: rgba(255,255,255,1);"));
+                    new KeyFrame(
+                            Duration.ZERO,
+                            new KeyValue(
+                                    playButton.backgroundProperty(),
+                                    new Background(
+                                            new BackgroundFill(Color.valueOf("#74923AFF"),
+                                            CornerRadii.EMPTY, Insets.EMPTY
+                                            )
+                                    )
+                            )
+                    ),
+                    new KeyFrame(
+                            Duration.millis(700),
+                            new KeyValue(
+                                    playButton.backgroundProperty(),
+                                    new Background(
+                                            new BackgroundFill(Color.valueOf("#91B248FF"),
+                                                    CornerRadii.EMPTY, Insets.EMPTY
+                                            )
+                                    )
+                            )
+                    )
+            );
+            clickedAnimation.setOnFinished(ev -> playButton.setStyle(
+                    "-fx-background-color: #91B248FF;" +
+                            "-fx-font-size: 32;" +
+                            "-fx-text-fill: rgba(255,255,255,1);"
+                    )
+            );
             clickedAnimation.play();
             if (!isDownloading())
                 this.play();
@@ -185,7 +217,11 @@ public class Home extends ContentPanel{
         playButton.setMinHeight(60);
         playButton.setMaxWidth(220);
         playButton.setMaxHeight(60);
-        playButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 34;  -fx-text-fill: rgba(255,255,255,1);");
+        playButton.setStyle(
+                "-fx-background-color: #91B248FF;" +
+                        "-fx-font-size: 34; " +
+                        "-fx-text-fill: rgba(255,255,255,1);"
+        );
         playButton.setTextAlignment(TextAlignment.CENTER);
         playButton.setEffect(new BlurDropShadow(Colors.DARK_GREY_4, 3, 0.3));
         setGrow(playButton);
@@ -195,9 +231,31 @@ public class Home extends ContentPanel{
         playButton.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
         playButton.setOnMouseClicked(e-> {
             Timeline clickedAnimation = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(playButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#74923AFF"), CornerRadii.EMPTY, Insets.EMPTY)))),
-                    new KeyFrame(Duration.millis(700), new KeyValue(playButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#91B248FF"), CornerRadii.EMPTY, Insets.EMPTY)))));
-            clickedAnimation.setOnFinished(ev -> playButton.setStyle("-fx-background-color: #91B248FF; -fx-font-size: 32; -fx-text-fill: rgba(255,255,255,1);"));
+                    new KeyFrame(Duration.ZERO,
+                            new KeyValue(playButton.backgroundProperty(),
+                                    new Background(
+                                            new BackgroundFill(Color.valueOf("#74923AFF"),
+                                                    CornerRadii.EMPTY, Insets.EMPTY
+                                            )
+                                    )
+                            )
+                    ),
+                    new KeyFrame(Duration.millis(700),
+                            new KeyValue(playButton.backgroundProperty(),
+                                    new Background(
+                                            new BackgroundFill(Color.valueOf("#91B248FF"),
+                                                    CornerRadii.EMPTY, Insets.EMPTY
+                                            )
+                                    )
+                            )
+                    )
+            );
+            clickedAnimation.setOnFinished(
+                    ev -> playButton.setStyle(
+                            "-fx-background-color: #91B248FF;" +
+                                    "-fx-font-size: 32;" +
+                                    "-fx-text-fill: rgba(255,255,255,1);")
+            );
             clickedAnimation.play();
             if (!isDownloading())
                 this.play();

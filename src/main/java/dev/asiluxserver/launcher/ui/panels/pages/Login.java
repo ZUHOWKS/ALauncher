@@ -82,7 +82,10 @@ public class Login extends Panel {
         GridPane.setVgrow(loginPanel, Priority.ALWAYS);
         GridPane.setHalignment(loginPanel, HPos.CENTER);
         GridPane.setValignment(loginPanel, VPos.CENTER);
-        loginPanel.setStyle("-fx-background-color: rgba(0,0,0,0); -fx-opacity: 100%;");
+        loginPanel.setStyle(
+                "-fx-background-color: rgba(0,0,0,0);" +
+                        "-fx-opacity: 100%;"
+        );
 
         RowConstraints bottomConstraints = new RowConstraints();
         bottomConstraints.setValignment(VPos.BOTTOM);
@@ -171,7 +174,10 @@ public class Login extends Panel {
         setGrow(noAccount);
         setAlignment(noAccount, HPos.CENTER, VPos.TOP);
         noAccount.setTranslateY(6);
-        noAccount.setStyle("-fx-text-fill: #ffffff; -fx-font-size: 14px;");
+        noAccount.setStyle(
+                "-fx-text-fill: #ffffff;" +
+                        "-fx-font-size: 14px;"
+        );
 
         /* Text pour S'inscrire avec action */
         Label registerHere = new Label("S'inscrire");
@@ -247,7 +253,11 @@ public class Login extends Panel {
         /* Text Field Nom d'utilisateur + Separator */
         setGrow(usernameField);
         setAlignment(usernameField, HPos.LEFT ,VPos.TOP);
-        usernameField.setStyle("-fx-background-color: rgba(37, 37, 37, 0.8); -fx-font-size: 16; -fx-text-fill: rgba(255,255,255,1);");
+        usernameField.setStyle(
+                "-fx-background-color: rgba(37, 37, 37, 0.8);" +
+                        "-fx-font-size: 16;" +
+                        "-fx-text-fill: rgba(255,255,255,1);"
+        );
         usernameField.setMaxHeight(38);
         usernameField.setMinHeight(38);
         usernameField.setMaxWidth(268);
@@ -295,7 +305,11 @@ public class Login extends Panel {
         passwordField.setMinHeight(38);
         passwordField.setMaxWidth(268);
         passwordField.setMinWidth(268);
-        passwordField.setStyle("-fx-background-color: rgba(37, 37, 37, 0.8); -fx-font-size: 16; -fx-text-fill: rgba(255,255,255,1);");
+        passwordField.setStyle(
+                "-fx-background-color: rgba(37, 37, 37, 0.8);" +
+                        "-fx-font-size: 16;" +
+                        "-fx-text-fill: rgba(255,255,255,1);"
+        );
         setGrow(passwordField);
         setAlignment(passwordField, HPos.LEFT ,VPos.TOP);
         passwordField.setTranslateX(6d);
@@ -371,7 +385,12 @@ public class Login extends Panel {
         connectionButton.setMinHeight(40);
         connectionButton.setMaxWidth(268);
         connectionButton.setMinWidth(268);
-        connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);");
+        connectionButton.setStyle(
+                "-fx-background-color: #91B848FF;" +
+                        "-fx-font-size: 20;" +
+                        "-fx-border-radius: 2px;" +
+                        "-fx-text-fill: rgba(255,255,255,1);"
+        );
         connectionButton.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
         connectionButton.setGraphic(mojangIcon);
         connectionButton.setTextAlignment(TextAlignment.CENTER);
@@ -389,9 +408,35 @@ public class Login extends Panel {
                 this.authenticateMS(usernameField.getText(), passwordField.getText());
             }
             Timeline clickedAnimation = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(connectionButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#74923AFF"), CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY)))),
-                    new KeyFrame(Duration.millis(500), new KeyValue(connectionButton.backgroundProperty(), new Background(new BackgroundFill(Color.valueOf("#91B848FF"), CornerRadii.EMPTY, Insets.EMPTY)))));
-            clickedAnimation.setOnFinished(ev -> connectionButton.setStyle("-fx-background-color: #91B848FF; -fx-font-size: 20; -fx-border-radius: 2px; -fx-text-fill: rgba(255,255,255,1);"));
+                    new KeyFrame(
+                            Duration.ZERO,
+                            new KeyValue(connectionButton.backgroundProperty(),
+                                    new Background(
+                                            new BackgroundFill(Color.valueOf("#74923AFF"),
+                                                    CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY
+                                            )
+                                    )
+                            )
+                    ),
+                    new KeyFrame(
+                            Duration.millis(500),
+                            new KeyValue(connectionButton.backgroundProperty(),
+                                    new Background(
+                                            new BackgroundFill(Color.valueOf("#91B848FF"),
+                                                    CornerRadii.EMPTY, Insets.EMPTY
+                                            )
+                                    )
+                            )
+                    )
+            );
+            clickedAnimation.setOnFinished(
+                    ev -> connectionButton.setStyle(
+                            "-fx-background-color: #91B848FF;" +
+                                    "-fx-font-size: 20;" +
+                                    "-fx-border-radius: 2px;" +
+                                    "-fx-text-fill: rgba(255,255,255,1);"
+                    )
+            );
             clickedAnimation.play();
 
         });
@@ -490,9 +535,13 @@ public class Login extends Panel {
         */
         topPanel.getChildren().addAll(connectionLabel);
         bottomPanel.getChildren().addAll(noAccount, registerHere);
-        middlePanel.getChildren().addAll(usernameLabel, usernameField, usernameSeparator, errorUsernameLabel,
-                passwordLabel, passwordField, passwordSeparator, errorPasswordLabel, forgottenPasswordLabel, connectionButton,
-                connectionChoseS2, connectionChoseS3, connectionWithLabel, microsoftImage, mojangImage, asiluxImage);
+        middlePanel.getChildren().addAll(
+                usernameLabel, usernameField, usernameSeparator, errorUsernameLabel,
+                passwordLabel, passwordField, passwordSeparator, errorPasswordLabel,
+                forgottenPasswordLabel,
+                connectionButton, connectionChoseS2, connectionChoseS3, connectionWithLabel,
+                microsoftImage, mojangImage, asiluxImage
+        );
         this.layout.getChildren().add(loginPanel);
 
     }
@@ -522,7 +571,9 @@ public class Login extends Panel {
     public void authenticate(String user, String password) {
 
         if (connectWithMojang.get()) {
-            Authenticator authenticator = new Authenticator(Authenticator.MOJANG_AUTH_URL, AuthPoints.NORMAL_AUTH_POINTS);
+            Authenticator authenticator = new Authenticator(
+                    Authenticator.MOJANG_AUTH_URL, AuthPoints.NORMAL_AUTH_POINTS
+            );
 
             try {
                 AuthResponse response = authenticator.authenticate(AuthAgent.MINECRAFT, user, password, null);

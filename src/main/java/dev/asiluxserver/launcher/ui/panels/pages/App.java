@@ -277,7 +277,9 @@ public class App extends Panel {
         updateLabel.setOnMouseEntered(e-> {
             this.layout.setCursor(Cursor.HAND);
             updateLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_1, 5, 0));
-            Transition transitionScale = scaleUp(updateLabel, Duration.millis(500), 1.125, 0.003, 0.05, 0);
+            Transition transitionScale = scaleUp(
+                    updateLabel, Duration.millis(500), 1.125, 0.003, 0.05, 0
+            );
             Transition ttX = translateX(updateLabel, Duration.millis(500), 28, 0.4);
             ttX.play();
             transitionScale.play();
@@ -309,7 +311,9 @@ public class App extends Panel {
         settingsLabel.setOnMouseEntered(e-> {
             this.layout.setCursor(Cursor.HAND);
             settingsLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_1, 5, 0));
-            Transition transitionScale = scaleUp(settingsLabel, Duration.millis(500), 1.125, 0.003, 0.05, 0);
+            Transition transitionScale = scaleUp(
+                    settingsLabel, Duration.millis(500), 1.125, 0.003, 0.05, 0
+            );
             Transition ttX = translateX(settingsLabel, Duration.millis(500), 28, 0.4);
             ttX.play();
             transitionScale.play();
@@ -335,7 +339,11 @@ public class App extends Panel {
         logOutBtn.setMinHeight(35);
         logOutBtn.setMaxWidth(120);
         logOutBtn.setMaxHeight(35);
-        logOutBtn.setStyle("-fx-background-color: #EE494E; -fx-font-size: 14; -fx-text-fill: rgba(255,255,255,1);");
+        logOutBtn.setStyle(
+                "-fx-background-color: #EE494E;" +
+                        "-fx-font-size: 14;" +
+                        "-fx-text-fill: rgba(255,255,255,1);"
+        );
         logOutBtn.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 14));
         logOutBtn.setTextFill(Colors.DEFAULT_WHITE.getColor());
         logOutBtn.setGraphic(logOutIcon);
