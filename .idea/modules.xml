@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/asilux-launcher-dev.iml" filepath="$PROJECT_DIR$/.idea/modules/asilux-launcher-dev.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/asilux-launcher-dev.main.iml" filepath="$PROJECT_DIR$/.idea/modules/asilux-launcher-dev.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/asilux-launcher-dev.test.iml" filepath="$PROJECT_DIR$/.idea/modules/asilux-launcher-dev.test.iml" />
+    </modules>
+  </component>
+</project>

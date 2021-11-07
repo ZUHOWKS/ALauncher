@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="asilux-launcher-dev:test" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="com.github.zuhowks" external.system.module.type="sourceSet" external.system.module.version="1.0.1-beta" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <output-test url="file://$MODULE_DIR$/../../build/classes/java/test" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../src/test" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="asilux-launcher-dev.main" />
+    <orderEntry type="library" name="Gradle: fr.litarvan:openauth:1.1.2" level="project" />
+    <orderEntry type="library" name="Gradle: de.jensd:fontawesomefx:8.9" level="project" />
+    <orderEntry type="library" name="Gradle: fr.flowarg:flowupdater:1.5.0" level="project" />
+    <orderEntry type="library" name="Gradle: fr.flowarg:openlauncherlib:3.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.oshi:oshi-core:5.8.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.goxr3plus:FX-BorderlessScene:4.4.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.8.8" level="project" />
+    <orderEntry type="library" name="Gradle: fr.flowarg:flowmultitools:1.4.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains:annotations:22.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: net.java.dev.jna:jna-platform:5.9.0" level="project" />
+    <orderEntry type="library" name="Gradle: net.java.dev.jna:jna:5.9.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.32" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.commons:commons-compress:1.21" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.json:json:20210307" level="project" />
+  </component>
+  <component name="TestModuleProperties" production-module="asilux-launcher-dev.main" />
+</module>
