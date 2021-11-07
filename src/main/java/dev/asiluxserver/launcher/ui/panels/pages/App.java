@@ -118,7 +118,6 @@ public class App extends Panel {
         setCenterH(avatarView);
         avatarView.setTranslateY(15d);
 
-
         avatarView.setOnMouseEntered(e-> {
 
             //Change User Cursor
@@ -151,10 +150,7 @@ public class App extends Panel {
                     }
                 }
             };
-
-            if (avatarView.getScaleX() < 1.17d && avatarView.getScaleY() < 1.17d) {
-                avatarUpScale.play();
-            }
+            avatarUpScale.play();
         });
 
         avatarView.setOnMouseExited(e-> {
@@ -188,10 +184,7 @@ public class App extends Panel {
                     }
                 }
             };
-
-            if (avatarView.getScaleX() > 1 && avatarView.getScaleY() > 1) {
-                avatarDownScale.play();
-            }
+            avatarDownScale.play();
         });
 
         /* TITLE HOME */
@@ -453,6 +446,8 @@ public class App extends Panel {
         }
     }
 
+    /* ANIMATION HELPER */ //TODO: Create a class AnimationHelper in utils.
+
     private Transition scaleUp(
             Node element, Duration duration,
             double MaxSize, double speed, double XSuppl, double YSuppl) {
@@ -491,10 +486,12 @@ public class App extends Panel {
                 }
             }
         };
+        /*
         transition.setOnFinished(e-> {
             element.setScaleX(MinSize);
             element.setScaleY(MinSize);
         });
+        */
         return transition;
     }
 
@@ -513,7 +510,7 @@ public class App extends Panel {
                 }
             }
         };
-        transition.setOnFinished(e-> element.setTranslateX(EndX));
+        //transition.setOnFinished(e-> element.setTranslateX(EndX));
         return transition;
     }
 }
