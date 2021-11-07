@@ -29,12 +29,14 @@ dev/asiluxserver/launcher/ui/panels/partials/TopBar.java
  dev.asiluxserver.launcher.ui.panels.partials.TopBar
 dev/asiluxserver/launcher/ui/panel/IPanel.java
  dev.asiluxserver.launcher.ui.panel.IPanel
+dev/asiluxserver/launcher/ui/panels/pages/content/Settings.java
+ dev.asiluxserver.launcher.ui.panels.pages.content.Settings
+dev/asiluxserver/launcher/ui/assets/Colors.java
+ dev.asiluxserver.launcher.ui.assets.Colors
 dev/asiluxserver/launcher/Launcher.java
  dev.asiluxserver.launcher.Launcher
 dev/asiluxserver/launcher/ui/panels/pages/Login.java
  dev.asiluxserver.launcher.ui.panels.pages.Login
-dev/asiluxserver/launcher/ui/assets/Colors.java
- dev.asiluxserver.launcher.ui.assets.Colors
 dev/asiluxserver/launcher/ui/panels/pages/App.java
  dev.asiluxserver.launcher.ui.panels.pages.App
  dev.asiluxserver.launcher.ui.panels.pages.App$1
@@ -43,5 +45,3 @@ dev/asiluxserver/launcher/ui/panels/pages/App.java
  dev.asiluxserver.launcher.ui.panels.pages.App$4
  dev.asiluxserver.launcher.ui.panels.pages.App$5
  dev.asiluxserver.launcher.ui.panels.pages.App$6
-dev/asiluxserver/launcher/ui/panels/pages/content/Settings.java
- dev.asiluxserver.launcher.ui.panels.pages.content.Settings
