@@ -211,7 +211,7 @@ public class App extends Panel {
         homeLabel.setOnMouseEntered(e-> {
             this.layout.setCursor(Cursor.HAND);
             homeLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_1, 5, 0));
-            Transition transitionScale = scaleUp(homeLabel, Duration.millis(500), 1.125, 0.003, 0.05, 0);
+            Transition transitionScale = scaleUp(homeLabel, Duration.millis(500), 1.075, 0.005, 0.05, 0);
             Transition ttX = translateX(homeLabel, Duration.millis(500), 28, 0.4);
             ttX.play();
             transitionScale.play();
@@ -244,7 +244,7 @@ public class App extends Panel {
         newsLabel.setOnMouseEntered(e-> {
             this.layout.setCursor(Cursor.HAND);
             newsLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_1, 5, 0));
-            Transition transitionScale = scaleUp(newsLabel, Duration.millis(500), 1.125, 0.003, 0.05, 0);
+            Transition transitionScale = scaleUp(newsLabel, Duration.millis(500), 1.075, 0.005, 0.05, 0);
             Transition ttX = translateX(newsLabel, Duration.millis(500), 28, 0.4);
             ttX.play();
             transitionScale.play();
@@ -252,7 +252,7 @@ public class App extends Panel {
         newsLabel.setOnMouseExited(e-> {
             this.layout.setCursor(Cursor.DEFAULT);
             newsLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
-            Transition transition = scaleDown(newsLabel, Duration.millis(650), 1, 0.0025);
+            Transition transition = scaleDown(newsLabel, Duration.millis(650), 1, 0.005);
             Transition ttX = translateX(newsLabel, Duration.millis(650), 18, 0.25);
             ttX.play();
             transition.play();
@@ -278,7 +278,7 @@ public class App extends Panel {
             this.layout.setCursor(Cursor.HAND);
             updateLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_1, 5, 0));
             Transition transitionScale = scaleUp(
-                    updateLabel, Duration.millis(500), 1.125, 0.003, 0.05, 0
+                    updateLabel, Duration.millis(500), 1.075, 0.005, 0.05, 0
             );
             Transition ttX = translateX(updateLabel, Duration.millis(500), 28, 0.4);
             ttX.play();
@@ -287,7 +287,7 @@ public class App extends Panel {
         updateLabel.setOnMouseExited(e-> {
             this.layout.setCursor(Cursor.DEFAULT);
             updateLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
-            Transition transition = scaleDown(updateLabel, Duration.millis(650), 1, 0.0025);
+            Transition transition = scaleDown(updateLabel, Duration.millis(650), 1, 0.005);
             Transition ttX = translateX(updateLabel, Duration.millis(650), 18, 0.25);
             ttX.play();
             transition.play();
@@ -312,7 +312,7 @@ public class App extends Panel {
             this.layout.setCursor(Cursor.HAND);
             settingsLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_1, 5, 0));
             Transition transitionScale = scaleUp(
-                    settingsLabel, Duration.millis(500), 1.125, 0.003, 0.05, 0
+                    settingsLabel, Duration.millis(500), 1.075, 0.005, 0.05, 0
             );
             Transition ttX = translateX(settingsLabel, Duration.millis(500), 28, 0.4);
             ttX.play();
@@ -321,7 +321,7 @@ public class App extends Panel {
         settingsLabel.setOnMouseExited(e-> {
             this.layout.setCursor(Cursor.DEFAULT);
             settingsLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
-            Transition transition = scaleDown(settingsLabel, Duration.millis(650), 1, 0.0025);
+            Transition transition = scaleDown(settingsLabel, Duration.millis(650), 1, 0.005);
             Transition ttX = translateX(settingsLabel, Duration.millis(650), 18, 0.25);
             ttX.play();
             transition.play();
