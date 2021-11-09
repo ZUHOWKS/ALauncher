@@ -16,7 +16,7 @@ public class Main {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        /*
+
         try {
             Class.forName("javafx.application.Application");
             Application.launch(Launcher.class, args);
@@ -28,6 +28,6 @@ public class Main {
                     JOptionPane.ERROR_MESSAGE
             );
         }
-        */
+
     }
 }
