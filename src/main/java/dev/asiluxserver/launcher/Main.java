@@ -6,7 +6,6 @@ import javafx.application.Application;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 
 public class Main {
