@@ -1,5 +1,7 @@
-dev/asiluxserver/launcher/ui/panels/pages/content/Settings.java
- dev.asiluxserver.launcher.ui.panels.pages.content.Settings
+dev/asiluxserver/launcher/ui/panels/pages/content/Home.java
+ dev.asiluxserver.launcher.ui.panels.pages.content.Home
+ dev.asiluxserver.launcher.ui.panels.pages.content.Home$1
+ dev.asiluxserver.launcher.ui.panels.pages.content.Home$StepInfo
 dev/asiluxserver/launcher/ui/assets/effects/BlurDropShadow.java
  dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow
 dev/asiluxserver/launcher/ui/panel/Panel.java
@@ -27,6 +29,8 @@ dev/asiluxserver/launcher/ui/panels/pages/content/ContentPanel.java
  dev.asiluxserver.launcher.ui.panels.pages.content.ContentPanel
 dev/asiluxserver/launcher/ui/PanelManager.java
  dev.asiluxserver.launcher.ui.PanelManager
+dev/asiluxserver/launcher/ui/panels/pages/content/Settings.java
+ dev.asiluxserver.launcher.ui.panels.pages.content.Settings
 dev/asiluxserver/launcher/ui/panel/ITakePLace.java
  dev.asiluxserver.launcher.ui.panel.ITakePLace
 dev/asiluxserver/launcher/ui/panels/partials/TopBar.java
@@ -39,10 +43,6 @@ dev/asiluxserver/launcher/ui/panels/pages/Login.java
  dev.asiluxserver.launcher.ui.panels.pages.Login
 dev/asiluxserver/launcher/ui/assets/Colors.java
  dev.asiluxserver.launcher.ui.assets.Colors
-dev/asiluxserver/launcher/ui/panels/pages/content/Home.java
- dev.asiluxserver.launcher.ui.panels.pages.content.Home
- dev.asiluxserver.launcher.ui.panels.pages.content.Home$1
- dev.asiluxserver.launcher.ui.panels.pages.content.Home$StepInfo
 dev/asiluxserver/launcher/utils/Updater.java
  dev.asiluxserver.launcher.utils.Updater
 dev/asiluxserver/launcher/Main.java

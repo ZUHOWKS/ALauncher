@@ -1,22 +1,24 @@
 package dev.asiluxserver.launcher.utils;
 
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class Updater {
 
     private final String address;
-    private final URL resourceLocator;
+    private final Connection connection;
+    private final Document html;
 
-    public Updater(String address) throws MalformedURLException {
+    public Updater(String address) throws IOException {
         this.address = address;
-        this.resourceLocator = new URL(this.address);
-        try {
-            System.out.println(getData());
-        } catch (IOException e) {
-            e.printStackTrace();
+        this.connection = Jsoup.connect(address);
+        this.html = connection.get();
+        for (Element element : html.select("meta")) {
+            System.out.println(element);
         }
     }
 
@@ -26,16 +28,5 @@ public class Updater {
 
     public String getWhatsNew() {
         return "";
-    }
-
-    private String getData() throws IOException {
-        InputStream html = resourceLocator.openStream();
-        StringBuilder buffer = new StringBuilder();
-        int c = 0;
-        while(c != -1) {
-            c = html.read();
-            buffer.append((char)c);
-        }
-        return buffer.toString();
     }
 }

@@ -21,7 +21,10 @@ repositories {
 
 dependencies {
 
+    implementation 'org.jsoup:jsoup:1.14.3'
+
     implementation 'fr.litarvan:openauth:1+'
+
     implementation 'de.jensd:fontawesomefx:8.9'
 
     implementation 'fr.flowarg:flowupdater:1.5+'
