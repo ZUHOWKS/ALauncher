@@ -4,19 +4,41 @@ import java.util.List;
 
 public class PatchNote {
 
-    String categorie;
+    String categories;
     List<String> note;
 
-    public void setCategorie(String categorie) {
-        this.categorie = categorie;
-    }
-
-    public void setNote(List<String> note) {
+    public PatchNote(String categories, List<String> note) {
+        this.categories = categories;
         this.note = note;
     }
 
-    public String getCategorie() {
-        return categorie;
+    public PatchNote(String categories, String note) {
+        this.categories = categories;
+        addNote(note);
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
+    }
+
+    public void setNote(String note, int index) {
+        this.note.set(index, note);
+    }
+
+    public void addNote(String note) {
+        this.note.add(note);
+    }
+
+    public void addNote(String note, int index) {
+        this.note.add(index, note);
+    }
+
+    public void removeNote(String note) {
+        this.note.remove(note);
+    }
+
+    public String getCategories() {
+        return categories;
     }
 
     public List<String> getNote() {
