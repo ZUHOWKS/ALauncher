@@ -7,12 +7,9 @@ public class PatchMessage {
     String title;
     List<PatchNote> patchNote;
 
-    public void setTitle(String title) {
+    public PatchMessage(String title, List<PatchNote> patchNotes) {
         this.title = title;
-    }
-
-    public void setPatchNote(List<PatchNote> patchNote) {
-        this.patchNote = patchNote;
+        this.patchNote = patchNotes;
     }
 
     public List<PatchNote> getPatchNote() {
@@ -22,4 +19,13 @@ public class PatchMessage {
     public String getTitle() {
         return title;
     }
+
+    public void addPatchNote(PatchNote patchNote) {
+        this.patchNote.add(patchNote);
+    }
+
+    public void addPatchNote(PatchNote patchNote, int index) {
+        this.patchNote.add(index, patchNote);
+    }
+
 }
