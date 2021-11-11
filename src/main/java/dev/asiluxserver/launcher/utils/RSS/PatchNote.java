@@ -1,13 +1,14 @@
 package dev.asiluxserver.launcher.utils.RSS;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PatchNote {
 
     String categories;
-    List<String> note;
+    ArrayList<String> note;
 
-    public PatchNote(String categories, List<String> note) {
+    public PatchNote(String categories, ArrayList<String> note) {
         this.categories = categories;
         this.note = note;
     }
