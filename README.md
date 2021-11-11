@@ -1,10 +1,25 @@
 # ALauncher
 Developpement of Asilux Launcher.
 
-# TODO
-- ~~_Optimisation du code._~~
-- Créer un système de mise à jour (patch sur le serveur, information de réequilibrage...)
-  | **Création d'un `PatchLoader`**. 
-- Page des nouveautés + Système de lecture des nouveautés | C'est une page pour faire de la publicité.
-- Page de mise à jours | **Synchronisé avec `PatchLoader`**.
-- Système de mise à jour du ALauncher | **Création d'un `UpdateSystem`**.
+
+# PatchLoader
+
+Le `PatchLoader` permet de lire un fichier `.xml` ou d'un autre format, afin de le retranscrire dans le code pour faire une liste des modifications.
+
+
+_**Format**_:
+- Un titre `Update Name`.
+- Des Catégories pour chaque  paragraphe.
+- Des paragraphes qui ne sont qu'une liste de modification, d'ajout ou de suppression d'éléments.
+
+_**Catégories**_:
+- Les événements.
+- Les nouveautés.
+- Les modifications majeurs (Refont...).
+- Les Fix de bug et de lag.
+- Les éléments retirés.
+
+_**Tâche à réaliser**_:
+- Déterminer un format pour le fichier `patch` | Par défaut le format sera `.xml`.
+- Création d'une structure des informations dans le fichier `patch.xml`.
+- Utilisation du RSS afin de lire le fichier `patch.xml`
