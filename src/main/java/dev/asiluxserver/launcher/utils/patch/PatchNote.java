@@ -8,6 +8,11 @@ public class PatchNote {
     String categories;
     ArrayList<String> note;
 
+    public PatchNote(String categories) {
+        this.categories = categories;
+        this.note = null;
+    }
+
     public PatchNote(String categories, ArrayList<String> note) {
         this.categories = categories;
         this.note = note;
