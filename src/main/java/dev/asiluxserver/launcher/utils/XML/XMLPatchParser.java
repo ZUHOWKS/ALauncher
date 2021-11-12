@@ -11,15 +11,15 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Locale;
 
 public class XMLPatchParser {
-    public XMLPatchParser() {
+    public XMLPatchParser(String url) {
         try {
-            File file = new File("patch.xml");
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
-            Document document = db.parse(file);
+            Document document = db.parse(new URL(url).openStream());
             document.getDocumentElement().normalize();
             System.out.println("Root Element :" + document.getDocumentElement().getAttribute("id"));
             NodeList nList = document.getElementsByTagName("categories");
