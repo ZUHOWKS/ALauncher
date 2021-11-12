@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public class PatchMessage {
 
     String title;
-    ArrayList<PatchNote> patchNote;
+    ArrayList<PatchNote> patchNotes;
 
     public PatchMessage(String title, ArrayList<PatchNote> patchNotes) {
         this.title = title;
-        this.patchNote = patchNotes;
+        this.patchNotes = patchNotes;
     }
 
     public void setTitle(String title) {
@@ -17,26 +17,30 @@ public class PatchMessage {
     }
 
     public void setPatchNote(PatchNote patchNote, int index) {
-        this.patchNote.set(index, patchNote);
+        this.patchNotes.set(index, patchNote);
     }
 
     public void addPatchNote(PatchNote patchNote) {
-        this.patchNote.add(patchNote);
+        this.patchNotes.add(patchNote);
     }
 
     public void addPatchNote(PatchNote patchNote, int index) {
-        this.patchNote.add(index, patchNote);
+        this.patchNotes.add(index, patchNote);
     }
 
     public void removePatchNote(PatchNote patchNote) {
-        this.patchNote.remove(patchNote);
+        this.patchNotes.remove(patchNote);
     }
 
-    public ArrayList<PatchNote> getPatchNote() {
-        return patchNote;
+    public ArrayList<PatchNote> getPatchNotes() {
+        return this.patchNotes;
+    }
+
+    public PatchNote getPatchNote(int index) {
+        return this.patchNotes.get(index);
     }
 
     public String getTitle() {
-        return title;
+        return this.title;
     }
 }
