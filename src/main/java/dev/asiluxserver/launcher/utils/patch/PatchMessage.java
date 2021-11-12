@@ -1,13 +1,13 @@
-package dev.asiluxserver.launcher.utils.RSS;
+package dev.asiluxserver.launcher.utils.patch;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class PatchMessage {
 
     String title;
-    List<PatchNote> patchNote;
+    ArrayList<PatchNote> patchNote;
 
-    public PatchMessage(String title, List<PatchNote> patchNotes) {
+    public PatchMessage(String title, ArrayList<PatchNote> patchNotes) {
         this.title = title;
         this.patchNote = patchNotes;
     }
@@ -32,7 +32,7 @@ public class PatchMessage {
         this.patchNote.remove(patchNote);
     }
 
-    public List<PatchNote> getPatchNote() {
+    public ArrayList<PatchNote> getPatchNote() {
         return patchNote;
     }
 

@@ -1,4 +1,4 @@
-package dev.asiluxserver.launcher.utils.RSS;
+package dev.asiluxserver.launcher.utils.patch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +24,10 @@ public class PatchNote {
 
     public void setNote(String note, int index) {
         this.note.set(index, note);
+    }
+
+    public void setNote(ArrayList<String> note) {
+        this.note = note;
     }
 
     public void addNote(String note) {
