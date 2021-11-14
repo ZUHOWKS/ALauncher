@@ -20,8 +20,8 @@ import java.util.Locale;
 
 public class XMLPatchParser {
 
-    String url;
-    PatchMessage patchMessage;
+    String url = "";
+    PatchMessage patchMessage = new PatchMessage("", new ArrayList<>());
 
     public XMLPatchParser(String url) {
         this.url = url;
@@ -48,7 +48,7 @@ public class XMLPatchParser {
 
                     Element eElement = (Element) nNode;
                     NodeList noteListe = ((Element) nNode).getElementsByTagName("note");
-                    PatchNote patchNote = new PatchNote(eElement.getAttribute("id").toUpperCase(Locale.ROOT));
+                    PatchNote patchNote = new PatchNote(eElement.getAttribute("id").toUpperCase(Locale.ROOT), new ArrayList<>());
 
                     for (int j = 0; j < noteListe.getLength(); j++) {
                         Node noteNode = noteListe.item(j);
@@ -61,5 +61,13 @@ public class XMLPatchParser {
         catch(IOException | ParserConfigurationException | SAXException e) {
             System.out.println(e);
         }
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }
