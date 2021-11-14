@@ -8,7 +8,8 @@ import java.util.ArrayList;
 public class PatchLoader  {
 
     XMLPatchParser patchFile;
-    ArrayList<Label> labels;
+    Label titleLabel = new Label("");
+    Label patchLabel = new Label("");
 
     public PatchLoader(XMLPatchParser xmlPatchParser) {
         this.patchFile = xmlPatchParser;
@@ -18,17 +19,17 @@ public class PatchLoader  {
 
         PatchMessage patchMessage = patchFile.getPatch();
         ArrayList<PatchNote> patchNotes = patchMessage.getPatchNotes();
-        this.labels.add(0, new Label(patchMessage.getTitle()));
+        this.titleLabel.setText(patchMessage.getTitle());
 
         for (int i = 0; i < patchNotes.size(); i++) {
             PatchNote patchNote = patchNotes.get(i);
             ArrayList<String> notes = patchNote.getNote();
-            Label note = new Label(patchNote.getCategories());
+            patchLabel.setText(patchLabel.getText() + (!patchLabel.getText().equals("") ? "\n\n" : "") +
+                    patchNote.getCategories() + "\n");
             for (int j = 0; j < patchNote.getNote().size(); j++) {
-                note.setText(note.getText() + "\n" +
-                        notes.get(j)
+                patchLabel.setText(patchLabel.getText() + "\n" +
+                        "  - " + notes.get(j)
                 );
-            this.labels.add(note);
             }
         }
     }
@@ -37,12 +38,12 @@ public class PatchLoader  {
         return this.patchFile.getPatch();
     }
 
-    public Label getLabel(int index) {
-        return this.labels.get(index);
+    public Label getPatchLabel() {
+        return this.patchLabel;
     }
 
-    public ArrayList<Label> getLabel() {
-        return this.labels;
+    public Label getTitleLabel() {
+        return this.titleLabel;
     }
 
     public XMLPatchParser getPatchFile() {
