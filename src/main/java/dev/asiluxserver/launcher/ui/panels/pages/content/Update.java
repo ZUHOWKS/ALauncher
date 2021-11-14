@@ -3,6 +3,7 @@ package dev.asiluxserver.launcher.ui.panels.pages.content;
 import dev.asiluxserver.launcher.Launcher;
 import dev.asiluxserver.launcher.Main;
 import dev.asiluxserver.launcher.ui.PanelManager;
+import dev.asiluxserver.launcher.ui.assets.Colors;
 import dev.asiluxserver.launcher.utils.patch.PatchLoader;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.geometry.HPos;
@@ -11,9 +12,15 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import org.w3c.dom.css.Rect;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,6 +34,7 @@ public class Update extends ContentPanel{
 
     GridPane contentPane = new GridPane();
     GridPane patchPane = new GridPane();
+    RowConstraints rowConstraints = new RowConstraints();
 
     @Override
     public String getName() {
@@ -42,37 +50,59 @@ public class Update extends ContentPanel{
         contentPane.setStyle("-fx-background-color: transparent;");
         contentPane.setMinWidth(480);
         contentPane.setMaxWidth(1760);
+
+        rowConstraints.setValignment(VPos.TOP);
+        rowConstraints.setMinHeight(150);
+        rowConstraints.setMaxHeight(200);
+        contentPane.getRowConstraints().addAll(rowConstraints, new RowConstraints());
+
         this.layout.getChildren().add(contentPane);
+
+        loadPatch(contentPane);
 
     }
 
     private void loadPatch(GridPane pane) {
 
-        ArrayList<Label> labels = patchLoader.getLabel();
-        Label patchTitleLabel = labels.get(0);
-        patchTitleLabel.setAlignment(Pos.TOP_LEFT);
-        setCanTakeAllSize(patchTitleLabel);
-        patchTitleLabel.setMinWidth(350);
-        patchTitleLabel.setMaxWidth(1630);
-        patchTitleLabel.setMinHeight(600);
-        patchTitleLabel.setMaxHeight(1800);
-        patchTitleLabel.setStyle("-fx-text-size: 46; -fx-text-fill: rgb(0, 0, 0);");
-
-        setAlignment(patchPane);
-        patchPane.setStyle("-fx-background-color: rgba(255, 255, 255, 0.95);");
-        patchPane.setMinWidth(420);
-        patchPane.setMaxWidth(1700);
-        patchPane.setMinHeight(660);
-        patchPane.setMaxHeight(1860);
+        patchPane.setAlignment(Pos.CENTER);
+        setGrow(patchPane);
+        patchPane.setMinWidth(800);
+        patchPane.setPrefWidth(1200);
+        patchPane.setMaxWidth(1600);
+        patchPane.setMinHeight(150);
+        patchPane.setPrefHeight(150);
+        patchPane.setMaxHeight(200);
+        patchPane.setStyle("-fx-background-color: rgba(0,0,0,1);");
 
         GridPane patchScrollPane = new GridPane();
-        setCanTakeAllSize(patchScrollPane);
-        patchScrollPane.setAlignment(Pos.BOTTOM_CENTER);
-        patchScrollPane.setMinWidth(400);
-        patchScrollPane.setMaxWidth(1680);
-        patchScrollPane.setMinHeight(640);
-        patchScrollPane.setMaxHeight(1840);
+        setGrow(patchScrollPane);
+        patchScrollPane.setAlignment(Pos.TOP_CENTER);
+        patchScrollPane.setMinWidth(800);
+        patchScrollPane.setMaxWidth(1400);
+        patchScrollPane.setMinHeight(635);
+        patchScrollPane.setMaxHeight(1000);
+        patchScrollPane.setStyle("-fx-background-color: rgba(255,255,255,0.85);");
 
+        GridPane patchVBoxPane = new GridPane();
+        setGrow(patchVBoxPane);
+        patchVBoxPane.setAlignment(Pos.TOP_CENTER);
+        patchVBoxPane.setMinWidth(800);
+        patchVBoxPane.setMaxWidth(1400);
+        patchVBoxPane.setMinHeight(635);
+        patchVBoxPane.setMaxHeight(5000);
+        patchVBoxPane.setTranslateY(100);
+
+        Label titleLabel = patchLoader.getTitleLabel();
+        setAlignment(titleLabel, HPos.LEFT, VPos.TOP);
+        setGrow(titleLabel);
+        titleLabel.setStyle("-fx-text-size: 45; -fx-text-fill: rgb(255, 255, 255);");
+        titleLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 60));
+
+        Label patchLabel = patchLoader.getPatchLabel();
+        setAlignment(patchLabel, HPos.CENTER, VPos.TOP);
+        setGrow(titleLabel);
+        patchLabel.setStyle("-fx-text-size: 17; -fx-text-fill: rgb(0, 0, 0);");
+        patchLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
 
         /* SCROLL PANE STYLE */
         ScrollPane scrollPane = new ScrollPane();
@@ -86,33 +116,23 @@ public class Update extends ContentPanel{
         /* SCROLL BAR */
         VBox vBox = new VBox();
         setGrow(vBox);
-        vBox.setMinWidth(pane.getMinWidth() - 40);
-        vBox.setMaxWidth(pane.getMinWidth() - 40);
-        vBox.setMinHeight(pane.getMinHeight() - 100);
-        vBox.setMaxHeight(pane.getMaxHeight() - 100);
-        vBox.setAlignment(Pos.CENTER);
+        setAlignment(vBox, HPos.CENTER, VPos.TOP);
+        vBox.setMinWidth(patchScrollPane.getMinWidth());
+        vBox.setMaxWidth(patchScrollPane.getMaxWidth() + 75);
+        vBox.setMinHeight(patchScrollPane.getMinHeight() + 500);
+        vBox.setMaxHeight(patchScrollPane.getMaxHeight() + 500);
         vBox.setTranslateY(10);
 
-        for (int i=1; i < labels.size(); i++) {
+        patchVBoxPane.getChildren().add(patchLabel);
 
-            Label patchNote = labels.get(i);
-            setAlignment(patchNote);
-            setCanTakeAllSize(patchNote);
-            patchNote.setMinWidth(350);
-            patchNote.setMaxWidth(1630);
-            patchNote.setMinHeight(600);
-            patchNote.setMaxHeight(1800);
-            patchNote.setStyle("-fx-text-size: 27; -fx-text-fill: rgb(0, 0, 0);");
-
-            patchScrollPane.getChildren().add(patchNote);
-
-        }
-
-        patchPane.getChildren().addAll(patchTitleLabel, scrollPane);
+        patchScrollPane.getChildren().add(scrollPane);
         scrollPane.setContent(vBox);
-        vBox.getChildren().add(0, patchScrollPane);
+        vBox.getChildren().add(0, patchVBoxPane);
 
-        pane.getChildren().addAll(patchPane);
+        patchPane.getChildren().addAll(titleLabel);
+
+        pane.add(patchPane,0,0);
+        pane.add(patchScrollPane,0,1);
 
     }
 }
