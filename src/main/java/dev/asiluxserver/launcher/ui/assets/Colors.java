@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 
 public enum Colors {
     DEFAULT_WHITE(Color.rgb(255,255,255)),
+    WHITE_1(Color.rgb(255,255,255, 0.85)),
 
     LIGHT_GREY_1(Color.rgb(255, 255, 255, 0.35)),
     LIGHT_GREY_2(Color.rgb(255, 255, 255, 0.3)),
