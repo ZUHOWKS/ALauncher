@@ -12,6 +12,7 @@ import dev.asiluxserver.launcher.ui.panels.pages.content.ContentPanel;
 import dev.asiluxserver.launcher.ui.panels.pages.content.Home;
 import dev.asiluxserver.launcher.ui.panels.pages.content.Settings;
 
+import dev.asiluxserver.launcher.ui.panels.pages.content.Update;
 import fr.theshark34.openlauncherlib.util.Saver;
 
 import javafx.animation.Transition;
@@ -286,6 +287,7 @@ public class App extends Panel {
             transition.play();
 
         });
+        updateLabel.setOnMouseClicked(e-> setPage(new Update(), updateLabel));
 
         /* TITLE SETTINGS */
         FontAwesomeIconView settingsIcon = new FontAwesomeIconView(FontAwesomeIcon.GEARS);

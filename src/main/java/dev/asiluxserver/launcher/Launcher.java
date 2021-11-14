@@ -3,6 +3,8 @@ package dev.asiluxserver.launcher;
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.panels.pages.App;
 import dev.asiluxserver.launcher.ui.panels.pages.Login;
+import dev.asiluxserver.launcher.utils.XML.XMLPatchParser;
+import dev.asiluxserver.launcher.utils.patch.PatchLoader;
 import fr.flowarg.flowlogger.ILogger;
 import fr.flowarg.flowlogger.Logger;
 import fr.litarvan.openauth.AuthPoints;
@@ -27,9 +29,13 @@ public class Launcher extends Application {
     private final Saver saver;
     private PanelManager panelManager;
     private AuthInfos authInfos = null;
+    private XMLPatchParser patchParser = new XMLPatchParser("https://zuhowks.github.io/patch.xml");
+    private PatchLoader patchLoader = new PatchLoader(patchParser);
 
     public Launcher() {
         instance = this;
+        this.patchParser.readEvent();
+        this.patchLoader.load();
         this.logger = new Logger("[AsiluxDev]", this.launcherDir.resolve("launcher.log"));
         if (!this.launcherDir.toFile().exists()) {
             if (!this.launcherDir.toFile().mkdir()) {
@@ -46,6 +52,7 @@ public class Launcher extends Application {
         this.logger.info("Starting launcher");
         this.panelManager = new PanelManager(this, stage);
         this.panelManager.init();
+
 
         if (this.isUserAlreadyLoggedIn()) {
             logger.info("Hello " + authInfos.getUsername());
@@ -124,4 +131,7 @@ public class Launcher extends Application {
     public Path getLauncherDir() {
         return launcherDir;
     }
+
+    public PatchLoader getPatchLoader() { return patchLoader;}
+
 }

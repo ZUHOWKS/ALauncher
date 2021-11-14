@@ -51,7 +51,7 @@ public class PatchNote {
         return categories;
     }
 
-    public List<String> getNote() {
-        return note;
+    public ArrayList<String> getNote() {
+        return this.note;
     }
 }

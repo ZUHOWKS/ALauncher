@@ -70,16 +70,18 @@ public class Home extends ContentPanel{
 
     @Override
     public String getName() {
-        return null;
+        return "home";
     }
 
     @Override
     public void init(PanelManager panelManager) {
         super.init(panelManager);
 
-        setCanTakeAllSize(this.layout);
-
+        /* CONTENT */
+        contentPane.setMinWidth(480);
+        contentPane.setMaxWidth(1760);
         setCanTakeAllSize(contentPane);
+
         this.layout.getChildren().add(contentPane);
 
         /* ACCUEIL */

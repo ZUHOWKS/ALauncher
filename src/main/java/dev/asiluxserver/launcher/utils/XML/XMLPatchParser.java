@@ -28,7 +28,6 @@ public class XMLPatchParser {
     }
 
     public PatchMessage getPatch() {
-        readEvent();
         return patchMessage;
     }
 
@@ -36,9 +35,9 @@ public class XMLPatchParser {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
-            Document document = db.parse(new URL(this.url).openStream());
+            Document document = db.parse(new URL("https://zuhowks.github.io/patch.xml").openStream());
             document.getDocumentElement().normalize();
-            this.patchMessage.setTitle(document.getDocumentElement().getAttribute("id"));
+            this.patchMessage.setTitle(document.getDocumentElement().getAttribute("id").toString().toUpperCase(Locale.ROOT));
             NodeList nList = document.getElementsByTagName("categories");
 
             for (int temp = 0; temp < nList.getLength(); temp++) {
