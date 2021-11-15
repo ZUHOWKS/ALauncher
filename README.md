@@ -22,4 +22,4 @@ _**Catégories**_:
 _**Tâche à réaliser**_:
 - Déterminer un format pour le fichier `patch` | Par défaut le format sera `.xml`.
 - Création d'une structure des informations dans le fichier `patch.xml`.
-- Utilisation du RSS afin de lire le fichier `patch.xml`.
+- Utilisation `DOM` afin de lire le fichier `patch.xml`.
