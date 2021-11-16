@@ -4,6 +4,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
 import dev.asiluxserver.launcher.ui.PanelManager;
+import dev.asiluxserver.launcher.ui.assets.Fonts;
 import dev.asiluxserver.launcher.ui.panel.Panel;
 
 import javafx.scene.control.Label;
@@ -11,9 +12,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 
 public class TopBar extends Panel {
     private GridPane topBar;
@@ -48,7 +46,7 @@ public class TopBar extends Panel {
 
         // TopBar: center
         Label title = new Label("Asilux Launcher");
-        title.setFont(Font.font("Consolas", FontWeight.BOLD, FontPosture.REGULAR, 18f));
+        title.setFont(Fonts.CONSOLAS_18F.getFont());
         title.setStyle("-fx-text-fill: white;");
         setCenterH(title);
         this.layout.getChildren().add(title);

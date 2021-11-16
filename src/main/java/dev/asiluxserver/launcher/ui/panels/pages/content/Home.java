@@ -8,6 +8,7 @@ import dev.asiluxserver.launcher.Main;
 import dev.asiluxserver.launcher.game.MinecraftInfos;
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.assets.Colors;
+import dev.asiluxserver.launcher.ui.assets.Fonts;
 import dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow;
 import dev.asiluxserver.launcher.utils.ZProgressBar;
 
@@ -34,8 +35,6 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
-import javafx.scene.effect.BlurType;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -44,8 +43,6 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
@@ -323,7 +320,7 @@ public class Home extends ContentPanel{
         setGrow(NewsTitle);
         setAlignment(NewsTitle, HPos.CENTER ,VPos.TOP);
         NewsTitle.setTextFill(Colors.DEFAULT_WHITE.getColor());
-        NewsTitle.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
+        NewsTitle.setFont(Fonts.ARIAL_20.getFont());
         NewsTitle.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 6, 0));
         NewsTitle.setTranslateY(-35);
 

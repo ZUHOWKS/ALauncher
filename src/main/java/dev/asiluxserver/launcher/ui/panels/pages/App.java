@@ -6,6 +6,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import dev.asiluxserver.launcher.Launcher;
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.assets.Colors;
+import dev.asiluxserver.launcher.ui.assets.Fonts;
 import dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow;
 import dev.asiluxserver.launcher.ui.panel.Panel;
 import dev.asiluxserver.launcher.ui.panels.pages.content.ContentPanel;
@@ -26,15 +27,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
 public class App extends Panel {
 
     private static App instance;
 
-    ColumnConstraints menuPainConstraint = new ColumnConstraints();
+    ColumnConstraints menuPaneConstraint = new ColumnConstraints();
     GridPane centerPane = new GridPane();
     GridPane leftBarPanel = new GridPane();
 
@@ -64,10 +63,10 @@ public class App extends Panel {
         super.init(panelManager);
 
         /* BASE PANEL */
-        menuPainConstraint.setHalignment(HPos.LEFT);
-        menuPainConstraint.setMinWidth(160);
-        menuPainConstraint.setMaxWidth(160);
-        this.layout.getColumnConstraints().addAll(menuPainConstraint, new ColumnConstraints());
+        menuPaneConstraint.setHalignment(HPos.LEFT);
+        menuPaneConstraint.setMinWidth(160);
+        menuPaneConstraint.setMaxWidth(160);
+        this.layout.getColumnConstraints().addAll(menuPaneConstraint, new ColumnConstraints());
 
         setGrow(leftBarPanel);
         setAlignment(leftBarPanel, HPos.LEFT, VPos.CENTER);
@@ -199,7 +198,7 @@ public class App extends Panel {
         homeIcon.setFill(Colors.DEFAULT_WHITE.getColor());
         homeIcon.setScaleX(1.5);
         homeIcon.setScaleY(1.5);
-        homeLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
+        homeLabel.setFont(Fonts.ARIAL_20.getFont());
         homeLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
         homeLabel.setGraphic(homeIcon);
         homeLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
@@ -232,7 +231,7 @@ public class App extends Panel {
         newsIcon.setFill(Colors.DEFAULT_WHITE.getColor());
         newsIcon.setScaleX(1.3);
         newsIcon.setScaleY(1.3);
-        newsLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
+        newsLabel.setFont(Fonts.ARIAL_20.getFont());
         newsLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
         newsLabel.setGraphic(newsIcon);
         newsLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
@@ -265,7 +264,7 @@ public class App extends Panel {
         updateIcon.setScaleX(1.4);
         updateIcon.setScaleY(1.4);
 
-        updateLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
+        updateLabel.setFont(Fonts.ARIAL_20.getFont());
         updateLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
         updateLabel.setGraphic(updateIcon);
         updateLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
@@ -299,7 +298,7 @@ public class App extends Panel {
         settingsIcon.setFill(Colors.DEFAULT_WHITE.getColor());
         settingsIcon.setScaleX(1.4);
         settingsIcon.setScaleY(1.4);
-        settingsLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
+        settingsLabel.setFont(Fonts.ARIAL_20.getFont());
         settingsLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
         settingsLabel.setGraphic(settingsIcon);
         settingsLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
@@ -344,7 +343,7 @@ public class App extends Panel {
                         "-fx-font-size: 14;" +
                         "-fx-text-fill: rgba(255,255,255,1);"
         );
-        logOutBtn.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 14));
+        logOutBtn.setFont(Fonts.ARIAL_14.getFont());
         logOutBtn.setTextFill(Colors.DEFAULT_WHITE.getColor());
         logOutBtn.setGraphic(logOutIcon);
         logOutBtn.setEffect(new BlurDropShadow(Colors.BLACK_2, 7, 3));

@@ -3,6 +3,7 @@ package dev.asiluxserver.launcher.ui.panels.pages;
 import dev.asiluxserver.launcher.Launcher;
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.assets.Colors;
+import dev.asiluxserver.launcher.ui.assets.Fonts;
 import dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow;
 import dev.asiluxserver.launcher.ui.panel.Panel;
 
@@ -34,8 +35,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
@@ -231,7 +230,7 @@ public class Login extends Panel {
 
         /* Text Nom d'utilisateur */
         Label usernameLabel = new Label("Adresse mail:");
-        usernameLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        usernameLabel.setFont(Fonts.ARIAL_17.getFont());
         usernameLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
         usernameLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
         setGrow(usernameLabel);
@@ -241,7 +240,7 @@ public class Login extends Panel {
 
         /* Text Nom d'utilisateur Erreur */
         Label errorUsernameLabel = new Label("");
-        errorUsernameLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        errorUsernameLabel.setFont(Fonts.ARIAL_17.getFont());
         errorUsernameLabel.setTextFill(Colors.RED_1.getColor());
         errorUsernameLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
         setGrow(errorUsernameLabel);
@@ -284,7 +283,7 @@ public class Login extends Panel {
         Label passwordLabel = new Label("Mots de passes:");
         setGrow(passwordLabel);
         setAlignment(passwordLabel, HPos.LEFT ,VPos.TOP);
-        passwordLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        passwordLabel.setFont(Fonts.ARIAL_17.getFont());
         passwordLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
         passwordLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
         passwordLabel.setTranslateX(7d);
@@ -294,7 +293,7 @@ public class Login extends Panel {
         Label errorPasswordLabel = new Label("");
         setGrow(errorPasswordLabel);
         setAlignment(errorPasswordLabel, HPos.LEFT ,VPos.TOP);
-        errorPasswordLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 17));
+        errorPasswordLabel.setFont(Fonts.ARIAL_17.getFont());
         errorPasswordLabel.setTextFill(Colors.RED_1.getColor());
         errorPasswordLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
         errorPasswordLabel.setTranslateX(7d);
@@ -334,7 +333,7 @@ public class Login extends Panel {
         Label forgottenPasswordLabel = new Label("Mot de passe oublié ?");
         setGrow(forgottenPasswordLabel);
         setAlignment(forgottenPasswordLabel, HPos.LEFT ,VPos.TOP);
-        forgottenPasswordLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 14));
+        forgottenPasswordLabel.setFont(Fonts.ARIAL_14.getFont());
         forgottenPasswordLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
         forgottenPasswordLabel.setEffect(new BlurDropShadow(Colors.GREY_2, 4, 0));
         forgottenPasswordLabel.setTranslateX(6d);
@@ -391,7 +390,7 @@ public class Login extends Panel {
                         "-fx-border-radius: 2px;" +
                         "-fx-text-fill: rgba(255,255,255,1);"
         );
-        connectionButton.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
+        connectionButton.setFont(Fonts.ARIAL_20.getFont());
         connectionButton.setGraphic(mojangIcon);
         connectionButton.setTextAlignment(TextAlignment.CENTER);
         connectionButton.setEffect(new BlurDropShadow(Colors.DARK_GREY_4, 3, 0.3));
@@ -482,7 +481,7 @@ public class Login extends Panel {
         Label connectionWithLabel = new Label("CONNEXION AVEC");
         setGrow(connectionWithLabel);
         setAlignment(connectionWithLabel, HPos.CENTER ,VPos.BOTTOM);
-        connectionWithLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 18));
+        connectionWithLabel.setFont(Fonts.ARIAL_18.getFont());
         connectionWithLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
         connectionWithLabel.setEffect(new BlurDropShadow(Colors.GREY_2, 4, 0));
         connectionWithLabel.setTranslateY(-37d);
