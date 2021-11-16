@@ -1,13 +1,14 @@
 package dev.asiluxserver.launcher.ui.panels.pages;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
 import dev.asiluxserver.launcher.Launcher;
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.assets.Colors;
 import dev.asiluxserver.launcher.ui.assets.Fonts;
 import dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow;
+import dev.asiluxserver.launcher.ui.compenents.CustomIcon;
+import dev.asiluxserver.launcher.ui.compenents.CustomLabel;
 import dev.asiluxserver.launcher.ui.panel.Panel;
 import dev.asiluxserver.launcher.ui.panels.pages.content.ContentPanel;
 import dev.asiluxserver.launcher.ui.panels.pages.content.Home;
@@ -21,7 +22,6 @@ import javafx.geometry.VPos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -37,10 +37,10 @@ public class App extends Panel {
     GridPane centerPane = new GridPane();
     GridPane leftBarPanel = new GridPane();
 
-    Label homeLabel = new Label(" Accueil");
-    Label newsLabel = new Label(" Nouveauté");
-    Label updateLabel = new Label(" Mise à jour");
-    Label settingsLabel = new Label(" Paramètres");
+    CustomLabel homeLabel = new CustomLabel(" Accueil", Fonts.ARIAL_20, Colors.DEFAULT_WHITE);
+    CustomLabel newsLabel = new CustomLabel(" Nouveauté", Fonts.ARIAL_20, Colors.DEFAULT_WHITE);
+    CustomLabel updateLabel = new CustomLabel(" Mise à jour", Fonts.ARIAL_20, Colors.DEFAULT_WHITE);
+    CustomLabel settingsLabel = new CustomLabel(" Paramètres", Fonts.ARIAL_20, Colors.DEFAULT_WHITE);
     Rectangle userLocationRectangle = new Rectangle(10, 30);
 
     Saver saver = Launcher.getInstance().getSaver();
@@ -194,13 +194,7 @@ public class App extends Panel {
         });
 
         /* TITLE HOME */
-        FontAwesomeIconView homeIcon = new FontAwesomeIconView(FontAwesomeIcon.HOME);
-        homeIcon.setFill(Colors.DEFAULT_WHITE.getColor());
-        homeIcon.setScaleX(1.5);
-        homeIcon.setScaleY(1.5);
-        homeLabel.setFont(Fonts.ARIAL_20.getFont());
-        homeLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
-        homeLabel.setGraphic(homeIcon);
+        homeLabel.setGraphic(new CustomIcon(FontAwesomeIcon.HOME, Colors.DEFAULT_WHITE, 1.5, 1.5));
         homeLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
         setGrow(homeLabel);
         setTop(homeLabel);
@@ -227,13 +221,7 @@ public class App extends Panel {
         homeLabel.setOnMouseClicked(e-> setPage(new Home(), homeLabel));
 
         /* TITLE NEWS */
-        FontAwesomeIconView newsIcon = new FontAwesomeIconView(FontAwesomeIcon.BELL);
-        newsIcon.setFill(Colors.DEFAULT_WHITE.getColor());
-        newsIcon.setScaleX(1.3);
-        newsIcon.setScaleY(1.3);
-        newsLabel.setFont(Fonts.ARIAL_20.getFont());
-        newsLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
-        newsLabel.setGraphic(newsIcon);
+        newsLabel.setGraphic(new CustomIcon(FontAwesomeIcon.BELL, Colors.DEFAULT_WHITE, 1.3, 1.3));
         newsLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
         setGrow(newsLabel);
         setTop(newsLabel);
@@ -259,14 +247,7 @@ public class App extends Panel {
         });
 
         /* TITLE UPDATE */
-        FontAwesomeIconView updateIcon = new FontAwesomeIconView(FontAwesomeIcon.CODE);
-        updateIcon.setFill(Colors.DEFAULT_WHITE.getColor());
-        updateIcon.setScaleX(1.4);
-        updateIcon.setScaleY(1.4);
-
-        updateLabel.setFont(Fonts.ARIAL_20.getFont());
-        updateLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
-        updateLabel.setGraphic(updateIcon);
+        updateLabel.setGraphic(new CustomIcon(FontAwesomeIcon.CODE, Colors.DEFAULT_WHITE, 1.4, 1.4));
         updateLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
         setGrow(updateLabel);
         setTop(updateLabel);
@@ -294,13 +275,7 @@ public class App extends Panel {
         });
 
         /* TITLE SETTINGS */
-        FontAwesomeIconView settingsIcon = new FontAwesomeIconView(FontAwesomeIcon.GEARS);
-        settingsIcon.setFill(Colors.DEFAULT_WHITE.getColor());
-        settingsIcon.setScaleX(1.4);
-        settingsIcon.setScaleY(1.4);
-        settingsLabel.setFont(Fonts.ARIAL_20.getFont());
-        settingsLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
-        settingsLabel.setGraphic(settingsIcon);
+        settingsLabel.setGraphic(new CustomIcon(FontAwesomeIcon.GEARS, Colors.DEFAULT_WHITE, 1.4, 1.4));
         settingsLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
         setGrow(settingsLabel);
         setTop(settingsLabel);
@@ -329,10 +304,7 @@ public class App extends Panel {
         settingsLabel.setOnMouseClicked(e-> setPage(new Settings(), settingsLabel));
 
         /* LOG OUT BUTTON */
-        FontAwesomeIconView logOutIcon = new FontAwesomeIconView(FontAwesomeIcon.SIGN_OUT);
-        logOutIcon.setFill(Colors.DEFAULT_WHITE.getColor());
-        logOutIcon.setScaleX(1.25);
-        logOutIcon.setScaleY(1.25);
+        CustomIcon logOutIcon = new CustomIcon(FontAwesomeIcon.SIGN_OUT, Colors.DEFAULT_WHITE, 1.25, 1.25);
         Button logOutBtn = new Button("Se déconnecter");
         logOutBtn.setMinWidth(120);
         logOutBtn.setMinHeight(35);
