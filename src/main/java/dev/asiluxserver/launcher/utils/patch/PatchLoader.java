@@ -30,9 +30,8 @@ public class PatchLoader  {
         ArrayList<PatchNote> patchNotes = patchMessage.getPatchNotes();
         this.titleLabel.setText(patchMessage.getTitle());
 
-        for (int i = 0; i < patchNotes.size(); i++) {
+        for (PatchNote patchNote : patchNotes) {
 
-            PatchNote patchNote = patchNotes.get(i);
             ArrayList<String> notes = patchNote.getNote();
             patchLabel.setText(patchLabel.getText() + (!patchLabel.getText().equals("") ? "\n\n" : "") +
                     patchNote.getCategories() + "\n");
@@ -45,7 +44,7 @@ public class PatchLoader  {
             GridPane.setValignment(categoriesLabel, VPos.TOP);
             GridPane.setHgrow(categoriesLabel, Priority.ALWAYS);
             GridPane.setVgrow(categoriesLabel, Priority.ALWAYS);
-            categoriesLabel.setStyle("-fx-text-size: 35; -fx-text-fill: rgb(0, 0, 0);");
+            categoriesLabel.setStyle("-fx-text-size: 40; -fx-text-fill: rgb(0, 0, 0);");
             categoriesLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 35));
             categoriesLabel.setTranslateX(50);
 
@@ -61,11 +60,11 @@ public class PatchLoader  {
             noteLabel.setTranslateY(75);
 
             int noteSize = notes.size();
-            for (int j = 0; j < noteSize; j++) {
+            for (String note : notes) {
                 patchLabel.setText(patchLabel.getText() + "\n" +
-                        "  - " + notes.get(j)
+                        "  - " + note
                 );
-                noteLabel.setText(noteLabel.getText() + "  - " + notes.get(j) + "\n");
+                noteLabel.setText(noteLabel.getText() + "  - " + note + "\n");
             }
 
             labels.add(categoriesLabel);
