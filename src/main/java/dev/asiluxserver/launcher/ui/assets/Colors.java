@@ -27,6 +27,8 @@ public enum Colors {
     LIGHT_GREEN_2(Color.rgb(100, 142, 56)),
     LIGHT_GREEN_3(Color.rgb(143, 168, 95)),
     LIGHT_GREEN_4(Color.rgb(155, 190, 82)),
+    LIGHT_GREEN_5(Color.rgb(165, 210, 72)),
+    LIGHT_GREEN_6(Color.rgb(167, 220, 82)),
 
     RED_1(Color.rgb(225,53,53)),
     ;
