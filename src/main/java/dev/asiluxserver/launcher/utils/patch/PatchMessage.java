@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class PatchMessage {
 
-    String title;
-    ArrayList<PatchNote> patchNotes;
+    private String title;
+    private ArrayList<PatchNote> patchNotes;
 
     public PatchMessage(String title, ArrayList<PatchNote> patchNotes) {
         this.title = title;

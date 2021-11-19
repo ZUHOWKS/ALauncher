@@ -15,10 +15,10 @@ import java.util.Locale;
 
 public class PatchLoader  {
 
-    XMLPatchParser patchFile;
-    ArrayList<ArrayList<Label>> patchNoteLabel = new ArrayList<>();
-    Label titleLabel = new Label("");
-    Label patchLabel = new Label("");
+    private XMLPatchParser patchFile;
+    private ArrayList<ArrayList<Label>> patchNoteLabel = new ArrayList<>();
+    private Label titleLabel = new Label("");
+    private Label patchLabel = new Label("");
 
     public PatchLoader(XMLPatchParser xmlPatchParser) {
         this.patchFile = xmlPatchParser;
@@ -45,7 +45,7 @@ public class PatchLoader  {
             GridPane.setValignment(categoriesLabel, VPos.TOP);
             GridPane.setHgrow(categoriesLabel, Priority.ALWAYS);
             GridPane.setVgrow(categoriesLabel, Priority.ALWAYS);
-            categoriesLabel.setStyle("-fx-text-size: 32; -fx-text-fill: rgb(0, 0, 0);");
+            categoriesLabel.setStyle("-fx-text-size: 35; -fx-text-fill: rgb(0, 0, 0);");
             categoriesLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 35));
             categoriesLabel.setTranslateX(50);
 
@@ -58,7 +58,7 @@ public class PatchLoader  {
             noteLabel.setStyle("-fx-text-size: 25; -fx-text-fill: rgb(0, 0, 0);");
             noteLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 25));
             noteLabel.setTranslateX(50);
-            noteLabel.setTranslateY(50);
+            noteLabel.setTranslateY(75);
 
             int noteSize = notes.size();
             for (int j = 0; j < noteSize; j++) {

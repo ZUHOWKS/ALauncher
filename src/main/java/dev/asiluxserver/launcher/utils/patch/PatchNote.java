@@ -5,8 +5,8 @@ import java.util.List;
 
 public class PatchNote {
 
-    String categories;
-    ArrayList<String> note;
+    private String categories;
+    private ArrayList<String> note;
 
     public PatchNote(String categories) {
         this.categories = categories;
