@@ -12,22 +12,24 @@ import dev.asiluxserver.launcher.utils.patch.PatchMessage;
 import dev.asiluxserver.launcher.utils.patch.PatchNote;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import org.w3c.dom.css.Rect;
 
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -88,6 +90,23 @@ public class Update extends ContentPanel{
         ArrayList<ArrayList<Label>> patchNoteLabel = patchLoader.getPatchNoteLabel();
         int patchNoteLabelSize = patchNoteLabel.size();
 
+        Stop[] GREEN_1 = new Stop[]{
+                new Stop(0, Colors.LIGHT_GREEN_5.getColor()),
+                new Stop(1, Colors.LIGHT_GREEN_2.getColor())
+        };
+        LinearGradient LG_GREEN_1 = new LinearGradient(
+                0,0,1.5,0,true,
+                CycleMethod.NO_CYCLE, GREEN_1
+        );
+
+        Stop[] GREEN_2 = new Stop[]{
+                new Stop(0, Colors.LIGHT_GREEN_5.getColor()),
+                new Stop(1, Colors.LIGHT_GREEN_3.getColor())
+        };
+        LinearGradient LG_GREEN_2 = new LinearGradient(
+                0,0,2.2,0,true,
+                CycleMethod.NO_CYCLE, GREEN_1
+        );
 
         patchPane.setAlignment(Pos.CENTER);
         setGrow(patchPane);
@@ -96,7 +115,7 @@ public class Update extends ContentPanel{
         patchPane.setMinHeight(100);
         patchPane.setPrefHeight(100);
         patchPane.setMaxHeight(150);
-        patchPane.setStyle("-fx-background-color: rgba(155,190,82,0.90);");
+        patchPane.setBackground(new Background(new BackgroundFill(LG_GREEN_1, CornerRadii.EMPTY, Insets.EMPTY)));
 
         GridPane patchScrollPane = new GridPane();
         setGrow(patchScrollPane);
@@ -119,7 +138,7 @@ public class Update extends ContentPanel{
         setAlignment(titleLabel, HPos.LEFT, VPos.CENTER);
         setGrow(titleLabel);
         titleLabel.setStyle("-fx-text-size: 50; -fx-text-fill: rgb(255, 255, 255);");
-        titleLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 50));
+        titleLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 60));
         titleLabel.setTranslateX(15);
 
         /* VERSION CLASSIQUE */
@@ -133,21 +152,30 @@ public class Update extends ContentPanel{
         for (int i = 0; i < patchNoteLabelSize; i++) {
             ArrayList<Label> labels = patchNoteLabel.get(i);
             int labelsSize = labels.size();
-
-            Separator separator = new Separator();
+            double lenght = labels.get(0).getText().replaceAll("\\s+", "").length();
+            if (lenght > 20) {
+                lenght = lenght * 0.95;
+            }
+            Rectangle separator = new Rectangle();
             setGrow(separator);
             setAlignment(separator, HPos.LEFT ,VPos.TOP);
-            separator.setEffect(new BlurDropShadow(Color.rgb(37,37, 37), 4, 0));
-            separator.setMaxHeight(50);
-            separator.setMinHeight(50);
-            separator.setMaxWidth(patchScrollPane.getMaxWidth() - 25);
-            separator.setMinWidth(patchScrollPane.getMinWidth() - 25);
-            separator.setTranslateX(49d);
-            separator.setTranslateY(25);
+            //separator.setEffect(new BlurDropShadow(Color.rgb(37,37, 37), 4, 0));
+            separator.setHeight(15);
+            separator.setWidth((lenght * 25));
+            System.out.println(labels.get(0).getWidth());
+            separator.setTranslateX(46.5d);
+            separator.setTranslateY(40);
+            separator.setArcHeight(10);
+            separator.setArcWidth(10);
+            separator.setFill(LG_GREEN_2);
 
-            patchVBoxPane.add(labels.get(0),0, i);
+            Label categories = labels.get(0);
+
+            Label note = labels.get(1);
+
+            patchVBoxPane.add(categories,0, i);
             patchVBoxPane.add(separator,0, i);
-            patchVBoxPane.add(labels.get(1),0, i);
+            patchVBoxPane.add(note,0, i);
         }
 
         /* SCROLL PANE STYLE */

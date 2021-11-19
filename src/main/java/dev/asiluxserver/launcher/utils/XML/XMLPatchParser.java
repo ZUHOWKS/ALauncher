@@ -20,8 +20,8 @@ import java.util.Locale;
 
 public class XMLPatchParser {
 
-    String url = "";
-    PatchMessage patchMessage = new PatchMessage("", new ArrayList<>());
+    private String url = "";
+    private PatchMessage patchMessage = new PatchMessage("", new ArrayList<>());
 
     public XMLPatchParser(String url) {
         this.url = url;
