@@ -137,9 +137,20 @@ public class Update extends ContentPanel{
         Label titleLabel = patchLoader.getTitleLabel();
         setAlignment(titleLabel, HPos.LEFT, VPos.CENTER);
         setGrow(titleLabel);
-        titleLabel.setStyle("-fx-text-size: 50; -fx-text-fill: rgb(255, 255, 255);");
-        titleLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 60));
-        titleLabel.setTranslateX(15);
+        titleLabel.setStyle("-fx-text-size: 70; -fx-text-fill: rgb(255, 255, 255);");
+        titleLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 70));
+        titleLabel.setTranslateX(75);
+
+        Rectangle separator1 = new Rectangle();
+        setGrow(separator1);
+        setAlignment(separator1, HPos.LEFT ,VPos.CENTER);
+        //separator.setEffect(new BlurDropShadow(Color.rgb(37,37, 37), 4, 0));
+        separator1.setHeight(80);
+        separator1.setWidth(15);
+        separator1.setTranslateX(50);
+        separator1.setArcHeight(10);
+        separator1.setArcWidth(10);
+        separator1.setFill(Color.rgb(255, 255, 255));
 
         /* VERSION CLASSIQUE */
         Label patchLabel = patchLoader.getPatchLabel();
@@ -152,19 +163,17 @@ public class Update extends ContentPanel{
         for (int i = 0; i < patchNoteLabelSize; i++) {
             ArrayList<Label> labels = patchNoteLabel.get(i);
             int labelsSize = labels.size();
-            double lenght = labels.get(0).getText().replaceAll("\\s+", "").length();
-            if (lenght > 20) {
-                lenght = lenght * 0.95;
-            }
+            double length = labels.get(0).getText().replace(" ","").length();
+            double separatorLength = 0;
             Rectangle separator = new Rectangle();
             setGrow(separator);
             setAlignment(separator, HPos.LEFT ,VPos.TOP);
             //separator.setEffect(new BlurDropShadow(Color.rgb(37,37, 37), 4, 0));
             separator.setHeight(15);
-            separator.setWidth((lenght * 25));
+            separator.setWidth(length * 25 + 7.25 * (length - labels.get(0).getText().length()) + 5);
             System.out.println(labels.get(0).getWidth());
-            separator.setTranslateX(46.5d);
-            separator.setTranslateY(40);
+            separator.setTranslateX(45d);
+            separator.setTranslateY(45);
             separator.setArcHeight(10);
             separator.setArcWidth(10);
             separator.setFill(LG_GREEN_2);
@@ -203,7 +212,7 @@ public class Update extends ContentPanel{
         scrollPane.setContent(vBox);
         vBox.getChildren().add(0, patchVBoxPane);
 
-        patchPane.getChildren().addAll(titleLabel);
+        patchPane.getChildren().addAll(separator1, titleLabel);
 
         pane.add(patchPane,0,0);
         pane.add(patchScrollPane,0,1);
