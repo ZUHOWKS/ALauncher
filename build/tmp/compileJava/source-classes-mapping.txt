@@ -13,8 +13,14 @@ dev/asiluxserver/launcher/auth/mineweb/AuthMineWeb.java
  dev.asiluxserver.launcher.auth.mineweb.AuthMineWeb
 dev/asiluxserver/launcher/utils/patch/PatchNote.java
  dev.asiluxserver.launcher.utils.patch.PatchNote
-dev/asiluxserver/launcher/ui/PanelManager.java
- dev.asiluxserver.launcher.ui.PanelManager
+dev/asiluxserver/launcher/ui/panels/pages/App.java
+ dev.asiluxserver.launcher.ui.panels.pages.App
+ dev.asiluxserver.launcher.ui.panels.pages.App$1
+ dev.asiluxserver.launcher.ui.panels.pages.App$2
+ dev.asiluxserver.launcher.ui.panels.pages.App$3
+ dev.asiluxserver.launcher.ui.panels.pages.App$4
+ dev.asiluxserver.launcher.ui.panels.pages.App$5
+ dev.asiluxserver.launcher.ui.panels.pages.App$6
 dev/asiluxserver/launcher/ui/panel/ITakePLace.java
  dev.asiluxserver.launcher.ui.panel.ITakePLace
 dev/asiluxserver/launcher/ui/panels/pages/content/Update.java
@@ -45,19 +51,13 @@ dev/asiluxserver/launcher/ui/panels/pages/content/ContentPanel.java
  dev.asiluxserver.launcher.ui.panels.pages.content.ContentPanel
 dev/asiluxserver/launcher/utils/patch/PatchLoader.java
  dev.asiluxserver.launcher.utils.patch.PatchLoader
-dev/asiluxserver/launcher/ui/panels/partials/TopBar.java
- dev.asiluxserver.launcher.ui.panels.partials.TopBar
+dev/asiluxserver/launcher/ui/panels/pages/Login.java
+ dev.asiluxserver.launcher.ui.panels.pages.Login
 dev/asiluxserver/launcher/ui/panel/IPanel.java
  dev.asiluxserver.launcher.ui.panel.IPanel
 dev/asiluxserver/launcher/Launcher.java
  dev.asiluxserver.launcher.Launcher
-dev/asiluxserver/launcher/ui/panels/pages/Login.java
- dev.asiluxserver.launcher.ui.panels.pages.Login
-dev/asiluxserver/launcher/ui/panels/pages/App.java
- dev.asiluxserver.launcher.ui.panels.pages.App
- dev.asiluxserver.launcher.ui.panels.pages.App$1
- dev.asiluxserver.launcher.ui.panels.pages.App$2
- dev.asiluxserver.launcher.ui.panels.pages.App$3
- dev.asiluxserver.launcher.ui.panels.pages.App$4
- dev.asiluxserver.launcher.ui.panels.pages.App$5
- dev.asiluxserver.launcher.ui.panels.pages.App$6
+dev/asiluxserver/launcher/ui/PanelManager.java
+ dev.asiluxserver.launcher.ui.PanelManager
+dev/asiluxserver/launcher/ui/panels/partials/TopBar.java
+ dev.asiluxserver.launcher.ui.panels.partials.TopBar
