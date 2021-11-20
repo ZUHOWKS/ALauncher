@@ -21,13 +21,16 @@ repositories {
 
 dependencies {
 
-    implementation 'fr.litarvan:openauth:1+'
+    implementation 'com.github.oshi:oshi-core:5+'
+
     implementation 'de.jensd:fontawesomefx:8.9'
 
     implementation 'fr.flowarg:flowupdater:1.5+'
     implementation 'fr.flowarg:openlauncherlib:3+'
 
-    implementation 'com.github.oshi:oshi-core:5+'
+    implementation 'fr.litarvan:openauth:1+'
+
+    implementation 'org.jsoup:jsoup:1.14.3'
 
     implementation group: 'com.github.goxr3plus', name: 'FX-BorderlessScene', version: '4.4.0'
 }

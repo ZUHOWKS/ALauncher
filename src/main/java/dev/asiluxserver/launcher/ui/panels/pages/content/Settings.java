@@ -6,15 +6,13 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import dev.asiluxserver.launcher.Launcher;
 import dev.asiluxserver.launcher.ui.PanelManager;
 
+import dev.asiluxserver.launcher.ui.assets.Fonts;
 import fr.theshark34.openlauncherlib.util.Saver;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
 import oshi.SystemInfo;
@@ -43,7 +41,7 @@ public class Settings extends ContentPanel {
 
         // Titre
         Label title = new Label("Paramètres");
-        title.setFont(Font.font("Consolas", FontWeight.BOLD, FontPosture.REGULAR, 25f));
+        title.setFont(Fonts.CONSOLAS_25F.getFont());
         title.setStyle("-fx-text-fill: rgb(255, 255, 255);");
         setLeft(title);
         setCanTakeAllSize(title);
