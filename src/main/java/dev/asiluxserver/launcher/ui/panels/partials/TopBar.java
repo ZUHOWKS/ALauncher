@@ -4,6 +4,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
 import dev.asiluxserver.launcher.ui.PanelManager;
+import dev.asiluxserver.launcher.ui.assets.Fonts;
 import dev.asiluxserver.launcher.ui.panel.Panel;
 
 import javafx.scene.control.Label;
@@ -48,7 +49,7 @@ public class TopBar extends Panel {
 
         // TopBar: center
         Label title = new Label("Asilux Launcher");
-        title.setFont(Font.font("Consolas", FontWeight.BOLD, FontPosture.REGULAR, 18f));
+        title.setFont(Font.loadFont(Fonts.SELAWK_SEMI_BOLD.get(), 18f));
         title.setStyle("-fx-text-fill: white;");
         setCenterH(title);
         this.layout.getChildren().add(title);
