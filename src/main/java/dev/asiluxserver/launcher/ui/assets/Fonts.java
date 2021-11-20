@@ -3,43 +3,53 @@ package dev.asiluxserver.launcher.ui.assets;
 import dev.asiluxserver.launcher.Main;
 
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 
-import java.io.InputStream;
+import java.net.URL;
 
 public enum Fonts {
-    ARIAL_14(Font.font("Arial", FontWeight.SEMI_BOLD, 14)),
-    ARIAL_17(Font.font("Arial", FontWeight.SEMI_BOLD, 17)),
-    ARIAL_18(Font.font("Arial", FontWeight.SEMI_BOLD, 18)),
-    ARIAL_20(Font.font("Arial", FontWeight.SEMI_BOLD, 20)),
 
-    CONSOLAS_18F(Font.font("Consolas", FontWeight.BOLD, FontPosture.REGULAR, 18f)),
-    CONSOLAS_25F(Font.font("Consolas", FontWeight.BOLD, FontPosture.REGULAR, 25f)),
+    ARIAL("Arial", FontWeight.SEMI_BOLD),
 
-    SELAWK(Main.class.getResource("/font/selawk.ttf").toExternalForm()),
-    SELAWK_SEMI_LIGHT(Main.class.getResource("/font/selawksl.ttf").toExternalForm()),
-    SELAWK_LIGHT(Main.class.getResource("/font/selawkl.ttf").toExternalForm()),
-    SELAWK_SEMI_BOLD(Main.class.getResource("/font/selawksb.ttf").toExternalForm()),
-    SELAWK_BOLD(Main.class.getResource("/font/selawkb.ttf").toExternalForm());
+    CONSOLAS("Consolas", FontWeight.BOLD),
+
+    SELAWK(Main.class.getResource("/font/selawk.ttf")),
+    SELAWK_SEMI_LIGHT(Main.class.getResource("/font/selawksl.ttf")),
+    SELAWK_LIGHT(Main.class.getResource("/font/selawkl.ttf")),
+    SELAWK_SEMI_BOLD(Main.class.getResource("/font/selawksb.ttf")),
+    SELAWK_BOLD(Main.class.getResource("/font/selawkb.ttf"))
+    ;
 
 
-    private final Font font;
-    private final String resourceAsStream;
+    private final String font;
+    private final FontWeight weight;
+    private final String resource;
 
-    Fonts(String resourceAsStream) {
-        this.resourceAsStream = resourceAsStream;
-    }
-
-    Fonts(Font font) {
+    Fonts(String font, FontWeight weight) {
         this.font = font;
+        this.weight = weight;
+        this.resource = null;
     }
 
-    public String get() {
-        return resourceAsStream;
+    Fonts(URL resource) {
+        if (resource != null) {
+            this.font = null;
+            this.weight = null;
+            this.resource = resource.toExternalForm();
+        } else {
+            this.font = "Consolas";
+            this.weight = FontWeight.SEMI_BOLD;
+            this.resource = null;
+        }
     }
 
-    public Font getFont() {
-        return this.font;
+    public Font getFont(double size) {
+        Font font;
+        if (this.resource  == null) {
+            font = Font.font(this.font, this.weight, size);
+        } else {
+            font = Font.loadFont(this.resource, size);
+        }
+        return font;
     }
 }

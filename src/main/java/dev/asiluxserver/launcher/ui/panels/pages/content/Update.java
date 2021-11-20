@@ -5,13 +5,11 @@ import dev.asiluxserver.launcher.Main;
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.assets.Colors;
 import dev.asiluxserver.launcher.ui.assets.Fonts;
-import dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow;
-import dev.asiluxserver.launcher.ui.panel.Panel;
-import dev.asiluxserver.launcher.ui.panels.partials.TopBar;
 import dev.asiluxserver.launcher.utils.patch.PatchLoader;
 import dev.asiluxserver.launcher.utils.patch.PatchMessage;
-import dev.asiluxserver.launcher.utils.patch.PatchNote;
+
 import fr.theshark34.openlauncherlib.util.Saver;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -20,24 +18,17 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
-import org.w3c.dom.css.Rect;
 
-import java.io.*;
 import java.net.URL;
-import java.sql.Time;
 import java.util.ArrayList;
 
 public class Update extends ContentPanel{
@@ -178,7 +169,7 @@ public class Update extends ContentPanel{
         setAlignment(titleLabel, HPos.LEFT, VPos.CENTER);
         setGrow(titleLabel);
         titleLabel.setStyle("-fx-text-size: 80; -fx-text-fill: rgb(255, 255, 255);");
-        titleLabel.setFont(Font.loadFont(Fonts.SELAWK_BOLD.get(), 80));
+        titleLabel.setFont(Fonts.SELAWK_BOLD.getFont(80));
         titleLabel.setTranslateX(75);
 
         Rectangle separator1 = new Rectangle();
@@ -197,7 +188,7 @@ public class Update extends ContentPanel{
         setAlignment(patchLabel, HPos.LEFT, VPos.TOP);
         setGrow(titleLabel);
         patchLabel.setStyle("-fx-text-size: 17; -fx-text-fill: rgb(0, 0, 0);");
-        patchLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
+        patchLabel.setFont(Fonts.ARIAL.getFont(20));
         patchLabel.setTranslateX(50);
 
         for (int i = 0; i < patchNoteLabelSize; i++) {

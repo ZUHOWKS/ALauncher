@@ -1,21 +1,14 @@
 package dev.asiluxserver.launcher.utils.patch;
 
-import dev.asiluxserver.launcher.Main;
-import dev.asiluxserver.launcher.ui.assets.Colors;
 import dev.asiluxserver.launcher.ui.assets.Fonts;
-import dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow;
 import dev.asiluxserver.launcher.utils.XML.XMLPatchParser;
+
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -52,7 +45,7 @@ public class PatchLoader  {
             GridPane.setHgrow(categoriesLabel, Priority.ALWAYS);
             GridPane.setVgrow(categoriesLabel, Priority.ALWAYS);
             categoriesLabel.setStyle("-fx-text-size: 40; -fx-text-fill: rgb(240, 240, 240);");
-            categoriesLabel.setFont(Font.loadFont(Fonts.SELAWK_SEMI_BOLD.get(), 40));
+            categoriesLabel.setFont(Fonts.SELAWK_SEMI_BOLD.getFont(40));
             categoriesLabel.setTranslateX(50);
             categoriesLabel.setTranslateY(25);
 
@@ -63,7 +56,7 @@ public class PatchLoader  {
             GridPane.setHgrow(noteLabel, Priority.ALWAYS);
             GridPane.setVgrow(noteLabel, Priority.ALWAYS);
             noteLabel.setStyle("-fx-text-size: 28; -fx-text-fill: rgb(230, 230, 230);");
-            noteLabel.setFont(Font.loadFont(Fonts.SELAWK.get(), 28));
+            noteLabel.setFont(Fonts.SELAWK.getFont(28));
             noteLabel.setTranslateX(50);
             noteLabel.setTranslateY(140);
 

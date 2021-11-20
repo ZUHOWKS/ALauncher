@@ -41,7 +41,7 @@ public class Settings extends ContentPanel {
 
         // Titre
         Label title = new Label("Paramètres");
-        title.setFont(Fonts.CONSOLAS_25F.getFont());
+        title.setFont(Fonts.CONSOLAS.getFont(25f));
         title.setStyle("-fx-text-fill: rgb(255, 255, 255);");
         setLeft(title);
         setCanTakeAllSize(title);

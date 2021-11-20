@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import java.nio.file.Path;
 
 public class Launcher extends Application {
+
     private static Launcher instance;
     private final ILogger logger;
     private final Path launcherDir = GameDirGenerator.createGameDir("asiluxdev", true);

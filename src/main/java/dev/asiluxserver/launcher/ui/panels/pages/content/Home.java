@@ -26,7 +26,6 @@ import fr.theshark34.openlauncherlib.minecraft.*;
 import fr.theshark34.openlauncherlib.util.Saver;
 
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -40,7 +39,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
@@ -50,7 +48,6 @@ import javafx.util.Duration;
 
 import java.net.URL;
 import java.nio.file.Path;
-import java.sql.Time;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -130,7 +127,7 @@ public class Home extends ContentPanel{
                 "-fx-text-alignment: center;" +
                         "-fx-text-fill: rgb(255, 255, 255);"
         );
-        stepLabel.setFont(Font.loadFont(Fonts.SELAWK_SEMI_LIGHT.get(), 18));
+        stepLabel.setFont(Fonts.SELAWK_SEMI_LIGHT.getFont(18));
         setAlignment(stepLabel, HPos.CENTER ,VPos.CENTER);
         setCanTakeAllSize(stepLabel);
         stepLabel.setTranslateY(60);
@@ -140,7 +137,7 @@ public class Home extends ContentPanel{
                 "-fx-text-alignment: center;" +
                         "-fx-text-fill: rgb(255, 255, 255);"
         );
-        fileLabel.setFont(Font.loadFont(Fonts.SELAWK_SEMI_LIGHT.get(), 18));
+        fileLabel.setFont(Fonts.SELAWK_SEMI_LIGHT.getFont(18));
         setCenterH(fileLabel);
         setAlignment(fileLabel, HPos.CENTER ,VPos.CENTER);
         setCanTakeAllSize(fileLabel);
@@ -172,7 +169,7 @@ public class Home extends ContentPanel{
 
         Label playLabel = new Label("JOUER");
         playLabel.setStyle("-fx-font-size: 42;");
-        playLabel.setFont(Font.loadFont(Fonts.SELAWK_BOLD.get(), 40));
+        playLabel.setFont(Fonts.SELAWK_BOLD.getFont(40));
         playLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
         playLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 6, 0));
         playLabel.setGraphic(playIcon);
@@ -213,23 +210,20 @@ public class Home extends ContentPanel{
         Timeline timeline = new Timeline();
         for (int i = 0; i < 500; i++) {
             int innerIterator = i;
-            KeyFrame kf = new KeyFrame(Duration.millis(10 * innerIterator), new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent ae) {
+            KeyFrame kf = new KeyFrame(Duration.millis(10 * innerIterator), ae -> {
 
-                    double runningRadius = innerIterator * (widthOfOneGradientCycle * -0.002);
-                    double xStartDynamic = xStartStatic + (runningRadius * Math.cos(Math.toRadians(gradientSlopeDegree)));
-                    double yStartDynamic = yStartStatic + (runningRadius * Math.sin(Math.toRadians(gradientSlopeDegree)));
-                    double xEndDynamic = xEndStatic + (runningRadius * Math.cos(Math.toRadians(gradientSlopeDegree)));
-                    double yEndDynamic = yEndStatic + (runningRadius * Math.sin(Math.toRadians(gradientSlopeDegree)));
+                double runningRadius = innerIterator * (widthOfOneGradientCycle * -0.002);
+                double xStartDynamic = xStartStatic + (runningRadius * Math.cos(Math.toRadians(gradientSlopeDegree)));
+                double yStartDynamic = yStartStatic + (runningRadius * Math.sin(Math.toRadians(gradientSlopeDegree)));
+                double xEndDynamic = xEndStatic + (runningRadius * Math.cos(Math.toRadians(gradientSlopeDegree)));
+                double yEndDynamic = yEndStatic + (runningRadius * Math.sin(Math.toRadians(gradientSlopeDegree)));
 
-                    LinearGradient gradient = new LinearGradient(xStartDynamic, yStartDynamic, xEndDynamic, yEndDynamic,
-                            false, CycleMethod.REPEAT, new Stop(0.05, Colors.LIGHT_GREEN_2.getColor()),
-                            new Stop(0.35, Colors.LIGHT_GREEN_5.getColor()),
-                            new Stop(0.75, Colors.LIGHT_GREEN_5.getColor()),
-                            new Stop(1, Colors.LIGHT_GREEN_2.getColor()));
-                    playButton.setBackground(new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY)));
-                }
+                LinearGradient gradient = new LinearGradient(xStartDynamic, yStartDynamic, xEndDynamic, yEndDynamic,
+                        false, CycleMethod.REPEAT, new Stop(0.05, Colors.LIGHT_GREEN_2.getColor()),
+                        new Stop(0.35, Colors.LIGHT_GREEN_5.getColor()),
+                        new Stop(0.75, Colors.LIGHT_GREEN_5.getColor()),
+                        new Stop(1, Colors.LIGHT_GREEN_2.getColor()));
+                playButton.setBackground(new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY)));
             });
             timeline.getKeyFrames().add(kf);
         }
@@ -296,7 +290,7 @@ public class Home extends ContentPanel{
         setGrow(NewsTitle);
         setAlignment(NewsTitle, HPos.CENTER ,VPos.TOP);
         NewsTitle.setTextFill(Colors.DEFAULT_WHITE.getColor());
-        NewsTitle.setFont(Fonts.ARIAL_20.getFont());
+        NewsTitle.setFont(Fonts.ARIAL.getFont(20));
         NewsTitle.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 6, 0));
         NewsTitle.setTranslateY(-35);
 
