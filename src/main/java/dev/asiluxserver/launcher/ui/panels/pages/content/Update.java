@@ -218,7 +218,7 @@ public class Update extends ContentPanel{
             setAlignment(separator, HPos.LEFT ,VPos.TOP);
             //separator.setEffect(new BlurDropShadow(Color.rgb(37,37, 37), 4, 0));
             separator.setHeight(15);
-            separator.setWidth(length * 27 + 5.85 * (length - labels.get(0).getText().length()) + 20);
+            separator.setWidth(length * 27.25 + 6 * (length - labels.get(0).getText().length()));
             separator.setTranslateX(44d);
             separator.setTranslateY(75);
             separator.setArcHeight(15);
