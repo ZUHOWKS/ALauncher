@@ -8,6 +8,7 @@ import dev.asiluxserver.launcher.Main;
 import dev.asiluxserver.launcher.game.MinecraftInfos;
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.assets.Colors;
+import dev.asiluxserver.launcher.ui.assets.Fonts;
 import dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow;
 import dev.asiluxserver.launcher.utils.ZProgressBar;
 
@@ -28,6 +29,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -51,6 +54,7 @@ import javafx.util.Duration;
 
 import java.net.URL;
 import java.nio.file.Path;
+import java.sql.Time;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -123,26 +127,28 @@ public class Home extends ContentPanel{
         setGrow(asiluxView);
         GridPane.setValignment(asiluxView, VPos.CENTER);
         GridPane.setHalignment(asiluxView, HPos.CENTER);
-        asiluxView.setTranslateY(-25);
+        asiluxView.setTranslateY(-75);
 
 
         stepLabel.setStyle(
                 "-fx-text-alignment: center;" +
                         "-fx-text-fill: rgb(255, 255, 255);"
         );
+        stepLabel.setFont(Font.loadFont(Fonts.SELAWK_SEMI_LIGHT.get(), 18));
         setAlignment(stepLabel, HPos.CENTER ,VPos.CENTER);
         setCanTakeAllSize(stepLabel);
-        stepLabel.setTranslateY(80);
+        stepLabel.setTranslateY(60);
 
 
         fileLabel.setStyle(
                 "-fx-text-alignment: center;" +
                         "-fx-text-fill: rgb(255, 255, 255);"
         );
+        fileLabel.setFont(Font.loadFont(Fonts.SELAWK_SEMI_LIGHT.get(), 18));
         setCenterH(fileLabel);
         setAlignment(fileLabel, HPos.CENTER ,VPos.CENTER);
         setCanTakeAllSize(fileLabel);
-        fileLabel.setTranslateY(94);
+        fileLabel.setTranslateY(74);
 
 
         progressBar = new ZProgressBar(450, 18);
@@ -159,7 +165,7 @@ public class Home extends ContentPanel{
         );
         progressBar.setForegroundColor(lg);
         progressBar.setEffect(new BlurDropShadow(Colors.DARK_GREY_2, 12, 0));
-        progressBar.setTranslateY(112);
+        progressBar.setTranslateY(92);
 
 
         FontAwesomeIconView playIcon = new FontAwesomeIconView(FontAwesomeIcon.PLAY);
@@ -170,6 +176,7 @@ public class Home extends ContentPanel{
 
         Label playLabel = new Label("JOUER");
         playLabel.setStyle("-fx-font-size: 42;");
+        playLabel.setFont(Font.loadFont(Fonts.SELAWK_BOLD.get(), 40));
         playLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
         playLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_2, 6, 0));
         playLabel.setGraphic(playIcon);
@@ -180,37 +187,6 @@ public class Home extends ContentPanel{
         playLabel.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
         playLabel.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
         playLabel.setOnMouseClicked(e-> {
-            Timeline clickedAnimation = new Timeline(
-                    new KeyFrame(
-                            Duration.ZERO,
-                            new KeyValue(
-                                    playButton.backgroundProperty(),
-                                    new Background(
-                                            new BackgroundFill(Color.valueOf("#74923AFF"),
-                                            CornerRadii.EMPTY, Insets.EMPTY
-                                            )
-                                    )
-                            )
-                    ),
-                    new KeyFrame(
-                            Duration.millis(700),
-                            new KeyValue(
-                                    playButton.backgroundProperty(),
-                                    new Background(
-                                            new BackgroundFill(Color.valueOf("#91B248FF"),
-                                                    CornerRadii.EMPTY, Insets.EMPTY
-                                            )
-                                    )
-                            )
-                    )
-            );
-            clickedAnimation.setOnFinished(ev -> playButton.setStyle(
-                    "-fx-background-color: #91B248FF;" +
-                            "-fx-font-size: 32;" +
-                            "-fx-text-fill: rgba(255,255,255,1);"
-                    )
-            );
-            clickedAnimation.play();
             if (!isDownloading())
                 this.play();
         });
@@ -219,11 +195,7 @@ public class Home extends ContentPanel{
         playButton.setMinHeight(60);
         playButton.setMaxWidth(220);
         playButton.setMaxHeight(60);
-        playButton.setStyle(
-                "-fx-background-color: #91B248FF;" +
-                        "-fx-font-size: 34; " +
-                        "-fx-text-fill: rgba(255,255,255,1);"
-        );
+        playButton.setStyle("-fx-font-size: 34; -fx-text-fill: rgba(255,255,255,1);");
         playButton.setTextAlignment(TextAlignment.CENTER);
         playButton.setEffect(new BlurDropShadow(Colors.DARK_GREY_4, 3, 0.3));
         setGrow(playButton);
@@ -232,38 +204,41 @@ public class Home extends ContentPanel{
         playButton.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
         playButton.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
         playButton.setOnMouseClicked(e-> {
-            Timeline clickedAnimation = new Timeline(
-                    new KeyFrame(Duration.ZERO,
-                            new KeyValue(playButton.backgroundProperty(),
-                                    new Background(
-                                            new BackgroundFill(Color.valueOf("#74923AFF"),
-                                                    CornerRadii.EMPTY, Insets.EMPTY
-                                            )
-                                    )
-                            )
-                    ),
-                    new KeyFrame(Duration.millis(700),
-                            new KeyValue(playButton.backgroundProperty(),
-                                    new Background(
-                                            new BackgroundFill(Color.valueOf("#91B248FF"),
-                                                    CornerRadii.EMPTY, Insets.EMPTY
-                                            )
-                                    )
-                            )
-                    )
-            );
-            clickedAnimation.setOnFinished(
-                    ev -> playButton.setStyle(
-                            "-fx-background-color: #91B248FF;" +
-                                    "-fx-font-size: 32;" +
-                                    "-fx-text-fill: rgba(255,255,255,1);")
-            );
-            clickedAnimation.play();
             if (!isDownloading())
                 this.play();
         });
 
+        double widthOfOneGradientCycle = 750;
+        double gradientSlopeDegree = -20;
+        double xStartStatic = 20;
+        double yStartStatic = 20;
+        double xEndStatic = xStartStatic + (widthOfOneGradientCycle * Math.cos(Math.toRadians(gradientSlopeDegree)));
+        double yEndStatic = yStartStatic + (widthOfOneGradientCycle * Math.sin(Math.toRadians(gradientSlopeDegree)));
+        Timeline timeline = new Timeline();
+        for (int i = 0; i < 500; i++) {
+            int innerIterator = i;
+            KeyFrame kf = new KeyFrame(Duration.millis(10 * innerIterator), new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent ae) {
 
+                    double runningRadius = innerIterator * (widthOfOneGradientCycle * -0.002);
+                    double xStartDynamic = xStartStatic + (runningRadius * Math.cos(Math.toRadians(gradientSlopeDegree)));
+                    double yStartDynamic = yStartStatic + (runningRadius * Math.sin(Math.toRadians(gradientSlopeDegree)));
+                    double xEndDynamic = xEndStatic + (runningRadius * Math.cos(Math.toRadians(gradientSlopeDegree)));
+                    double yEndDynamic = yEndStatic + (runningRadius * Math.sin(Math.toRadians(gradientSlopeDegree)));
+
+                    LinearGradient gradient = new LinearGradient(xStartDynamic, yStartDynamic, xEndDynamic, yEndDynamic,
+                            false, CycleMethod.REPEAT, new Stop(0.05, Colors.LIGHT_GREEN_2.getColor()),
+                            new Stop(0.35, Colors.LIGHT_GREEN_5.getColor()),
+                            new Stop(0.75, Colors.LIGHT_GREEN_5.getColor()),
+                            new Stop(1, Colors.LIGHT_GREEN_2.getColor()));
+                    playButton.setBackground(new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY)));
+                }
+            });
+            timeline.getKeyFrames().add(kf);
+        }
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
         pane.getChildren().addAll(asiluxView, playButton, playLabel, progressBar);
     }
 
