@@ -1,5 +1,6 @@
-# ALauncher
-Developpement of Asilux Launcher.
+# Mise à jour du ALauncher en version 1.1.0
+
+Nouvelle version du launcher est enfin arrivé ! Beaucoup de choses on était retravaillé dans cette version du launcher. Vous retrouverez ci-dessous toutes les modifications apportées au ALauncher. 
 
 
 # !NEW! PatchLoader
@@ -21,7 +22,7 @@ _**Catégories**_:
 
 À chaque démarrage du launcher, un processus interne se lance afin de construire une version texte du patch. Si vous n'êtes pas connecté à internet au moment du démarrage du launcher, le `PatchLoader`renvoie un texte vide.
 
-# Nouvelle onglet: Mise à jour
+# Nouvel onglet: Mise à jour
 
 L'onglet des Mise à jour est disponible ! Il permet d'avoir un aperçu du patch dans sa totalité via un super design. Il utilise le `PatchLoader` et donc vous l'auriez compris, pour obtenir cette aperçu il faut être connecté à internet au lancement du ALauncher.
 
