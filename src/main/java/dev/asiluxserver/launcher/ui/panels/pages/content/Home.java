@@ -500,7 +500,7 @@ public class Home extends ContentPanel{
 
     public enum StepInfo {
         READ("Lecture du fichier json..."),
-        DL_LIBS("Téléchargement des libraries..."),
+        DL_LIBS("Téléchargement des librairies..."),
         DL_ASSETS("Téléchargement des ressources..."),
         EXTRACT_NATIVES("Extraction des natives..."),
         FORGE("Installation de forge..."),

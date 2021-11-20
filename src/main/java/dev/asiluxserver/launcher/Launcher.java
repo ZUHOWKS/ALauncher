@@ -5,8 +5,10 @@ import dev.asiluxserver.launcher.ui.panels.pages.App;
 import dev.asiluxserver.launcher.ui.panels.pages.Login;
 import dev.asiluxserver.launcher.utils.XML.XMLPatchParser;
 import dev.asiluxserver.launcher.utils.patch.PatchLoader;
+
 import fr.flowarg.flowlogger.ILogger;
 import fr.flowarg.flowlogger.Logger;
+
 import fr.litarvan.openauth.AuthPoints;
 import fr.litarvan.openauth.AuthenticationException;
 import fr.litarvan.openauth.Authenticator;
@@ -14,9 +16,11 @@ import fr.litarvan.openauth.microsoft.MicrosoftAuthResult;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticationException;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
 import fr.litarvan.openauth.model.response.RefreshResponse;
+
 import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
 import fr.theshark34.openlauncherlib.minecraft.util.GameDirGenerator;
 import fr.theshark34.openlauncherlib.util.Saver;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 
