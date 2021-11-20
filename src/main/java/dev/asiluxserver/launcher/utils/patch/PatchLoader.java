@@ -65,7 +65,7 @@ public class PatchLoader  {
             noteLabel.setStyle("-fx-text-size: 28; -fx-text-fill: rgb(230, 230, 230);");
             noteLabel.setFont(Font.loadFont(Fonts.SELAWK.get(), 28));
             noteLabel.setTranslateX(50);
-            noteLabel.setTranslateY(130);
+            noteLabel.setTranslateY(140);
 
             int noteSize = notes.size();
             for (String note : notes) {
