@@ -68,9 +68,8 @@ public class Home extends ContentPanel{
         return "home";
     }
 
-    @Override
-    public void init(PanelManager panelManager) {
-        super.init(panelManager);
+    public Home() {
+        super();
 
         /* CONTENT */
         contentPane.setMinWidth(480);

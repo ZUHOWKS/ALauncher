@@ -1,7 +1,6 @@
 package dev.asiluxserver.launcher.ui.panels.pages;
 
 import dev.asiluxserver.launcher.Launcher;
-import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.assets.Colors;
 import dev.asiluxserver.launcher.ui.assets.Fonts;
 import dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow;
@@ -66,9 +65,8 @@ public class Login extends Panel {
         return null;
     }
 
-    @Override
-    public void init(PanelManager panelManager) {
-        super.init(panelManager);
+    public Login() {
+        super();
 
         AtomicBoolean antiSpamConnection = new AtomicBoolean(false);
 

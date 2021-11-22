@@ -3,7 +3,6 @@ package dev.asiluxserver.launcher.ui.panels.partials;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
-import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.panel.Panel;
 
 import javafx.scene.control.Label;
@@ -28,9 +27,8 @@ public class TopBar extends Panel {
         return null;
     }
 
-    @Override
-    public void init(PanelManager panelManager) {
-        super.init(panelManager);
+    public TopBar() {
+        super();
         this.topBar = this.layout;
         this.layout.setStyle("-fx-background-color: rgb(35, 40, 40);");
         setCanTakeAllWidth(this.topBar);

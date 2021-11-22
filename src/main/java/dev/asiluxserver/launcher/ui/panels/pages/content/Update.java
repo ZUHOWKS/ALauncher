@@ -63,9 +63,8 @@ public class Update extends ContentPanel{
         return "update";
     }
 
-    @Override
-    public void init(PanelManager panelManager) {
-        super.init(panelManager);
+    public Update() {
+        super();
 
         minWidth = panelManager.getStage().getMinWidth() - 160;
         prefWidth = panelManager.getStage().getWidth() - 160;

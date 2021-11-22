@@ -4,7 +4,6 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
 import dev.asiluxserver.launcher.Launcher;
-import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.assets.Colors;
 import dev.asiluxserver.launcher.ui.assets.Fonts;
 import dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow;
@@ -84,9 +83,8 @@ public class App extends Panel {
         return super.getStyleSheetPath();
     }
 
-    @Override
-    public void init(PanelManager panelManager) {
-        super.init(panelManager);
+    public App() {
+        super();
 
         /* BASE PANEL */
         menuPainConstraint.setHalignment(HPos.LEFT);
@@ -445,7 +443,6 @@ public class App extends Panel {
                         panel.getStyleSheetPath()
                 );
             }
-            panel.init(this.panelManager);
             panel.onShow();
         }
     }

@@ -59,7 +59,6 @@ public class PanelManager {
             topPaneContraints.setMaxHeight(25);
             this.layout.getRowConstraints().addAll(topPaneContraints, new RowConstraints());
             this.layout.add(topBar.getLayout(), 0, 0);
-            topBar.init(this);
         }
 
         this.layout.add(this.contentPane, 0,1);
@@ -82,7 +81,6 @@ public class PanelManager {
             this.stage.getScene().getStylesheets().clear();
             this.stage.getScene().getStylesheets().add(panel.getStyleSheetPath());
         }
-        panel.init(this);
         panel.onShow();
     }
 

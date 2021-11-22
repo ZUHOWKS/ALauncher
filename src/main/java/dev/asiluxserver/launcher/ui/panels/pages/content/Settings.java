@@ -28,9 +28,8 @@ public class Settings extends ContentPanel {
         return "settings";
     }
 
-    @Override
-    public void init(PanelManager panelManager) {
-        super.init(panelManager);
+    public Settings() {
+        super();
 
         // Content
         contentPane.setStyle("-fx-background-color: transparent;");
