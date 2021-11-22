@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class PanelManager {
+
     private final Launcher launcher;
     private final Stage stage;
     private GridPane layout;

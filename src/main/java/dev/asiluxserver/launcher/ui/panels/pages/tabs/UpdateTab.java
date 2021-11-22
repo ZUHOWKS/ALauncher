@@ -1,8 +1,7 @@
-package dev.asiluxserver.launcher.ui.panels.pages.content;
+package dev.asiluxserver.launcher.ui.panels.pages.tabs;
 
 import dev.asiluxserver.launcher.Launcher;
 import dev.asiluxserver.launcher.Main;
-import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.assets.Colors;
 import dev.asiluxserver.launcher.ui.assets.Fonts;
 import dev.asiluxserver.launcher.utils.patch.PatchLoader;
@@ -30,7 +29,7 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class Update extends ContentPanel{
+public class UpdateTab extends Tab {
 
     Launcher launcher = Launcher.getInstance();
 
@@ -63,7 +62,7 @@ public class Update extends ContentPanel{
         return "update";
     }
 
-    public Update() {
+    public UpdateTab() {
         super();
 
         minWidth = panelManager.getStage().getMinWidth() - 160;

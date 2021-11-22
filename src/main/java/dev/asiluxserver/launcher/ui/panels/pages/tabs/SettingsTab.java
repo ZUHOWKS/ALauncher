@@ -1,10 +1,9 @@
-package dev.asiluxserver.launcher.ui.panels.pages.content;
+package dev.asiluxserver.launcher.ui.panels.pages.tabs;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
 import dev.asiluxserver.launcher.Launcher;
-import dev.asiluxserver.launcher.ui.PanelManager;
 
 import dev.asiluxserver.launcher.ui.assets.Fonts;
 import fr.theshark34.openlauncherlib.util.Saver;
@@ -18,7 +17,7 @@ import javafx.scene.text.TextAlignment;
 import oshi.SystemInfo;
 import oshi.hardware.GlobalMemory;
 
-public class Settings extends ContentPanel {
+public class SettingsTab extends Tab {
 
     private final Saver saver = Launcher.getInstance().getSaver();
     GridPane contentPane = new GridPane();
@@ -28,7 +27,7 @@ public class Settings extends ContentPanel {
         return "settings";
     }
 
-    public Settings() {
+    public SettingsTab() {
         super();
 
         // Content

@@ -43,7 +43,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Login extends Panel {
+public class LoginPage extends Panel {
 
     GridPane loginPanel = new GridPane();
     GridPane mainPanel = new GridPane();
@@ -65,7 +65,7 @@ public class Login extends Panel {
         return null;
     }
 
-    public Login() {
+    public LoginPage() {
         super();
 
         AtomicBoolean antiSpamConnection = new AtomicBoolean(false);
@@ -578,7 +578,7 @@ public class Login extends Panel {
                 saver.set("clientToken", response.getClientToken());
                 saver.save();
 
-                Launcher.getInstance().setAuthInfos(new AuthInfos(
+                Launcher.getInstance().setAuthInfo(new AuthInfos(
                         response.getSelectedProfile().getName(),
                         response.getAccessToken(),
                         response.getClientToken(),
@@ -587,7 +587,7 @@ public class Login extends Panel {
 
                 this.logger.info("Hello " + response.getSelectedProfile().getName());
 
-                panelManager.showPanel(new App());
+                panelManager.showPanel(panelManager.getLauncher().getMainPage());
             } catch (AuthenticationException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Erreur");
@@ -605,7 +605,7 @@ public class Login extends Panel {
             saver.set("msAccessToken", result.getAccessToken());
             saver.set("msRefreshToken", result.getRefreshToken());
             saver.save();
-            Launcher.getInstance().setAuthInfos(new AuthInfos(
+            Launcher.getInstance().setAuthInfo(new AuthInfos(
                     result.getProfile().getName(),
                     result.getAccessToken(),
                     result.getProfile().getId()
@@ -613,7 +613,7 @@ public class Login extends Panel {
 
             this.logger.info("Hello " + result.getProfile().getName());
 
-            panelManager.showPanel(new App());
+            panelManager.showPanel(panelManager.getLauncher().getMainPage());
 
         } catch (MicrosoftAuthenticationException error) {
             Launcher.getInstance().getLogger().err(error.toString());
@@ -639,14 +639,14 @@ public class Login extends Panel {
             saver.set("msAccessToken", response.getAccessToken());
             saver.set("msRefreshToken", response.getRefreshToken());
             saver.save();
-            Launcher.getInstance().setAuthInfos(new AuthInfos(
+            Launcher.getInstance().setAuthInfo(new AuthInfos(
                     response.getProfile().getName(),
                     response.getAccessToken(),
                     response.getProfile().getId()
             ));
             this.logger.info("Hello " + response.getProfile().getName());
 
-            panelManager.showPanel(new App());
+            panelManager.showPanel(panelManager.getLauncher().getMainPage());
         });
     }
 }
