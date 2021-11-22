@@ -24,3 +24,5 @@ hs_err_pid*
 
 # Out directories
 /build
+/build/*.bin
+/build/*.lock
