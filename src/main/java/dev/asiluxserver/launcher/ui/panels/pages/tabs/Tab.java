@@ -1,11 +1,11 @@
-package dev.asiluxserver.launcher.ui.panels.pages.content;
+package dev.asiluxserver.launcher.ui.panels.pages.tabs;
 
 import dev.asiluxserver.launcher.ui.panel.Panel;
 
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
 
-public abstract class ContentPanel extends Panel {
+public abstract class Tab extends Panel {
 
     @Override
     public void onShow() {

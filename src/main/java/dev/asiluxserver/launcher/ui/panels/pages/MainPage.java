@@ -4,16 +4,15 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
 import dev.asiluxserver.launcher.Launcher;
-import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.assets.Colors;
 import dev.asiluxserver.launcher.ui.assets.Fonts;
 import dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow;
 import dev.asiluxserver.launcher.ui.compenents.CustomIcon;
 import dev.asiluxserver.launcher.ui.compenents.CustomLabel;
 import dev.asiluxserver.launcher.ui.panel.Panel;
-import dev.asiluxserver.launcher.ui.panels.pages.content.ContentPanel;
-import dev.asiluxserver.launcher.ui.panels.pages.content.Home;
-import dev.asiluxserver.launcher.ui.panels.pages.content.Settings;
+import dev.asiluxserver.launcher.ui.panels.pages.tabs.Tab;
+import dev.asiluxserver.launcher.ui.panels.pages.tabs.HomeTab;
+import dev.asiluxserver.launcher.ui.panels.pages.tabs.SettingsTab;
 
 import fr.theshark34.openlauncherlib.util.Saver;
 
@@ -38,9 +37,7 @@ import javafx.util.Duration;
  * Contient une grille d'affichage (GridPanel) à gauche pour les onglets et une deuxième
  * grille d'affichage pour le contenu d'un onglet au centre.
  */
-public class App extends Panel {
-
-    private static App instance;
+public class MainPage extends Panel {
 
     ColumnConstraints menuPainConstraint = new ColumnConstraints();
     GridPane centerPane = new GridPane();
@@ -68,11 +65,11 @@ public class App extends Panel {
     Saver saver = Launcher.getInstance().getSaver();
     Node prevUserInfoPose = homeLabel;
     Node activeLink = null;
-    ContentPanel currentPage = null;
+    Tab currentPage = null;
 
     // Les onglets de navigation
-    Home homeTab = new Home();
-    Settings settingsTab = new Settings();
+    HomeTab homeTab = new HomeTab();
+    SettingsTab settingsTab = new SettingsTab();
 
     @Override
     public String getName() {
@@ -84,9 +81,8 @@ public class App extends Panel {
         return super.getStyleSheetPath();
     }
 
-    @Override
-    public void init(PanelManager panelManager) {
-        super.init(panelManager);
+    public MainPage() {
+        super();
 
         /* BASE PANEL */
         menuPainConstraint.setHalignment(HPos.LEFT);
@@ -131,7 +127,7 @@ public class App extends Panel {
         avatarRectangle.setTranslateY(8d);
 
         /* USER AVATAR */
-        String avatarUrl = "https://minotar.net/avatar/" + Launcher.getInstance().getAuthInfos().getUuid() + ".png";
+        String avatarUrl = "https://minotar.net/avatar/" + Launcher.getInstance().getAuthInfo().getUuid() + ".png";
         ImageView avatarView = new ImageView();
         avatarView.setImage(new Image(avatarUrl));
         avatarView.setPreserveRatio(true);
@@ -353,7 +349,7 @@ public class App extends Panel {
         logOutBtn.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
         logOutBtn.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
         logOutBtn.setOnMouseClicked(e-> {
-            if (currentPage instanceof Home && ((Home) currentPage).isDownloading()) {
+            if (currentPage instanceof HomeTab && ((HomeTab) currentPage).isDownloading()) {
                 return;
             }
             saver.remove("accessToken");
@@ -361,8 +357,8 @@ public class App extends Panel {
             saver.remove("msAccessToken");
             saver.remove("msRefreshToken");
             saver.save();
-            Launcher.getInstance().setAuthInfos(null);
-            this.panelManager.showPanel(new Login());
+            Launcher.getInstance().setAuthInfo(null);
+            panelManager.showPanel(panelManager.getLauncher().getLoginPage());
         });
 
         /* USER INFO LOCATION */
@@ -423,8 +419,8 @@ public class App extends Panel {
     }
 
     /* METHODES NAVIGATION */
-    public void setPage(ContentPanel panel, Node navButton) {
-        if (currentPage instanceof Home && ((Home) currentPage).isDownloading()) {
+    public void setPage(Tab panel, Node navButton) {
+        if (currentPage instanceof HomeTab && ((HomeTab) currentPage).isDownloading()) {
             return;
         }
         if (activeLink != null)
@@ -445,7 +441,6 @@ public class App extends Panel {
                         panel.getStyleSheetPath()
                 );
             }
-            panel.init(this.panelManager);
             panel.onShow();
         }
     }

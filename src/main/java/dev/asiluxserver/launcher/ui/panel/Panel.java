@@ -21,10 +21,6 @@ public abstract class Panel implements IPanel, IMovable, ITakePLace {
 
     public Panel() {
         this.logger = Launcher.getInstance().getLogger();
-    }
-
-    @Override
-    public void init(PanelManager panelManager) {
         setCanTakeAllSize(this.layout);
     }
 

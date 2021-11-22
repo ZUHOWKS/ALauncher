@@ -1,8 +1,8 @@
 package dev.asiluxserver.launcher;
 
 import dev.asiluxserver.launcher.ui.PanelManager;
-import dev.asiluxserver.launcher.ui.panels.pages.App;
-import dev.asiluxserver.launcher.ui.panels.pages.Login;
+import dev.asiluxserver.launcher.ui.panels.pages.MainPage;
+import dev.asiluxserver.launcher.ui.panels.pages.LoginPage;
 import dev.asiluxserver.launcher.utils.XML.XMLPatchParser;
 import dev.asiluxserver.launcher.utils.patch.PatchLoader;
 
@@ -33,9 +33,13 @@ public class Launcher extends Application {
     private final Path launcherDir = GameDirGenerator.createGameDir("asiluxdev", true);
     private final Saver saver;
     private PanelManager panelManager;
-    private AuthInfos authInfos = null;
+    private AuthInfos authInfo = null;
     private XMLPatchParser patchParser = new XMLPatchParser("https://zuhowks.github.io/patch.xml");
     private PatchLoader patchLoader = new PatchLoader(patchParser);
+
+    // Pages du launcher
+    private final MainPage mainPage;
+    private final LoginPage loginPage;
 
     public Launcher() {
         instance = this;
@@ -50,6 +54,9 @@ public class Launcher extends Application {
 
         saver = new Saver(this.launcherDir.resolve("config.properties"));
         saver.load();
+
+        mainPage = new MainPage();
+        loginPage = new LoginPage();
     }
 
     @Override
@@ -60,10 +67,10 @@ public class Launcher extends Application {
 
 
         if (this.isUserAlreadyLoggedIn()) {
-            logger.info("Hello " + authInfos.getUsername());
-            this.panelManager.showPanel(new App());
+            logger.info("Hello " + authInfo.getUsername());
+            this.panelManager.showPanel(mainPage);
         } else {
-            this.panelManager.showPanel(new Login());
+            this.panelManager.showPanel(loginPage);
         }
     }
 
@@ -76,7 +83,7 @@ public class Launcher extends Application {
                 saver.set("accessToken", response.getAccessToken());
                 saver.set("clientToken", response.getClientToken());
                 saver.save();
-                this.setAuthInfos(new AuthInfos(
+                this.setAuthInfo(new AuthInfos(
                         response.getSelectedProfile().getName(),
                         response.getAccessToken(),
                         response.getClientToken(),
@@ -97,7 +104,7 @@ public class Launcher extends Application {
                 saver.set("msAccessToken", response.getAccessToken());
                 saver.set("msRefreshToken", response.getRefreshToken());
                 saver.save();
-                this.setAuthInfos(new AuthInfos(
+                this.setAuthInfo(new AuthInfos(
                         response.getProfile().getName(),
                         response.getAccessToken(),
                         response.getProfile().getId()
@@ -113,30 +120,37 @@ public class Launcher extends Application {
         return false;
     }
 
-    public void setAuthInfos(AuthInfos authInfos) {
-        this.authInfos = authInfos;
-    }
-
-    public AuthInfos getAuthInfos() {
-        return authInfos;
-    }
-
-    public ILogger getLogger() {
-        return logger;
+    public AuthInfos getAuthInfo() {
+        return authInfo;
     }
 
     public static Launcher getInstance() {
         return instance;
     }
 
-    public Saver getSaver() {
-        return saver;
-    }
-
     public Path getLauncherDir() {
         return launcherDir;
     }
 
+    public LoginPage getLoginPage() {
+        return loginPage;
+    }
+
+    public ILogger getLogger() {
+        return logger;
+    }
+
+    public MainPage getMainPage() {
+        return mainPage;
+    }
+
     public PatchLoader getPatchLoader() { return patchLoader;}
 
+    public Saver getSaver() {
+        return saver;
+    }
+
+    public void setAuthInfo(AuthInfos authInfo) {
+        this.authInfo = authInfo;
+    }
 }

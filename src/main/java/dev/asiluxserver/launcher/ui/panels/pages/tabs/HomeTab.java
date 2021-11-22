@@ -1,4 +1,4 @@
-package dev.asiluxserver.launcher.ui.panels.pages.content;
+package dev.asiluxserver.launcher.ui.panels.pages.tabs;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -6,7 +6,6 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import dev.asiluxserver.launcher.Launcher;
 import dev.asiluxserver.launcher.Main;
 import dev.asiluxserver.launcher.game.MinecraftInfos;
-import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.assets.Colors;
 import dev.asiluxserver.launcher.ui.assets.Fonts;
 import dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow;
@@ -49,7 +48,7 @@ import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.util.List;
 
-public class Home extends ContentPanel{
+public class HomeTab extends Tab {
 
     private final Saver saver = Launcher.getInstance().getSaver();
     ZProgressBar progressBar;
@@ -68,9 +67,8 @@ public class Home extends ContentPanel{
         return "home";
     }
 
-    @Override
-    public void init(PanelManager panelManager) {
-        super.init(panelManager);
+    public HomeTab() {
+        super();
 
         /* CONTENT */
         contentPane.setMinWidth(480);
@@ -446,7 +444,7 @@ public class Home extends ContentPanel{
         );
 
         try {
-            ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(infos, GameFolder.FLOW_UPDATER, Launcher.getInstance().getAuthInfos());
+            ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(infos, GameFolder.FLOW_UPDATER, Launcher.getInstance().getAuthInfo());
             profile.getVmArgs().add(this.getRamArgsFromSaver());
             ExternalLauncher launcher = new ExternalLauncher(profile);
 
