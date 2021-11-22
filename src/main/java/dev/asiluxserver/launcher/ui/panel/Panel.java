@@ -25,7 +25,6 @@ public abstract class Panel implements IPanel, IMovable, ITakePLace {
 
     @Override
     public void init(PanelManager panelManager) {
-        this.panelManager = panelManager;
         setCanTakeAllSize(this.layout);
     }
 

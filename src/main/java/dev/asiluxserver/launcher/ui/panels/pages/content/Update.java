@@ -21,7 +21,6 @@ import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
@@ -181,7 +180,7 @@ public class Update extends ContentPanel{
         separator1.setTranslateX(50);
         separator1.setArcHeight(15);
         separator1.setArcWidth(15);
-        separator1.setFill(Color.rgb(255, 255, 255));
+        separator1.setFill(Colors.DEFAULT_WHITE.getColor());
 
         /* VERSION CLASSIQUE */
         Label patchLabel = patchLoader.getPatchLabel();

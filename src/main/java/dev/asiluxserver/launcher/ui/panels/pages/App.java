@@ -6,7 +6,10 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import dev.asiluxserver.launcher.Launcher;
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.assets.Colors;
+import dev.asiluxserver.launcher.ui.assets.Fonts;
 import dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow;
+import dev.asiluxserver.launcher.ui.compenents.CustomIcon;
+import dev.asiluxserver.launcher.ui.compenents.CustomLabel;
 import dev.asiluxserver.launcher.ui.panel.Panel;
 import dev.asiluxserver.launcher.ui.panels.pages.content.ContentPanel;
 import dev.asiluxserver.launcher.ui.panels.pages.content.Home;
@@ -20,7 +23,6 @@ import javafx.geometry.VPos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -30,6 +32,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
+/**
+ * Un panneau d'affichage pour l'application principale, contient des onglets de navigation pour
+ * la page d'accueil, les nouveautés, les mises à jour et les paramètres.
+ * Contient une grille d'affichage (GridPanel) à gauche pour les onglets et une deuxième
+ * grille d'affichage pour le contenu d'un onglet au centre.
+ */
 public class App extends Panel {
 
     private static App instance;
@@ -38,16 +46,33 @@ public class App extends Panel {
     GridPane centerPane = new GridPane();
     GridPane leftBarPanel = new GridPane();
 
-    Label homeLabel = new Label(" Accueil");
-    Label newsLabel = new Label(" Nouveauté");
-    Label updateLabel = new Label(" Mise à jour");
-    Label settingsLabel = new Label(" Paramètres");
+    // Les onglets de navigation, utilisent les classes custom `CustomLabel` et `CustomIcon`
+    CustomLabel homeLabel = new CustomLabel(
+            " Accueil", Fonts.ARIAL.getFont(20), Colors.DEFAULT_WHITE,
+            new CustomIcon(FontAwesomeIcon.HOME, Colors.DEFAULT_WHITE, 1.5, 1.5)
+    );
+    CustomLabel newsLabel = new CustomLabel(
+            " Nouveauté", Fonts.ARIAL.getFont(20), Colors.DEFAULT_WHITE,
+            new CustomIcon(FontAwesomeIcon.BELL, Colors.DEFAULT_WHITE, 1.3, 1.3)
+    );
+    CustomLabel updateLabel = new CustomLabel(
+            " Mise à jour", Fonts.ARIAL.getFont(20), Colors.DEFAULT_WHITE,
+            new CustomIcon(FontAwesomeIcon.CODE, Colors.DEFAULT_WHITE, 1.4, 1.4)
+    );
+    CustomLabel settingsLabel = new CustomLabel(
+            " Paramètres", Fonts.ARIAL.getFont(20), Colors.DEFAULT_WHITE,
+            new CustomIcon(FontAwesomeIcon.GEARS, Colors.DEFAULT_WHITE, 1.4, 1.4)
+    );
     Rectangle userLocationRectangle = new Rectangle(10, 30);
 
     Saver saver = Launcher.getInstance().getSaver();
     Node prevUserInfoPose = homeLabel;
     Node activeLink = null;
     ContentPanel currentPage = null;
+
+    // Les onglets de navigation
+    Home homeTab = new Home();
+    Settings settingsTab = new Settings();
 
     @Override
     public String getName() {
@@ -84,7 +109,7 @@ public class App extends Panel {
     @Override
     public void onShow() {
         super.onShow();
-        setPage(new Home(), homeLabel); //Ouvre l'onglet Home
+        setPage(homeTab, homeLabel); //Ouvre l'onglet Home
     }
 
     /*
@@ -195,13 +220,6 @@ public class App extends Panel {
         });
 
         /* TITLE HOME */
-        FontAwesomeIconView homeIcon = new FontAwesomeIconView(FontAwesomeIcon.HOME);
-        homeIcon.setFill(Colors.DEFAULT_WHITE.getColor());
-        homeIcon.setScaleX(1.5);
-        homeIcon.setScaleY(1.5);
-        homeLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
-        homeLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
-        homeLabel.setGraphic(homeIcon);
         homeLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
         setGrow(homeLabel);
         setTop(homeLabel);
@@ -225,16 +243,9 @@ public class App extends Panel {
             transition.play();
 
         });
-        homeLabel.setOnMouseClicked(e-> setPage(new Home(), homeLabel));
+        homeLabel.setOnMouseClicked(e-> setPage(homeTab, homeLabel));
 
         /* TITLE NEWS */
-        FontAwesomeIconView newsIcon = new FontAwesomeIconView(FontAwesomeIcon.BELL);
-        newsIcon.setFill(Colors.DEFAULT_WHITE.getColor());
-        newsIcon.setScaleX(1.3);
-        newsIcon.setScaleY(1.3);
-        newsLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
-        newsLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
-        newsLabel.setGraphic(newsIcon);
         newsLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
         setGrow(newsLabel);
         setTop(newsLabel);
@@ -260,14 +271,7 @@ public class App extends Panel {
         });
 
         /* TITLE UPDATE */
-        FontAwesomeIconView updateIcon = new FontAwesomeIconView(FontAwesomeIcon.CODE);
-        updateIcon.setFill(Colors.DEFAULT_WHITE.getColor());
-        updateIcon.setScaleX(1.4);
-        updateIcon.setScaleY(1.4);
-
-        updateLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
         updateLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
-        updateLabel.setGraphic(updateIcon);
         updateLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
         setGrow(updateLabel);
         setTop(updateLabel);
@@ -295,13 +299,6 @@ public class App extends Panel {
         });
 
         /* TITLE SETTINGS */
-        FontAwesomeIconView settingsIcon = new FontAwesomeIconView(FontAwesomeIcon.GEARS);
-        settingsIcon.setFill(Colors.DEFAULT_WHITE.getColor());
-        settingsIcon.setScaleX(1.4);
-        settingsIcon.setScaleY(1.4);
-        settingsLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
-        settingsLabel.setTextFill(Colors.DEFAULT_WHITE.getColor());
-        settingsLabel.setGraphic(settingsIcon);
         settingsLabel.setEffect(new BlurDropShadow(Colors.LIGHT_GREY_3, 4, 0));
         setGrow(settingsLabel);
         setTop(settingsLabel);
@@ -327,7 +324,7 @@ public class App extends Panel {
             transition.play();
 
         });
-        settingsLabel.setOnMouseClicked(e-> setPage(new Settings(), settingsLabel));
+        settingsLabel.setOnMouseClicked(e-> setPage(settingsTab, settingsLabel));
 
         /* LOG OUT BUTTON */
         FontAwesomeIconView logOutIcon = new FontAwesomeIconView(FontAwesomeIcon.SIGN_OUT);

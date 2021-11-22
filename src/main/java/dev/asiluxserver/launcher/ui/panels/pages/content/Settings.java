@@ -106,23 +106,23 @@ public class Settings extends ContentPanel {
         /*
          * Save Button
          */
-        Button saveBtn = new Button("Enregistrer");
-        saveBtn.setStyle(
+        Button saveButton = new Button("Enregistrer");
+        saveButton.setStyle(
                 "-fx-background-color: #91B248FF;" +
                         "-fx-text-fill: rgb(255, 255, 255);" +
                         "-fx-text-size: 25;"
         );
         FontAwesomeIconView iconView = new FontAwesomeIconView(FontAwesomeIcon.SAVE);
         iconView.getStyleClass().add("save-icon");
-        saveBtn.setGraphic(iconView);
-        setCanTakeAllSize(saveBtn);
-        setBottom(saveBtn);
-        setCenterH(saveBtn);
-        saveBtn.setOnMouseClicked(e -> {
+        saveButton.setGraphic(iconView);
+        setCanTakeAllSize(saveButton);
+        setBottom(saveButton);
+        setCenterH(saveButton);
+        saveButton.setOnMouseClicked(e -> {
             double _val = Double.parseDouble(comboBox.getValue().replace(" Go", ""));
             _val *= 1024;
             saver.set("maxRam", String.valueOf((int) _val));
         });
-        contentPane.getChildren().add(saveBtn);
+        contentPane.getChildren().add(saveButton);
     }
 }

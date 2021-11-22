@@ -1,7 +1,6 @@
 package dev.asiluxserver.launcher.utils.patch;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PatchNote {
 

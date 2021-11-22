@@ -1,6 +1,5 @@
 package dev.asiluxserver.launcher.ui.compenents;
 
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
 import dev.asiluxserver.launcher.ui.assets.Colors;
@@ -20,12 +19,8 @@ public class CustomLabel extends javafx.scene.control.Label {
         this(label, font, color.getColor());
     }
 
-    public CustomLabel(String label, Font font, Colors color, FontAwesomeIcon icon) {
-        this(label, font, color.getColor());
+    public CustomLabel(String label, Font font, Colors color, FontAwesomeIconView icon) {
+        this(label, font, color);
         setGraphic(icon);
-    }
-
-    public void setGraphic(FontAwesomeIcon icon) {
-        setGraphic(new FontAwesomeIconView(icon));
     }
 }

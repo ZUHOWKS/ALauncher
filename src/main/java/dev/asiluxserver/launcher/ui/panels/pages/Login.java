@@ -70,7 +70,6 @@ public class Login extends Panel {
     public void init(PanelManager panelManager) {
         super.init(panelManager);
 
-
         AtomicBoolean antiSpamConnection = new AtomicBoolean(false);
 
         loginPanel.setMaxWidth(400);
