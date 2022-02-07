@@ -89,6 +89,8 @@ public class Update extends ContentPanel{
         contentPane.setStyle("-fx-background-color: transparent;");
         contentPane.setMinWidth(480);
         contentPane.setMaxWidth(1760);
+        contentPane.setMaxHeight(1080);
+        contentPane.setMinHeight(720);
 
         rowConstraints.setValignment(VPos.TOP);
         rowConstraints.setMinHeight(150);

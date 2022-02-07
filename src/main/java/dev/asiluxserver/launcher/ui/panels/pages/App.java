@@ -74,6 +74,8 @@ public class App extends Panel {
         setGrow(leftBarPanel);
         setAlignment(leftBarPanel, HPos.LEFT, VPos.CENTER);
         leftBarPanel.setMinWidth(160);
+        leftBarPanel.setMaxHeight(1060);
+        leftBarPanel.setMinHeight(710);
         leftBarPanel.setMaxWidth(160);
         leftBarPanel.setStyle("-fx-background-color: rgba(24,24,24,1);");
 
@@ -368,7 +370,7 @@ public class App extends Panel {
         setGrow(logOutBtn);
         setBottom(logOutBtn);
         setCenterH(logOutBtn);
-        logOutBtn.setTranslateY(-25d);
+        logOutBtn.setTranslateY(-45d);
         logOutBtn.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
         logOutBtn.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
         logOutBtn.setOnMouseClicked(e-> {
