@@ -22,13 +22,17 @@ public class ZProgressBar extends GridPane {
     }
 
     private void init(int width, int height) {
+        this.backgroundRect.setArcHeight((double) (height));
+        this.backgroundRect.setArcWidth((double) (height));
+        this.foregroundRect.setArcHeight((double) (height));
+        this.foregroundRect.setArcWidth((double) (height));
         GridPane.setVgrow(this.foregroundRect, Priority.ALWAYS);
         GridPane.setHgrow(this.foregroundRect, Priority.ALWAYS);
         GridPane.setValignment(this.foregroundRect, VPos.CENTER);
         GridPane.setHalignment(this.foregroundRect, HPos.LEFT);
         this.setBarWidth((double)width);
         this.setBarHeight((double)height);
-        this.getChildren().addAll(new Node[]{this.backgroundRect, this.foregroundRect});
+        this.getChildren().addAll(this.backgroundRect, this.foregroundRect);
     }
 
     public void setBarWidth(double width) {
