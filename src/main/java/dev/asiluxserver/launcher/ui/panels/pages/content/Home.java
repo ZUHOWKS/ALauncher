@@ -13,6 +13,7 @@ import dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow;
 import dev.asiluxserver.launcher.utils.ZProgressBar;
 
 import fr.flowarg.flowupdater.FlowUpdater;
+import fr.flowarg.flowupdater.download.DownloadList;
 import fr.flowarg.flowupdater.download.IProgressCallback;
 import fr.flowarg.flowupdater.download.Step;
 import fr.flowarg.flowupdater.download.json.Mod;
@@ -26,7 +27,6 @@ import fr.theshark34.openlauncherlib.minecraft.*;
 import fr.theshark34.openlauncherlib.util.Saver;
 
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -37,12 +37,9 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
-import javafx.scene.effect.BlurType;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
@@ -54,7 +51,6 @@ import javafx.util.Duration;
 
 import java.net.URL;
 import java.nio.file.Path;
-import java.sql.Time;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -191,6 +187,10 @@ public class Home extends ContentPanel{
                 this.play();
         });
 
+        Rectangle playButtonShape = new Rectangle(220, 60);
+        playButtonShape.setArcWidth(30d);
+        playButtonShape.setArcHeight(30d);
+        playButton.setShape(playButtonShape);
         playButton.setMinWidth(220);
         playButton.setMinHeight(60);
         playButton.setMaxWidth(220);
@@ -399,7 +399,10 @@ public class Home extends ContentPanel{
             }
 
             @Override
-            public void update(long downloaded, long max) {
+            public void update(DownloadList.DownloadInfo info) {
+                IProgressCallback.super.update(info);
+                long downloaded =  info.getDownloadedBytes();
+                long max = info.getTotalToDownloadBytes();
                 Platform.runLater(() -> {
                     percentTxt = decimalFormat.format(downloaded * 100.d / max) + "%";
                     setStatus(String.format("%s (%s)", stepTxt, percentTxt));
