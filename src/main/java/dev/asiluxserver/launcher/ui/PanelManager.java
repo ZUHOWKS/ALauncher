@@ -30,45 +30,23 @@ public class PanelManager {
 
     public void init() {
         this.stage.setTitle("Asilux");
-        this.stage.setMinWidth(1280);
-        this.stage.setMinHeight(720);
-        this.stage.setWidth(1280);
-        this.stage.setHeight(720);
+        this.stage.setMinWidth(320);
+        this.stage.setMinHeight(480);
+        this.stage.setWidth(320);
+        this.stage.setHeight(480);
+        this.stage.setMaxWidth(320);
+        this.stage.setMaxHeight(480);
         this.stage.centerOnScreen();
         this.stage.getIcons().add(new Image("images/asilux-icon.png"));
 
         this.layout = new GridPane();
 
-        if (Platform.isOnLinux()) {
-            Scene scene = new Scene(this.layout);
-            this.stage.setScene(scene);
-        } else {
-            this.stage.initStyle(StageStyle.UNDECORATED);
-
-            TopBar topBar = new TopBar();
-            BorderlessScene scene = new BorderlessScene(this.stage, StageStyle.UNDECORATED, this.layout);
-            scene.setResizable(true);
-            scene.setMoveControl(topBar.getLayout());
-            scene.removeDefaultCSS();
-
-            this.stage.setScene(scene);
-
-            RowConstraints topPaneContraints = new RowConstraints();
-            topPaneContraints.setValignment(VPos.TOP);
-            topPaneContraints.setMinHeight(25);
-            topPaneContraints.setMaxHeight(25);
-            this.layout.getRowConstraints().addAll(topPaneContraints, new RowConstraints());
-            this.layout.add(topBar.getLayout(), 0, 0);
-            topBar.init(this);
-        }
+        this.stage.initStyle(StageStyle.TRANSPARENT);
+        Scene scene = new Scene(this.layout);
+        this.stage.setScene(scene);
 
         this.layout.add(this.contentPane, 0,1);
-        this.layout.setStyle(
-                "-fx-background-image: url('/background.png');" +
-                        "-fx-background-repeat: stretch;" +
-                        "-fx-background-position: center center;" +
-                        "-fx-background-size: cover;"
-        );
+        this.layout.setStyle("-fx-background-color: rgba(153, 189, 95, 1);");
         GridPane.setVgrow(this.contentPane, Priority.ALWAYS);
         GridPane.setHgrow(this.contentPane, Priority.ALWAYS);
 

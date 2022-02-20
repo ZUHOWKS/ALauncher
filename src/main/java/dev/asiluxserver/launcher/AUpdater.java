@@ -2,7 +2,6 @@ package dev.asiluxserver.launcher;
 
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.panels.pages.App;
-import dev.asiluxserver.launcher.ui.panels.pages.Login;
 import dev.asiluxserver.launcher.utils.XML.XMLPatchParser;
 import dev.asiluxserver.launcher.utils.patch.PatchLoader;
 import fr.flowarg.flowlogger.ILogger;
@@ -42,7 +41,6 @@ public class AUpdater extends Application {
                 this.logger.err("Unable to create launcher folder");
             }
         }
-
         saver = new Saver(this.launcherDir.resolve("config.properties"));
         saver.load();
     }
@@ -50,16 +48,10 @@ public class AUpdater extends Application {
     @Override
     public void start(Stage stage) {
         this.logger.info("Starting launcher");
+        this.saver.get("version");
         this.panelManager = new PanelManager(this, stage);
         this.panelManager.init();
-
-
-        if (this.isUserAlreadyLoggedIn()) {
-            logger.info("Hello " + authInfos.getUsername());
-            this.panelManager.showPanel(new App());
-        } else {
-            this.panelManager.showPanel(new Login());
-        }
+        this.panelManager.showPanel(new App());
     }
 
     public boolean isUserAlreadyLoggedIn() {
