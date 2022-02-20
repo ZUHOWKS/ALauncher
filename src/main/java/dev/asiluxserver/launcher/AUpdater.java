@@ -22,8 +22,8 @@ import javafx.stage.Stage;
 
 import java.nio.file.Path;
 
-public class Launcher extends Application {
-    private static Launcher instance;
+public class AUpdater extends Application {
+    private static AUpdater instance;
     private final ILogger logger;
     private final Path launcherDir = GameDirGenerator.createGameDir("asiluxdev", true);
     private final Saver saver;
@@ -32,7 +32,7 @@ public class Launcher extends Application {
     private XMLPatchParser patchParser = new XMLPatchParser("https://zuhowks.github.io/patch.xml");
     private PatchLoader patchLoader = new PatchLoader(patchParser);
 
-    public Launcher() {
+    public AUpdater() {
         instance = this;
         this.patchParser.readEvent();
         this.patchLoader.load();
@@ -120,7 +120,7 @@ public class Launcher extends Application {
         return logger;
     }
 
-    public static Launcher getInstance() {
+    public static AUpdater getInstance() {
         return instance;
     }
 

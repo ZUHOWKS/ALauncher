@@ -3,7 +3,7 @@ package dev.asiluxserver.launcher.ui.panels.pages.content;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
-import dev.asiluxserver.launcher.Launcher;
+import dev.asiluxserver.launcher.AUpdater;
 import dev.asiluxserver.launcher.ui.PanelManager;
 
 import fr.theshark34.openlauncherlib.util.Saver;
@@ -22,7 +22,7 @@ import oshi.hardware.GlobalMemory;
 
 public class Settings extends ContentPanel {
 
-    private final Saver saver = Launcher.getInstance().getSaver();
+    private final Saver saver = AUpdater.getInstance().getSaver();
     GridPane contentPane = new GridPane();
 
     @Override

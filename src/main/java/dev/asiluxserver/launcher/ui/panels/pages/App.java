@@ -3,7 +3,7 @@ package dev.asiluxserver.launcher.ui.panels.pages;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
-import dev.asiluxserver.launcher.Launcher;
+import dev.asiluxserver.launcher.AUpdater;
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.assets.Colors;
 import dev.asiluxserver.launcher.ui.assets.Fonts;
@@ -29,7 +29,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
 public class App extends Panel {
@@ -46,7 +45,7 @@ public class App extends Panel {
     Label settingsLabel = new Label(" Paramètres");
     Rectangle userLocationRectangle = new Rectangle(10, 30);
 
-    Saver saver = Launcher.getInstance().getSaver();
+    Saver saver = AUpdater.getInstance().getSaver();
     Node prevUserInfoPose = homeLabel;
     Node activeLink = null;
     ContentPanel currentPage = null;
@@ -115,7 +114,7 @@ public class App extends Panel {
         avatarRectangle.setTranslateY(8d);
 
         /* USER AVATAR */
-        String avatarUrl = "https://minotar.net/avatar/" + Launcher.getInstance().getAuthInfos().getUuid() + ".png";
+        String avatarUrl = "https://minotar.net/avatar/" + AUpdater.getInstance().getAuthInfos().getUuid() + ".png";
         ImageView avatarView = new ImageView();
         avatarView.setImage(new Image(avatarUrl));
         avatarView.setPreserveRatio(true);
@@ -382,7 +381,7 @@ public class App extends Panel {
             saver.remove("msAccessToken");
             saver.remove("msRefreshToken");
             saver.save();
-            Launcher.getInstance().setAuthInfos(null);
+            AUpdater.getInstance().setAuthInfos(null);
             this.panelManager.showPanel(new Login());
         });
 

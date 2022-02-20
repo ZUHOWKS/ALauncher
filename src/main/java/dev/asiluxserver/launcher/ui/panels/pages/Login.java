@@ -1,6 +1,6 @@
 package dev.asiluxserver.launcher.ui.panels.pages;
 
-import dev.asiluxserver.launcher.Launcher;
+import dev.asiluxserver.launcher.AUpdater;
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.assets.Colors;
 import dev.asiluxserver.launcher.ui.assets.Fonts;
@@ -20,7 +20,6 @@ import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
 import fr.theshark34.openlauncherlib.util.Saver;
 
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -36,7 +35,6 @@ import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
@@ -65,7 +63,7 @@ public class Login extends Panel {
     AtomicBoolean connectWithMojang = new AtomicBoolean(true);
     AtomicBoolean connectWithMicrosoft = new AtomicBoolean(false);
 
-    Saver saver = Launcher.getInstance().getSaver();
+    Saver saver = AUpdater.getInstance().getSaver();
 
     @Override
     public String getName() {
@@ -567,7 +565,7 @@ public class Login extends Panel {
                 saver.set("clientToken", response.getClientToken());
                 saver.save();
 
-                Launcher.getInstance().setAuthInfos(new AuthInfos(
+                AUpdater.getInstance().setAuthInfos(new AuthInfos(
                         response.getSelectedProfile().getName(),
                         response.getAccessToken(),
                         response.getClientToken(),
@@ -594,7 +592,7 @@ public class Login extends Panel {
             saver.set("msAccessToken", result.getAccessToken());
             saver.set("msRefreshToken", result.getRefreshToken());
             saver.save();
-            Launcher.getInstance().setAuthInfos(new AuthInfos(
+            AUpdater.getInstance().setAuthInfos(new AuthInfos(
                     result.getProfile().getName(),
                     result.getAccessToken(),
                     result.getProfile().getId()
@@ -605,7 +603,7 @@ public class Login extends Panel {
             panelManager.showPanel(new App());
 
         } catch (MicrosoftAuthenticationException error) {
-            Launcher.getInstance().getLogger().err(error.toString());
+            AUpdater.getInstance().getLogger().err(error.toString());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
             alert.setContentText(error.getMessage());
@@ -617,7 +615,7 @@ public class Login extends Panel {
         MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
         authenticator.loginWithAsyncWebview().whenComplete((response, error) -> {
             if (error != null) {
-                Launcher.getInstance().getLogger().err(error.toString());
+                AUpdater.getInstance().getLogger().err(error.toString());
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Erreur");
                 alert.setContentText(error.getMessage());
@@ -628,7 +626,7 @@ public class Login extends Panel {
             saver.set("msAccessToken", response.getAccessToken());
             saver.set("msRefreshToken", response.getRefreshToken());
             saver.save();
-            Launcher.getInstance().setAuthInfos(new AuthInfos(
+            AUpdater.getInstance().setAuthInfos(new AuthInfos(
                     response.getProfile().getName(),
                     response.getAccessToken(),
                     response.getProfile().getId()

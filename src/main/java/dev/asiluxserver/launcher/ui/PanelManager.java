@@ -2,7 +2,7 @@ package dev.asiluxserver.launcher.ui;
 
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
 
-import dev.asiluxserver.launcher.Launcher;
+import dev.asiluxserver.launcher.AUpdater;
 import dev.asiluxserver.launcher.ui.panel.IPanel;
 import dev.asiluxserver.launcher.ui.panels.partials.TopBar;
 
@@ -18,12 +18,12 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class PanelManager {
-    private final Launcher launcher;
+    private final AUpdater launcher;
     private final Stage stage;
     private GridPane layout;
     private final GridPane contentPane = new GridPane();
 
-    public PanelManager(Launcher launcher, Stage stage) {
+    public PanelManager(AUpdater launcher, Stage stage) {
         this.launcher = launcher;
         this.stage = stage;
     }
@@ -90,7 +90,7 @@ public class PanelManager {
         return stage;
     }
 
-    public Launcher getLauncher() {
+    public AUpdater getLauncher() {
         return launcher;
     }
 }
