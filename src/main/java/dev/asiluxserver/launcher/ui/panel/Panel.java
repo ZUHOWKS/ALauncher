@@ -1,6 +1,6 @@
 package dev.asiluxserver.launcher.ui.panel;
 
-import dev.asiluxserver.launcher.Launcher;
+import dev.asiluxserver.launcher.ALauncher;
 import dev.asiluxserver.launcher.ui.PanelManager;
 
 import fr.flowarg.flowlogger.ILogger;
@@ -20,7 +20,7 @@ public abstract class Panel implements IPanel, IMovable, ITakePLace {
     protected PanelManager panelManager;
 
     public Panel() {
-        this.logger = Launcher.getInstance().getLogger();
+        this.logger = ALauncher.getInstance().getLogger();
     }
 
     @Override

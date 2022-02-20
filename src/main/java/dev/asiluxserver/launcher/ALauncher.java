@@ -22,21 +22,21 @@ import javafx.stage.Stage;
 
 import java.nio.file.Path;
 
-public class Launcher extends Application {
-    private static Launcher instance;
+public class ALauncher extends Application {
+    private static ALauncher instance;
     private final ILogger logger;
-    private final Path launcherDir = GameDirGenerator.createGameDir("asiluxdev", true);
+    private final Path launcherDir = GameDirGenerator.createGameDir("ALauncher", true);
     private final Saver saver;
     private PanelManager panelManager;
     private AuthInfos authInfos = null;
     private XMLPatchParser patchParser = new XMLPatchParser("https://zuhowks.github.io/patch.xml");
     private PatchLoader patchLoader = new PatchLoader(patchParser);
 
-    public Launcher() {
+    public ALauncher() {
         instance = this;
         this.patchParser.readEvent();
         this.patchLoader.load();
-        this.logger = new Logger("[AsiluxDev]", this.launcherDir.resolve("launcher.log"));
+        this.logger = new Logger("[ALauncher]", this.launcherDir.resolve("launcher.log"));
         if (!this.launcherDir.toFile().exists()) {
             if (!this.launcherDir.toFile().mkdir()) {
                 this.logger.err("Unable to create launcher folder");
@@ -120,7 +120,7 @@ public class Launcher extends Application {
         return logger;
     }
 
-    public static Launcher getInstance() {
+    public static ALauncher getInstance() {
         return instance;
     }
 
