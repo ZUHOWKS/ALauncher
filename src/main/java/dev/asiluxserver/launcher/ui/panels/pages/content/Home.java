@@ -188,8 +188,8 @@ public class Home extends ContentPanel{
         });
 
         Rectangle playButtonShape = new Rectangle(220, 60);
-        playButtonShape.setArcWidth(30d);
-        playButtonShape.setArcHeight(30d);
+        playButtonShape.setArcWidth(40d);
+        playButtonShape.setArcHeight(40d);
         playButton.setShape(playButtonShape);
         playButton.setMinWidth(220);
         playButton.setMinHeight(60);
