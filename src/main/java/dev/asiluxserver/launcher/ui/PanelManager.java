@@ -1,19 +1,11 @@
 package dev.asiluxserver.launcher.ui;
 
-import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
-
 import dev.asiluxserver.launcher.AUpdater;
 import dev.asiluxserver.launcher.ui.panel.IPanel;
-import dev.asiluxserver.launcher.ui.panels.partials.TopBar;
-
-import fr.flowarg.flowcompat.Platform;
-
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 

@@ -8,7 +8,6 @@ import dev.asiluxserver.launcher.ui.assets.Colors;
 import dev.asiluxserver.launcher.ui.assets.Fonts;
 import dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow;
 import dev.asiluxserver.launcher.ui.panel.Panel;
-import dev.asiluxserver.launcher.utils.ZProgressBar;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.application.Platform;
 import javafx.geometry.HPos;
