@@ -13,18 +13,18 @@ dev/asiluxserver/launcher/utils/Helpers.java
  dev.asiluxserver.launcher.utils.Helpers$1
 dev/asiluxserver/launcher/utils/ZProgressBar.java
  dev.asiluxserver.launcher.utils.ZProgressBar
-dev/asiluxserver/launcher/Main.java
- dev.asiluxserver.launcher.Main
-dev/asiluxserver/launcher/ui/panel/IMovable.java
- dev.asiluxserver.launcher.ui.panel.IMovable
 dev/asiluxserver/launcher/ui/assets/Colors.java
  dev.asiluxserver.launcher.ui.assets.Colors
+dev/asiluxserver/launcher/ui/panel/IMovable.java
+ dev.asiluxserver.launcher.ui.panel.IMovable
 dev/asiluxserver/launcher/ui/panel/Panel.java
  dev.asiluxserver.launcher.ui.panel.Panel
 dev/asiluxserver/launcher/ui/PanelManager.java
  dev.asiluxserver.launcher.ui.PanelManager
 dev/asiluxserver/launcher/ui/panel/IPanel.java
  dev.asiluxserver.launcher.ui.panel.IPanel
+dev/asiluxserver/launcher/Main.java
+ dev.asiluxserver.launcher.Main
 dev/asiluxserver/launcher/ui/panels/pages/App.java
  dev.asiluxserver.launcher.ui.panels.pages.App
  dev.asiluxserver.launcher.ui.panels.pages.App$InfoLabel
