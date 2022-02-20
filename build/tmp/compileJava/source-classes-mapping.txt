@@ -2,14 +2,10 @@ dev/asiluxserver/launcher/ui/assets/effects/BlurDropShadow.java
  dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow
 dev/asiluxserver/launcher/ui/assets/Fonts.java
  dev.asiluxserver.launcher.ui.assets.Fonts
-dev/asiluxserver/launcher/utils/patch/PatchMessage.java
- dev.asiluxserver.launcher.utils.patch.PatchMessage
 dev/asiluxserver/launcher/utils/XML/XMLPatchParser.java
  dev.asiluxserver.launcher.utils.XML.XMLPatchParser
-dev/asiluxserver/launcher/utils/RSS/RSSPatchParser.java
- dev.asiluxserver.launcher.utils.RSS.RSSPatchParser
-dev/asiluxserver/launcher/ui/panel/ITakePLace.java
- dev.asiluxserver.launcher.ui.panel.ITakePLace
+dev/asiluxserver/launcher/ui/panel/Panel.java
+ dev.asiluxserver.launcher.ui.panel.Panel
 dev/asiluxserver/launcher/game/MinecraftInfos.java
  dev.asiluxserver.launcher.game.MinecraftInfos
 dev/asiluxserver/launcher/utils/Helpers.java
@@ -23,21 +19,18 @@ dev/asiluxserver/launcher/auth/mineweb/AuthMineWeb.java
  dev.asiluxserver.launcher.auth.mineweb.AuthMineWeb
 dev/asiluxserver/launcher/ui/assets/Colors.java
  dev.asiluxserver.launcher.ui.assets.Colors
-dev/asiluxserver/launcher/utils/patch/PatchNote.java
- dev.asiluxserver.launcher.utils.patch.PatchNote
 dev/asiluxserver/launcher/ui/panel/IMovable.java
  dev.asiluxserver.launcher.ui.panel.IMovable
-dev/asiluxserver/launcher/utils/patch/PatchLoader.java
- dev.asiluxserver.launcher.utils.patch.PatchLoader
-dev/asiluxserver/launcher/ui/panel/Panel.java
- dev.asiluxserver.launcher.ui.panel.Panel
 dev/asiluxserver/launcher/ui/PanelManager.java
  dev.asiluxserver.launcher.ui.PanelManager
+dev/asiluxserver/launcher/ui/panel/ITakePLace.java
+ dev.asiluxserver.launcher.ui.panel.ITakePLace
 dev/asiluxserver/launcher/ui/panels/partials/TopBar.java
  dev.asiluxserver.launcher.ui.panels.partials.TopBar
 dev/asiluxserver/launcher/ui/panel/IPanel.java
  dev.asiluxserver.launcher.ui.panel.IPanel
 dev/asiluxserver/launcher/ui/panels/pages/App.java
  dev.asiluxserver.launcher.ui.panels.pages.App
+ dev.asiluxserver.launcher.ui.panels.pages.App$InfoLabel
 dev/asiluxserver/launcher/AUpdater.java
  dev.asiluxserver.launcher.AUpdater

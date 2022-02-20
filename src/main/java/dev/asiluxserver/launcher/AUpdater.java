@@ -3,7 +3,6 @@ package dev.asiluxserver.launcher;
 import dev.asiluxserver.launcher.ui.PanelManager;
 import dev.asiluxserver.launcher.ui.panels.pages.App;
 import dev.asiluxserver.launcher.utils.XML.XMLPatchParser;
-import dev.asiluxserver.launcher.utils.patch.PatchLoader;
 import fr.flowarg.flowlogger.ILogger;
 import fr.flowarg.flowlogger.Logger;
 import fr.litarvan.openauth.AuthPoints;
@@ -24,18 +23,19 @@ import java.nio.file.Path;
 public class AUpdater extends Application {
     private static AUpdater instance;
     private final ILogger logger;
-    private final Path launcherDir = GameDirGenerator.createGameDir("asiluxdev", true);
+    private final Path launcherDir = GameDirGenerator.createGameDir("ALauncher", true);
     private final Saver saver;
     private PanelManager panelManager;
     private AuthInfos authInfos = null;
-    private XMLPatchParser patchParser = new XMLPatchParser("https://zuhowks.github.io/patch.xml");
-    private PatchLoader patchLoader = new PatchLoader(patchParser);
+    private XMLPatchParser patchParser;
+    private String version;
 
     public AUpdater() {
         instance = this;
+        this.patchParser = new XMLPatchParser("https://zuhowks.github.io/patch.xml");
         this.patchParser.readEvent();
-        this.patchLoader.load();
-        this.logger = new Logger("[AsiluxDev]", this.launcherDir.resolve("launcher.log"));
+        this.version = patchParser.getVersion();
+        this.logger = new Logger("[ALauncher]", this.launcherDir.resolve("launcher.log"));
         if (!this.launcherDir.toFile().exists()) {
             if (!this.launcherDir.toFile().mkdir()) {
                 this.logger.err("Unable to create launcher folder");
@@ -47,8 +47,7 @@ public class AUpdater extends Application {
 
     @Override
     public void start(Stage stage) {
-        this.logger.info("Starting launcher");
-        this.saver.get("version");
+        this.logger.info("Check to update");
         this.panelManager = new PanelManager(this, stage);
         this.panelManager.init();
         this.panelManager.showPanel(new App());
@@ -124,6 +123,7 @@ public class AUpdater extends Application {
         return launcherDir;
     }
 
-    public PatchLoader getPatchLoader() { return patchLoader;}
-
+    public String getVersion() {
+        return version;
+    }
 }
