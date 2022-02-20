@@ -9,11 +9,12 @@ dev/asiluxserver/launcher/game/MinecraftInfos.java
 dev/asiluxserver/launcher/utils/Helpers.java
  dev.asiluxserver.launcher.utils.Helpers
  dev.asiluxserver.launcher.utils.Helpers$1
-dev/asiluxserver/launcher/ui/panels/pages/Login.java
- dev.asiluxserver.launcher.ui.panels.pages.Login
- dev.asiluxserver.launcher.ui.panels.pages.Login$1
+dev/asiluxserver/launcher/utils/ZProgressBar.java
+ dev.asiluxserver.launcher.utils.ZProgressBar
 dev/asiluxserver/launcher/auth/mineweb/AuthMineWeb.java
  dev.asiluxserver.launcher.auth.mineweb.AuthMineWeb
+dev/asiluxserver/launcher/ALauncher.java
+ dev.asiluxserver.launcher.ALauncher
 dev/asiluxserver/launcher/utils/patch/PatchNote.java
  dev.asiluxserver.launcher.utils.patch.PatchNote
 dev/asiluxserver/launcher/ui/PanelManager.java
@@ -30,8 +31,11 @@ dev/asiluxserver/launcher/ui/panels/pages/App.java
  dev.asiluxserver.launcher.ui.panels.pages.App$6
 dev/asiluxserver/launcher/ui/panels/pages/content/Settings.java
  dev.asiluxserver.launcher.ui.panels.pages.content.Settings
-dev/asiluxserver/launcher/ui/assets/Colors.java
- dev.asiluxserver.launcher.ui.assets.Colors
+dev/asiluxserver/launcher/ui/panels/pages/content/Home.java
+ dev.asiluxserver.launcher.ui.panels.pages.content.Home
+ dev.asiluxserver.launcher.ui.panels.pages.content.Home$1
+ dev.asiluxserver.launcher.ui.panels.pages.content.Home$2
+ dev.asiluxserver.launcher.ui.panels.pages.content.Home$StepInfo
 dev/asiluxserver/launcher/ui/assets/effects/BlurDropShadow.java
  dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow
 dev/asiluxserver/launcher/ui/assets/Fonts.java
@@ -54,12 +58,8 @@ dev/asiluxserver/launcher/ui/panels/partials/TopBar.java
  dev.asiluxserver.launcher.ui.panels.partials.TopBar
 dev/asiluxserver/launcher/ui/panel/IPanel.java
  dev.asiluxserver.launcher.ui.panel.IPanel
-dev/asiluxserver/launcher/Launcher.java
- dev.asiluxserver.launcher.Launcher
-dev/asiluxserver/launcher/ui/panels/pages/content/Home.java
- dev.asiluxserver.launcher.ui.panels.pages.content.Home
- dev.asiluxserver.launcher.ui.panels.pages.content.Home$1
- dev.asiluxserver.launcher.ui.panels.pages.content.Home$2
- dev.asiluxserver.launcher.ui.panels.pages.content.Home$StepInfo
-dev/asiluxserver/launcher/utils/ZProgressBar.java
- dev.asiluxserver.launcher.utils.ZProgressBar
+dev/asiluxserver/launcher/ui/panels/pages/Login.java
+ dev.asiluxserver.launcher.ui.panels.pages.Login
+ dev.asiluxserver.launcher.ui.panels.pages.Login$1
+dev/asiluxserver/launcher/ui/assets/Colors.java
+ dev.asiluxserver.launcher.ui.assets.Colors
