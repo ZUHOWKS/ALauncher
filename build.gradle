@@ -33,7 +33,7 @@ dependencies {
 }
 
 application {
-    mainClass = 'dev.asiluxserver.launcher.Main'
+    mainClass = 'zuhowks.asiluxteam.fr.launcher.Main'
 }
 
 compileJava {
