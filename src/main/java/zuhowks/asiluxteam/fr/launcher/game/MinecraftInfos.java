@@ -1,8 +1,7 @@
-package dev.asiluxserver.launcher.game;
+package zuhowks.asiluxteam.fr.launcher.game;
 
 import fr.flowarg.flowupdater.versions.ForgeVersionBuilder;
 import fr.flowarg.flowupdater.versions.VersionType;
-
 import fr.theshark34.openlauncherlib.minecraft.GameType;
 
 public class MinecraftInfos {

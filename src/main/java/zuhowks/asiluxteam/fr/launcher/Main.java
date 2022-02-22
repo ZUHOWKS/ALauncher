@@ -1,4 +1,4 @@
-package dev.asiluxserver.launcher;
+package zuhowks.asiluxteam.fr.launcher;
 
 
 import javafx.application.Application;

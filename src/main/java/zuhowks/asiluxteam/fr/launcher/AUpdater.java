@@ -1,14 +1,14 @@
-package dev.asiluxserver.launcher;
+package zuhowks.asiluxteam.fr.launcher;
 
-import dev.asiluxserver.launcher.ui.PanelManager;
-import dev.asiluxserver.launcher.ui.panels.pages.App;
-import dev.asiluxserver.launcher.utils.XML.XMLPatchParser;
 import fr.flowarg.flowlogger.ILogger;
 import fr.flowarg.flowlogger.Logger;
 import fr.theshark34.openlauncherlib.minecraft.util.GameDirGenerator;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import zuhowks.asiluxteam.fr.launcher.ui.PanelManager;
+import zuhowks.asiluxteam.fr.launcher.ui.panels.pages.App;
+import zuhowks.asiluxteam.fr.launcher.utils.XML.XMLPatchParser;
 
 import java.nio.file.Path;
 

@@ -1,13 +1,13 @@
-package dev.asiluxserver.launcher.ui;
+package zuhowks.asiluxteam.fr.launcher.ui;
 
-import dev.asiluxserver.launcher.AUpdater;
-import dev.asiluxserver.launcher.ui.panel.IPanel;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import zuhowks.asiluxteam.fr.launcher.AUpdater;
+import zuhowks.asiluxteam.fr.launcher.ui.panel.IPanel;
 
 public class PanelManager {
     private final AUpdater launcher;

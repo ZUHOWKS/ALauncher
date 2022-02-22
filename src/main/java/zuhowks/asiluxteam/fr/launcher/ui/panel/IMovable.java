@@ -1,4 +1,4 @@
-package dev.asiluxserver.launcher.ui.panel;
+package zuhowks.asiluxteam.fr.launcher.ui.panel;
 
 import javafx.scene.Node;
 

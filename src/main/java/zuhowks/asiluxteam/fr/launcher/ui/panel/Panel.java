@@ -1,10 +1,6 @@
-package dev.asiluxserver.launcher.ui.panel;
-
-import dev.asiluxserver.launcher.AUpdater;
-import dev.asiluxserver.launcher.ui.PanelManager;
+package zuhowks.asiluxteam.fr.launcher.ui.panel;
 
 import fr.flowarg.flowlogger.ILogger;
-
 import javafx.animation.FadeTransition;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -12,6 +8,8 @@ import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.util.Duration;
+import zuhowks.asiluxteam.fr.launcher.AUpdater;
+import zuhowks.asiluxteam.fr.launcher.ui.PanelManager;
 
 public abstract class Panel implements IPanel, IMovable, ITakePLace {
 

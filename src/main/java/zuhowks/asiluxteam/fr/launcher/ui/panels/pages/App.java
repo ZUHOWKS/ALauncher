@@ -1,13 +1,7 @@
-package dev.asiluxserver.launcher.ui.panels.pages;
+package zuhowks.asiluxteam.fr.launcher.ui.panels.pages;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import dev.asiluxserver.launcher.AUpdater;
-import dev.asiluxserver.launcher.ui.PanelManager;
-import dev.asiluxserver.launcher.ui.assets.Colors;
-import dev.asiluxserver.launcher.ui.assets.Fonts;
-import dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow;
-import dev.asiluxserver.launcher.ui.panel.Panel;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.application.Platform;
 import javafx.geometry.HPos;
@@ -21,6 +15,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import org.apache.commons.io.FileUtils;
+import zuhowks.asiluxteam.fr.launcher.AUpdater;
+import zuhowks.asiluxteam.fr.launcher.ui.PanelManager;
+import zuhowks.asiluxteam.fr.launcher.ui.assets.Colors;
+import zuhowks.asiluxteam.fr.launcher.ui.assets.Fonts;
+import zuhowks.asiluxteam.fr.launcher.ui.assets.effects.BlurDropShadow;
+import zuhowks.asiluxteam.fr.launcher.ui.panel.Panel;
 
 import java.io.File;
 import java.io.IOException;

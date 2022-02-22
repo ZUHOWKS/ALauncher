@@ -1,4 +1,4 @@
-package dev.asiluxserver.launcher.utils;
+package zuhowks.asiluxteam.fr.launcher.utils;
 
 import fr.flowarg.flowcompat.Platform;
 

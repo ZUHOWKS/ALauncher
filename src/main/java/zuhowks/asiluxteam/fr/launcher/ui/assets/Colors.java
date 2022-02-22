@@ -1,4 +1,4 @@
-package dev.asiluxserver.launcher.ui.assets;
+package zuhowks.asiluxteam.fr.launcher.ui.assets;
 
 import javafx.scene.paint.Color;
 

@@ -1,8 +1,7 @@
-package dev.asiluxserver.launcher.utils;
+package zuhowks.asiluxteam.fr.launcher.utils;
 
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;

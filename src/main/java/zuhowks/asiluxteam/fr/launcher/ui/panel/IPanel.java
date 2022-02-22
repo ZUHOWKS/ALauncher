@@ -1,8 +1,7 @@
-package dev.asiluxserver.launcher.ui.panel;
-
-import dev.asiluxserver.launcher.ui.PanelManager;
+package zuhowks.asiluxteam.fr.launcher.ui.panel;
 
 import javafx.scene.layout.GridPane;
+import zuhowks.asiluxteam.fr.launcher.ui.PanelManager;
 
 public interface IPanel {
     void init(PanelManager panelManager);

@@ -1,10 +1,9 @@
-package dev.asiluxserver.launcher.ui.assets.effects;
-
-import dev.asiluxserver.launcher.ui.assets.Colors;
+package zuhowks.asiluxteam.fr.launcher.ui.assets.effects;
 
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
+import zuhowks.asiluxteam.fr.launcher.ui.assets.Colors;
 
 public class BlurDropShadow extends DropShadow {
 

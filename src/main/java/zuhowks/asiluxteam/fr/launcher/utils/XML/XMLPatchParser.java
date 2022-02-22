@@ -1,4 +1,4 @@
-package dev.asiluxserver.launcher.utils.XML;
+package zuhowks.asiluxteam.fr.launcher.utils.XML;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -14,7 +14,7 @@ import java.util.Locale;
 
 public class XMLPatchParser {
 
-    private String url = "";
+    private String url;
     private String version;
 
     public XMLPatchParser(String url) {

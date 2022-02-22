@@ -1,9 +1,10 @@
-package dev.asiluxserver.launcher.ui.panel;
+package zuhowks.asiluxteam.fr.launcher.ui.panel;
 
 import javafx.scene.Node;
 import javafx.scene.layout.Priority;
 
-import static javafx.scene.layout.GridPane.*;
+import static javafx.scene.layout.GridPane.setHgrow;
+import static javafx.scene.layout.GridPane.setVgrow;
 
 public interface ITakePLace {
 
