@@ -1,4 +1,4 @@
-# Mise à jour du ALauncher en version 1.1.0
+# Mise à jour du ALauncher en version 1.1.1
 
 Nouvelle version du launcher est enfin arrivé ! Beaucoup de choses on était retravaillé dans cette version du launcher. Vous retrouverez ci-dessous toutes les modifications apportées au ALauncher. 
 
