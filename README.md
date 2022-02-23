@@ -36,7 +36,7 @@ _**Nouveauté**_:
 
 _**Modification**_:
 - Page de connection | Refont du design général de la page.
-- Onglet Accueil | Nouvelle animation sur le bouton jouer;
+- Onglet Accueil | Nouvelle animation sur le bouton jouer.
 
 _**Fixs**_:
 - Bug photo de profil | Correction de la photo de profil qui ne s'affichais pas par moment.
