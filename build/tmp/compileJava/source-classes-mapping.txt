@@ -1,65 +1,65 @@
-dev/asiluxserver/launcher/ui/panels/pages/content/Update.java
- dev.asiluxserver.launcher.ui.panels.pages.content.Update
- dev.asiluxserver.launcher.ui.panels.pages.content.Update$1
- dev.asiluxserver.launcher.ui.panels.pages.content.Update$2
-dev/asiluxserver/launcher/utils/patch/PatchMessage.java
- dev.asiluxserver.launcher.utils.patch.PatchMessage
-dev/asiluxserver/launcher/game/MinecraftInfos.java
- dev.asiluxserver.launcher.game.MinecraftInfos
-dev/asiluxserver/launcher/utils/Helpers.java
- dev.asiluxserver.launcher.utils.Helpers
- dev.asiluxserver.launcher.utils.Helpers$1
-dev/asiluxserver/launcher/utils/ZProgressBar.java
- dev.asiluxserver.launcher.utils.ZProgressBar
-dev/asiluxserver/launcher/auth/mineweb/AuthMineWeb.java
- dev.asiluxserver.launcher.auth.mineweb.AuthMineWeb
-dev/asiluxserver/launcher/ALauncher.java
- dev.asiluxserver.launcher.ALauncher
-dev/asiluxserver/launcher/utils/patch/PatchNote.java
- dev.asiluxserver.launcher.utils.patch.PatchNote
-dev/asiluxserver/launcher/ui/PanelManager.java
- dev.asiluxserver.launcher.ui.PanelManager
-dev/asiluxserver/launcher/ui/panel/ITakePLace.java
- dev.asiluxserver.launcher.ui.panel.ITakePLace
-dev/asiluxserver/launcher/ui/panels/pages/App.java
- dev.asiluxserver.launcher.ui.panels.pages.App
- dev.asiluxserver.launcher.ui.panels.pages.App$1
- dev.asiluxserver.launcher.ui.panels.pages.App$2
- dev.asiluxserver.launcher.ui.panels.pages.App$3
- dev.asiluxserver.launcher.ui.panels.pages.App$4
- dev.asiluxserver.launcher.ui.panels.pages.App$5
- dev.asiluxserver.launcher.ui.panels.pages.App$6
-dev/asiluxserver/launcher/ui/panels/pages/content/Settings.java
- dev.asiluxserver.launcher.ui.panels.pages.content.Settings
-dev/asiluxserver/launcher/ui/panels/pages/content/Home.java
- dev.asiluxserver.launcher.ui.panels.pages.content.Home
- dev.asiluxserver.launcher.ui.panels.pages.content.Home$1
- dev.asiluxserver.launcher.ui.panels.pages.content.Home$2
- dev.asiluxserver.launcher.ui.panels.pages.content.Home$StepInfo
-dev/asiluxserver/launcher/ui/assets/effects/BlurDropShadow.java
- dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow
-dev/asiluxserver/launcher/ui/assets/Fonts.java
- dev.asiluxserver.launcher.ui.assets.Fonts
-dev/asiluxserver/launcher/utils/XML/XMLPatchParser.java
- dev.asiluxserver.launcher.utils.XML.XMLPatchParser
-dev/asiluxserver/launcher/utils/RSS/RSSPatchParser.java
- dev.asiluxserver.launcher.utils.RSS.RSSPatchParser
-dev/asiluxserver/launcher/ui/panel/Panel.java
- dev.asiluxserver.launcher.ui.panel.Panel
-dev/asiluxserver/launcher/Main.java
- dev.asiluxserver.launcher.Main
-dev/asiluxserver/launcher/ui/panel/IMovable.java
- dev.asiluxserver.launcher.ui.panel.IMovable
-dev/asiluxserver/launcher/ui/panels/pages/content/ContentPanel.java
- dev.asiluxserver.launcher.ui.panels.pages.content.ContentPanel
-dev/asiluxserver/launcher/utils/patch/PatchLoader.java
- dev.asiluxserver.launcher.utils.patch.PatchLoader
-dev/asiluxserver/launcher/ui/panels/partials/TopBar.java
- dev.asiluxserver.launcher.ui.panels.partials.TopBar
-dev/asiluxserver/launcher/ui/panel/IPanel.java
- dev.asiluxserver.launcher.ui.panel.IPanel
-dev/asiluxserver/launcher/ui/panels/pages/Login.java
- dev.asiluxserver.launcher.ui.panels.pages.Login
- dev.asiluxserver.launcher.ui.panels.pages.Login$1
-dev/asiluxserver/launcher/ui/assets/Colors.java
- dev.asiluxserver.launcher.ui.assets.Colors
+zuhowks/asiluxteam/fr/launcher/auth/mineweb/AuthMineWeb.java
+ zuhowks.asiluxteam.fr.launcher.auth.mineweb.AuthMineWeb
+zuhowks/asiluxteam/fr/launcher/ui/panels/pages/content/ContentPanel.java
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.ContentPanel
+zuhowks/asiluxteam/fr/launcher/game/MinecraftInfos.java
+ zuhowks.asiluxteam.fr.launcher.game.MinecraftInfos
+zuhowks/asiluxteam/fr/launcher/utils/patch/PatchNote.java
+ zuhowks.asiluxteam.fr.launcher.utils.patch.PatchNote
+zuhowks/asiluxteam/fr/launcher/utils/patch/PatchMessage.java
+ zuhowks.asiluxteam.fr.launcher.utils.patch.PatchMessage
+zuhowks/asiluxteam/fr/launcher/ui/assets/effects/BlurDropShadow.java
+ zuhowks.asiluxteam.fr.launcher.ui.assets.effects.BlurDropShadow
+zuhowks/asiluxteam/fr/launcher/utils/ZProgressBar.java
+ zuhowks.asiluxteam.fr.launcher.utils.ZProgressBar
+zuhowks/asiluxteam/fr/launcher/ui/PanelManager.java
+ zuhowks.asiluxteam.fr.launcher.ui.PanelManager
+zuhowks/asiluxteam/fr/launcher/ui/panel/ITakePLace.java
+ zuhowks.asiluxteam.fr.launcher.ui.panel.ITakePLace
+zuhowks/asiluxteam/fr/launcher/ui/panels/pages/content/Update.java
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Update
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Update$1
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Update$2
+zuhowks/asiluxteam/fr/launcher/utils/RSS/RSSPatchParser.java
+ zuhowks.asiluxteam.fr.launcher.utils.RSS.RSSPatchParser
+zuhowks/asiluxteam/fr/launcher/utils/patch/PatchLoader.java
+ zuhowks.asiluxteam.fr.launcher.utils.patch.PatchLoader
+zuhowks/asiluxteam/fr/launcher/ui/assets/Fonts.java
+ zuhowks.asiluxteam.fr.launcher.ui.assets.Fonts
+zuhowks/asiluxteam/fr/launcher/utils/XML/XMLPatchParser.java
+ zuhowks.asiluxteam.fr.launcher.utils.XML.XMLPatchParser
+zuhowks/asiluxteam/fr/launcher/ui/panels/pages/content/Home.java
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Home
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Home$1
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Home$2
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Home$StepInfo
+zuhowks/asiluxteam/fr/launcher/ui/panel/Panel.java
+ zuhowks.asiluxteam.fr.launcher.ui.panel.Panel
+zuhowks/asiluxteam/fr/launcher/utils/Helpers.java
+ zuhowks.asiluxteam.fr.launcher.utils.Helpers
+ zuhowks.asiluxteam.fr.launcher.utils.Helpers$1
+zuhowks/asiluxteam/fr/launcher/ALauncher.java
+ zuhowks.asiluxteam.fr.launcher.ALauncher
+zuhowks/asiluxteam/fr/launcher/ui/panels/pages/App.java
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.App
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.App$1
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.App$2
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.App$3
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.App$4
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.App$5
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.App$6
+zuhowks/asiluxteam/fr/launcher/Main.java
+ zuhowks.asiluxteam.fr.launcher.Main
+zuhowks/asiluxteam/fr/launcher/ui/panels/pages/Login.java
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.Login
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.Login$1
+zuhowks/asiluxteam/fr/launcher/ui/panel/IMovable.java
+ zuhowks.asiluxteam.fr.launcher.ui.panel.IMovable
+zuhowks/asiluxteam/fr/launcher/ui/panels/partials/TopBar.java
+ zuhowks.asiluxteam.fr.launcher.ui.panels.partials.TopBar
+zuhowks/asiluxteam/fr/launcher/ui/assets/Colors.java
+ zuhowks.asiluxteam.fr.launcher.ui.assets.Colors
+zuhowks/asiluxteam/fr/launcher/ui/panel/IPanel.java
+ zuhowks.asiluxteam.fr.launcher.ui.panel.IPanel
+zuhowks/asiluxteam/fr/launcher/ui/panels/pages/content/Settings.java
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Settings
