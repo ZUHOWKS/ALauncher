@@ -19,6 +19,7 @@ import zuhowks.asiluxteam.fr.launcher.ui.panels.pages.App;
 import zuhowks.asiluxteam.fr.launcher.ui.panels.pages.Login;
 import zuhowks.asiluxteam.fr.launcher.utils.XML.XMLPatchParser;
 import zuhowks.asiluxteam.fr.launcher.utils.patch.PatchLoader;
+import zuhowks.asiluxteam.fr.launcher.utils.patch.PatchMessage;
 
 import java.nio.file.Path;
 
@@ -29,13 +30,14 @@ public class ALauncher extends Application {
     private final Saver saver;
     private PanelManager panelManager;
     private AuthInfos authInfos = null;
-    private XMLPatchParser patchParser = new XMLPatchParser("https://zuhowks.github.io/patch.xml");
-    private PatchLoader patchLoader = new PatchLoader(patchParser);
+    private XMLPatchParser patchParser;
+    private PatchMessage patchMessage;
 
     public ALauncher() {
         instance = this;
+        this.patchParser = new XMLPatchParser("https://zuhowks.github.io/patch.xml");
         this.patchParser.readEvent();
-        this.patchLoader.load();
+        this.patchMessage = patchParser.getPatch();
         this.logger = new Logger("[ALauncher]", this.launcherDir.resolve("launcher.log"));
         if (!this.launcherDir.toFile().exists()) {
             if (!this.launcherDir.toFile().mkdir()) {
@@ -132,6 +134,6 @@ public class ALauncher extends Application {
         return launcherDir;
     }
 
-    public PatchLoader getPatchLoader() { return patchLoader;}
+    public PatchMessage getPatchMessage() { return patchMessage;}
 
 }

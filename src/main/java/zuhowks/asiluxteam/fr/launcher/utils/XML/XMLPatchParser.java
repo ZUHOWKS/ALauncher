@@ -18,11 +18,12 @@ import java.util.Locale;
 
 public class XMLPatchParser {
 
-    private String url = "";
-    private PatchMessage patchMessage = new PatchMessage("", new ArrayList<>());
+    private String url;
+    private PatchMessage patchMessage;
 
     public XMLPatchParser(String url) {
         this.url = url;
+        this.patchMessage = new PatchMessage("", new ArrayList<>());
     }
 
     public PatchMessage getPatch() {
@@ -50,7 +51,7 @@ public class XMLPatchParser {
 
                     for (int j = 0; j < noteListe.getLength(); j++) {
                         Node noteNode = noteListe.item(j);
-                        patchNote.addNote(noteNode.getTextContent());
+                        patchNote.addNote("  • " + noteNode.getTextContent());
                     }
                     this.patchMessage.addPatchNote(patchNote);
                 }

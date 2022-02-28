@@ -1,5 +1,7 @@
 package zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content;
 
+import com.sun.javafx.tk.FontLoader;
+import com.sun.javafx.tk.Toolkit;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -27,7 +29,9 @@ import zuhowks.asiluxteam.fr.launcher.ui.assets.Colors;
 import zuhowks.asiluxteam.fr.launcher.ui.assets.Fonts;
 import zuhowks.asiluxteam.fr.launcher.utils.patch.PatchLoader;
 import zuhowks.asiluxteam.fr.launcher.utils.patch.PatchMessage;
+import zuhowks.asiluxteam.fr.launcher.utils.patch.PatchNote;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -36,8 +40,7 @@ public class Update extends ContentPanel{
     ALauncher launcher = ALauncher.getInstance();
 
     private final Saver saver = launcher.getSaver();
-    PatchLoader patchLoader = launcher.getPatchLoader();
-    PatchMessage patchMessage = launcher.getPatchLoader().getPatch();
+    PatchMessage patchMessage = launcher.getPatchMessage();
 
     GridPane contentPane = new GridPane();
     GridPane patchPane = new GridPane();
@@ -96,8 +99,7 @@ public class Update extends ContentPanel{
 
     private void loadPatch(GridPane pane) {
 
-        ArrayList<ArrayList<Label>> patchNoteLabel = patchLoader.getPatchNoteLabel();
-        int patchNoteLabelSize = patchNoteLabel.size();
+        ArrayList<PatchNote> patchNotes = patchMessage.getPatchNotes();
 
         Stop[] GREEN_1 = new Stop[]{
                 new Stop(0, Colors.LIGHT_GREEN_5.getColor()),
@@ -167,7 +169,7 @@ public class Update extends ContentPanel{
         patchVBoxPane.setMinHeight(minHeight);
         patchVBoxPane.setMaxHeight(5000);
 
-        Label titleLabel = patchLoader.getTitleLabel();
+        Label titleLabel = new Label(patchMessage.getTitle());
         setAlignment(titleLabel, HPos.LEFT, VPos.CENTER);
         setGrow(titleLabel);
         titleLabel.setStyle("-fx-text-size: 80; -fx-text-fill: rgb(255, 255, 255);");
@@ -185,15 +187,9 @@ public class Update extends ContentPanel{
         separator1.setArcWidth(15);
         separator1.setFill(Color.rgb(255, 255, 255));
 
-        /* VERSION CLASSIQUE */
-        Label patchLabel = patchLoader.getPatchLabel();
-        setAlignment(patchLabel, HPos.LEFT, VPos.TOP);
-        setGrow(titleLabel);
-        patchLabel.setStyle("-fx-text-size: 17; -fx-text-fill: rgb(0, 0, 0);");
-        patchLabel.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
-        patchLabel.setTranslateX(50);
+        int line2= 0;
 
-        for (int i = 0; i < patchNoteLabelSize; i++) {
+        for (int i = 0; i < patchNotes.size(); i++) {
 
             double widthOfOneGradientCycleS = 600;
             double gradientSlopeDegreeS = 20;
@@ -202,21 +198,39 @@ public class Update extends ContentPanel{
             double xEndStaticS = xStartStaticS + (widthOfOneGradientCycleS * Math.cos(Math.toRadians(gradientSlopeDegreeS)));
             double yEndStaticS = yStartStaticS + (widthOfOneGradientCycleS * Math.sin(Math.toRadians(gradientSlopeDegreeS)));
 
-            ArrayList<Label> labels = patchNoteLabel.get(i);
-            int labelsSize = labels.size();
-            double length = labels.get(0).getText().replace(" ","").length();
-            double separatorLength = 0;
+
+
+
+            int line = i > 0 ? patchNotes.get(i-1).getNote().size() + 4 : 0;
+
+            Label categoriesLabel = new Label(patchNotes.get(i).getCategories());
+            categoriesLabel.setAlignment(Pos.TOP_LEFT);
+            GridPane.setHalignment(categoriesLabel, HPos.LEFT);
+            GridPane.setValignment(categoriesLabel, VPos.TOP);
+            GridPane.setHgrow(categoriesLabel, Priority.ALWAYS);
+            GridPane.setVgrow(categoriesLabel, Priority.ALWAYS);
+            categoriesLabel.setStyle("-fx-text-size: 40; -fx-text-fill: rgb(240, 240, 240);");
+            categoriesLabel.setFont(Font.loadFont(Fonts.SELAWK_SEMI_BOLD.get(), 40));
+            categoriesLabel.setTranslateX(50);
+            categoriesLabel.setTranslateY(25 * (i + 1));
+
+            pane.getChildren().add(categoriesLabel);
+
+            FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+
             Rectangle separator = new Rectangle();
             setGrow(separator);
             setAlignment(separator, HPos.LEFT ,VPos.TOP);
             //separator.setEffect(new BlurDropShadow(Color.rgb(37,37, 37), 4, 0));
             separator.setHeight(15);
-            separator.setWidth(length * 27.25 + 6 * (length - labels.get(0).getText().length()));
+            separator.setWidth(fontLoader.computeStringWidth(categoriesLabel.getText(), categoriesLabel.getFont()) + 12d);
             separator.setTranslateX(44d);
-            separator.setTranslateY(75);
+            separator.setTranslateY(25 * (i+1) + 50);
             separator.setArcHeight(15);
             separator.setArcWidth(15);
             separator.setFill(LG_GREEN_2);
+
+            pane.getChildren().remove(categoriesLabel);
 
             Timeline timelineS = new Timeline();
             for (int k = 0; k < 500; k++) {
@@ -244,20 +258,30 @@ public class Update extends ContentPanel{
             timelineS.setCycleCount(Timeline.INDEFINITE);
             timelineS.play();
 
-            Label categories = labels.get(0);
+            patchVBoxPane.add(categoriesLabel,0, line);
+            patchVBoxPane.add(separator,0, line);
 
-            Label note = labels.get(1);
-
-            patchVBoxPane.add(categories,0, i);
-
-            if (categories.getWidth() > 15) {
-                separator.setWidth(categories.getWidth() + 15);
+            patchVBoxPane.add(new Label("   "), 0, line+1);
+            line+=2;
+            line2+=2;
+            for (int k = 0; k < patchNotes.get(i).getNote().size(); k++) {
+                line2++;
+                Label noteLabel = new Label(patchNotes.get(i).getNote().get(k));
+                noteLabel.setAlignment(Pos.TOP_LEFT);
+                GridPane.setHalignment(noteLabel, HPos.LEFT);
+                GridPane.setValignment(noteLabel, VPos.TOP);
+                GridPane.setHgrow(noteLabel, Priority.ALWAYS);
+                GridPane.setVgrow(noteLabel, Priority.ALWAYS);
+                noteLabel.setStyle("-fx-text-size: 28; -fx-text-fill: rgb(230, 230, 230);");
+                noteLabel.setFont(Font.loadFont(Fonts.SELAWK.get(), 28));
+                noteLabel.setTranslateX(50);
+                noteLabel.setTranslateY(25 * (i + 1) + 10);
+                patchVBoxPane.add(noteLabel, 0, line + k);
             }
 
-            patchVBoxPane.add(separator,0, i);
-            patchVBoxPane.add(note,0, i);
-        }
 
+        }
+        System.out.println(line2);
         /* SCROLL PANE STYLE */
         ScrollPane scrollPane = new ScrollPane();
         setGrow(scrollPane);
