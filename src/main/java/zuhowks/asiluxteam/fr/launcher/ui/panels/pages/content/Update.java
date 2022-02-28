@@ -20,18 +20,15 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import zuhowks.asiluxteam.fr.launcher.ALauncher;
 import zuhowks.asiluxteam.fr.launcher.Main;
 import zuhowks.asiluxteam.fr.launcher.ui.PanelManager;
 import zuhowks.asiluxteam.fr.launcher.ui.assets.Colors;
 import zuhowks.asiluxteam.fr.launcher.ui.assets.Fonts;
-import zuhowks.asiluxteam.fr.launcher.utils.patch.PatchLoader;
 import zuhowks.asiluxteam.fr.launcher.utils.patch.PatchMessage;
 import zuhowks.asiluxteam.fr.launcher.utils.patch.PatchNote;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -83,7 +80,6 @@ public class Update extends ContentPanel{
         contentPane.setStyle("-fx-background-color: transparent;");
         contentPane.setMinWidth(480);
         contentPane.setMaxWidth(1760);
-        contentPane.setMaxHeight(1080);
         contentPane.setMinHeight(720);
 
         rowConstraints.setValignment(VPos.TOP);
@@ -157,17 +153,8 @@ public class Update extends ContentPanel{
         patchScrollPane.setAlignment(Pos.TOP_CENTER);
         patchScrollPane.setMinWidth(minWidth);
         patchScrollPane.setMaxWidth(maxWidth);
-        patchScrollPane.setMinHeight(minHeight);
-        patchScrollPane.setMaxHeight(maxHeight);
         patchScrollPane.setStyle("-fx-background-color: rgb(45,45,45)");
-
-        GridPane patchVBoxPane = new GridPane();
-        setGrow(patchVBoxPane);
-        patchVBoxPane.setAlignment(Pos.TOP_LEFT);
-        patchVBoxPane.setMinWidth(minWidth);
-        patchVBoxPane.setMaxWidth(maxWidth);
-        patchVBoxPane.setMinHeight(minHeight);
-        patchVBoxPane.setMaxHeight(5000);
+        patchScrollPane.setMaxHeight(50000);
 
         Label titleLabel = new Label(patchMessage.getTitle());
         setAlignment(titleLabel, HPos.LEFT, VPos.CENTER);
@@ -187,9 +174,35 @@ public class Update extends ContentPanel{
         separator1.setArcWidth(15);
         separator1.setFill(Color.rgb(255, 255, 255));
 
-        int line2= 0;
+        int line= 0;
+
+        /* SCROLL BAR */
+        VBox vBox = new VBox();
+        setGrow(vBox);
+        setAlignment(vBox, HPos.LEFT, VPos.TOP);
+        vBox.setMinWidth(minWidth - 25);
+        vBox.setMaxWidth(maxWidth - 25);
+        vBox.setMaxHeight(50000);
+
+        /* SCROLL PANE STYLE */
+        ScrollPane scrollPane = new ScrollPane();
+        setGrow(scrollPane);
+        setAlignment(scrollPane, HPos.CENTER, VPos.CENTER);
+        URL resource = Main.class.getResource("/css/scroll-pane.css");
+        if (resource != null) {
+            scrollPane.getStylesheets().addAll(resource.toExternalForm());
+        }
 
         for (int i = 0; i < patchNotes.size(); i++) {
+
+            GridPane patchVBoxPane = new GridPane();
+            setGrow(patchVBoxPane);
+            patchVBoxPane.setAlignment(Pos.TOP_LEFT);
+            patchVBoxPane.setMinWidth(minWidth);
+            patchVBoxPane.setMaxWidth(maxWidth);
+
+            patchVBoxPane.add(new Label("  "), 0, line);
+            line++;
 
             double widthOfOneGradientCycleS = 600;
             double gradientSlopeDegreeS = 20;
@@ -201,7 +214,7 @@ public class Update extends ContentPanel{
 
 
 
-            int line = i > 0 ? patchNotes.get(i-1).getNote().size() + 4 : 0;
+            //line += i > 0 ? patchNotes.get(i-1).getNote().size() + 4 : 0;
 
             Label categoriesLabel = new Label(patchNotes.get(i).getCategories());
             categoriesLabel.setAlignment(Pos.TOP_LEFT);
@@ -212,9 +225,7 @@ public class Update extends ContentPanel{
             categoriesLabel.setStyle("-fx-text-size: 40; -fx-text-fill: rgb(240, 240, 240);");
             categoriesLabel.setFont(Font.loadFont(Fonts.SELAWK_SEMI_BOLD.get(), 40));
             categoriesLabel.setTranslateX(50);
-            categoriesLabel.setTranslateY(25 * (i + 1));
 
-            pane.getChildren().add(categoriesLabel);
 
             FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
 
@@ -225,12 +236,10 @@ public class Update extends ContentPanel{
             separator.setHeight(15);
             separator.setWidth(fontLoader.computeStringWidth(categoriesLabel.getText(), categoriesLabel.getFont()) + 12d);
             separator.setTranslateX(44d);
-            separator.setTranslateY(25 * (i+1) + 50);
+            separator.setTranslateY(50);
             separator.setArcHeight(15);
             separator.setArcWidth(15);
             separator.setFill(LG_GREEN_2);
-
-            pane.getChildren().remove(categoriesLabel);
 
             Timeline timelineS = new Timeline();
             for (int k = 0; k < 500; k++) {
@@ -261,51 +270,34 @@ public class Update extends ContentPanel{
             patchVBoxPane.add(categoriesLabel,0, line);
             patchVBoxPane.add(separator,0, line);
 
-            patchVBoxPane.add(new Label("   "), 0, line+1);
+            patchVBoxPane.add(new Label("\n "), 0, line+1);
             line+=2;
-            line2+=2;
             for (int k = 0; k < patchNotes.get(i).getNote().size(); k++) {
-                line2++;
-                Label noteLabel = new Label(patchNotes.get(i).getNote().get(k));
-                noteLabel.setAlignment(Pos.TOP_LEFT);
-                GridPane.setHalignment(noteLabel, HPos.LEFT);
-                GridPane.setValignment(noteLabel, VPos.TOP);
-                GridPane.setHgrow(noteLabel, Priority.ALWAYS);
-                GridPane.setVgrow(noteLabel, Priority.ALWAYS);
-                noteLabel.setStyle("-fx-text-size: 28; -fx-text-fill: rgb(230, 230, 230);");
-                noteLabel.setFont(Font.loadFont(Fonts.SELAWK.get(), 28));
-                noteLabel.setTranslateX(50);
-                noteLabel.setTranslateY(25 * (i + 1) + 10);
-                patchVBoxPane.add(noteLabel, 0, line + k);
+                String[] strings = patchNotes.get(i).getNote().get(k).split("\n");
+                for (String string : strings) {
+                    Label noteLabel = new Label(string);
+                    noteLabel.setAlignment(Pos.TOP_LEFT);
+                    GridPane.setHalignment(noteLabel, HPos.LEFT);
+                    GridPane.setValignment(noteLabel, VPos.TOP);
+                    GridPane.setHgrow(noteLabel, Priority.ALWAYS);
+                    GridPane.setVgrow(noteLabel, Priority.ALWAYS);
+                    noteLabel.setStyle("-fx-text-size: 28; -fx-text-fill: rgb(230, 230, 230);");
+                    noteLabel.setFont(Font.loadFont(Fonts.SELAWK.get(), 28));
+                    noteLabel.setTranslateX(50);
+                    patchVBoxPane.add(noteLabel, 0, line);
+                    line++;
+                }
             }
+            patchVBoxPane.add(new Label("\n "), 0, line);
+            line++;
 
-
+            vBox.getChildren().add(patchVBoxPane);
         }
-        System.out.println(line2);
-        /* SCROLL PANE STYLE */
-        ScrollPane scrollPane = new ScrollPane();
-        setGrow(scrollPane);
-        setAlignment(scrollPane, HPos.CENTER, VPos.CENTER);
-        URL resource = Main.class.getResource("/css/scroll-pane.css");
-        if (resource != null) {
-            scrollPane.getStylesheets().addAll(resource.toExternalForm());
-        }
-
-        /* SCROLL BAR */
-        VBox vBox = new VBox();
-        setGrow(vBox);
-        setAlignment(vBox, HPos.LEFT, VPos.TOP);
-        vBox.setMinWidth(patchScrollPane.getMinWidth() - 25);
-        vBox.setMaxWidth(patchScrollPane.getMaxWidth() - 25);
-        vBox.setMinHeight(patchScrollPane.getMinHeight() + 500);
-        vBox.setMaxHeight(patchScrollPane.getMaxHeight() + 500);
-        vBox.setTranslateY(10);
 
         //patchVBoxPane.getChildren().add(patchLabel);
 
         patchScrollPane.getChildren().add(scrollPane);
         scrollPane.setContent(vBox);
-        vBox.getChildren().add(0, patchVBoxPane);
 
         patchPane.getChildren().addAll(separator1, titleLabel);
 
