@@ -25,3 +25,7 @@ hs_err_pid*
 # Out directories
 build/
 .gradle/
+gralde
+build
+.idea
+.asiluxdev
