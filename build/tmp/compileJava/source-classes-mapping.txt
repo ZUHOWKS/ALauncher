@@ -16,8 +16,10 @@ zuhowks/asiluxteam/fr/launcher/ui/PanelManager.java
  zuhowks.asiluxteam.fr.launcher.ui.PanelManager
 zuhowks/asiluxteam/fr/launcher/ui/panel/ITakePLace.java
  zuhowks.asiluxteam.fr.launcher.ui.panel.ITakePLace
-zuhowks/asiluxteam/fr/launcher/ui/panels/pages/content/Settings.java
- zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Settings
+zuhowks/asiluxteam/fr/launcher/ui/panels/pages/content/Update.java
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Update
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Update$1
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Update$2
 zuhowks/asiluxteam/fr/launcher/utils/RSS/RSSPatchParser.java
  zuhowks.asiluxteam.fr.launcher.utils.RSS.RSSPatchParser
 zuhowks/asiluxteam/fr/launcher/utils/patch/PatchLoader.java
@@ -26,35 +28,33 @@ zuhowks/asiluxteam/fr/launcher/ui/assets/Fonts.java
  zuhowks.asiluxteam.fr.launcher.ui.assets.Fonts
 zuhowks/asiluxteam/fr/launcher/utils/XML/XMLPatchParser.java
  zuhowks.asiluxteam.fr.launcher.utils.XML.XMLPatchParser
-zuhowks/asiluxteam/fr/launcher/ui/panels/pages/content/Home.java
- zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Home
- zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Home$1
- zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Home$2
- zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Home$StepInfo
+zuhowks/asiluxteam/fr/launcher/ui/panels/pages/content/Settings.java
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Settings
 zuhowks/asiluxteam/fr/launcher/ui/panel/Panel.java
  zuhowks.asiluxteam.fr.launcher.ui.panel.Panel
 zuhowks/asiluxteam/fr/launcher/utils/Helpers.java
  zuhowks.asiluxteam.fr.launcher.utils.Helpers
  zuhowks.asiluxteam.fr.launcher.utils.Helpers$1
-zuhowks/asiluxteam/fr/launcher/ALauncher.java
- zuhowks.asiluxteam.fr.launcher.ALauncher
+zuhowks/asiluxteam/fr/launcher/ui/panels/pages/content/Home.java
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Home
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Home$1
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Home$2
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Home$StepInfo
 zuhowks/asiluxteam/fr/launcher/ui/panel/IPanel.java
  zuhowks.asiluxteam.fr.launcher.ui.panel.IPanel
 zuhowks/asiluxteam/fr/launcher/Main.java
  zuhowks.asiluxteam.fr.launcher.Main
-zuhowks/asiluxteam/fr/launcher/ui/panels/pages/Login.java
- zuhowks.asiluxteam.fr.launcher.ui.panels.pages.Login
- zuhowks.asiluxteam.fr.launcher.ui.panels.pages.Login$1
+zuhowks/asiluxteam/fr/launcher/ui/assets/Colors.java
+ zuhowks.asiluxteam.fr.launcher.ui.assets.Colors
 zuhowks/asiluxteam/fr/launcher/ui/panel/IMovable.java
  zuhowks.asiluxteam.fr.launcher.ui.panel.IMovable
 zuhowks/asiluxteam/fr/launcher/ui/panels/partials/TopBar.java
  zuhowks.asiluxteam.fr.launcher.ui.panels.partials.TopBar
-zuhowks/asiluxteam/fr/launcher/ui/assets/Colors.java
- zuhowks.asiluxteam.fr.launcher.ui.assets.Colors
-zuhowks/asiluxteam/fr/launcher/ui/panels/pages/content/Update.java
- zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Update
- zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Update$1
- zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Update$2
+zuhowks/asiluxteam/fr/launcher/ui/panels/pages/Login.java
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.Login
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.Login$1
+zuhowks/asiluxteam/fr/launcher/ALauncher.java
+ zuhowks.asiluxteam.fr.launcher.ALauncher
 zuhowks/asiluxteam/fr/launcher/ui/panels/pages/App.java
  zuhowks.asiluxteam.fr.launcher.ui.panels.pages.App
  zuhowks.asiluxteam.fr.launcher.ui.panels.pages.App$1

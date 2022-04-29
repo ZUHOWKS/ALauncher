@@ -12,6 +12,7 @@ import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -45,6 +46,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Login extends Panel {
@@ -246,8 +248,8 @@ public class Login extends Panel {
         usernameField.setMinWidth(268);
         usernameField.setTranslateX(6d);
         usernameField.setTranslateY(45d);
-        usernameField.focusedProperty().addListener((_a, oldValue, newValue) -> {
-            if (!newValue) this.updateLoginBtnState(usernameField, null);
+        usernameField.textProperty().addListener((_a, oldValue, newValue) -> {
+            this.updateLoginBtnState(usernameField, null);
         });
         usernameField.setOnKeyPressed(e-> updateLoginBtnState(usernameField, null));
 
@@ -297,8 +299,8 @@ public class Login extends Panel {
         setAlignment(passwordField, HPos.LEFT ,VPos.TOP);
         passwordField.setTranslateX(6d);
         passwordField.setTranslateY(152d);
-        passwordField.focusedProperty().addListener((_a, oldValue, newValue) -> {
-            if (!newValue) this.updateLoginBtnState(passwordField, null);
+        passwordField.textProperty().addListener((_a, oldValue, newValue) -> {
+            this.updateLoginBtnState(passwordField, null);
         });
         passwordField.setOnKeyPressed(e-> updateLoginBtnState(passwordField, null));
 
@@ -358,10 +360,10 @@ public class Login extends Panel {
         microsoftIcon.setTranslateX(-5);
         microsoftIcon.setTranslateY(2);
 
-        ImageView asylumIcon = new ImageView(new Image("images/asilux-icon.png"));
-        asylumIcon.setFitHeight(37);
-        asylumIcon.setFitWidth(37);
-        asylumIcon.setTranslateX(-5);
+        ImageView asiluxIcon = new ImageView(new Image("images/asilux-icon.png"));
+        asiluxIcon.setFitHeight(37);
+        asiluxIcon.setFitWidth(37);
+        asiluxIcon.setTranslateX(-5);
 
         /* Bouton pour se connecter*/
         connectionButton.setMaxHeight(42);
@@ -383,11 +385,12 @@ public class Login extends Panel {
         connectionButton.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
         connectionButton.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
         connectionButton.setOnMouseClicked(e-> {
-            if (connectWithMojang.get()) {
+
+            //if (connectWithMicrosoft.get()) {
+            //    this.authenticateMS(usernameField.getText(), passwordField.getText());
+            //} else {
                 this.authenticate(usernameField.getText(), passwordField.getText());
-            } else if (connectWithMicrosoft.get()) {
-                this.authenticateMS(usernameField.getText(), passwordField.getText());
-            }
+            //}
         });
 
         double widthOfOneGradientCycle = 750;
@@ -480,10 +483,7 @@ public class Login extends Panel {
         microsoftImage.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
         microsoftImage.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
         microsoftImage.setOnMouseClicked(e-> {
-            connectionButton.setGraphic(microsoftIcon);
-            connectWithMojang.set(false);
-            connectWithMicrosoft.set(true);
-            //authenticateMS();
+            authenticateWebMS();
         });
 
         ImageView mojangImage = new ImageView(new Image("images/icon/mojang-icon.png"));
@@ -510,6 +510,14 @@ public class Login extends Panel {
         setRight(asiluxImage);
         asiluxImage.setTranslateX(-15d);
         asiluxImage.setTranslateY(40d);
+        asiluxImage.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
+        asiluxImage.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
+        asiluxImage.setOnMouseClicked(e-> {
+            connectionButton.setGraphic(asiluxIcon);
+            connectWithMicrosoft.set(false);
+            connectWithMojang.set(false);
+
+        });
 
         /*
         * REGISTRY HANDLERS
@@ -580,6 +588,19 @@ public class Login extends Panel {
                 alert.setContentText(e.getMessage());
                 alert.show();
             }
+        } else {
+            AuthInfos infos = new AuthInfos(
+                    usernameField.getText(),
+                    UUID.randomUUID().toString(),
+                    UUID.randomUUID().toString()
+            );
+            saver.set("offline-username", infos.getUsername());
+            saver.save();
+            ALauncher.getInstance().setAuthInfos(infos);
+
+            this.logger.info("Hello " + infos.getUsername());
+
+            panelManager.showPanel(new App());
         }
     }
 
@@ -631,7 +652,9 @@ public class Login extends Panel {
             ));
             this.logger.info("Hello " + response.getProfile().getName());
 
-            panelManager.showPanel(new App());
+            Platform.runLater(() -> {
+                panelManager.showPanel(new App());
+            });
         });
     }
 }
