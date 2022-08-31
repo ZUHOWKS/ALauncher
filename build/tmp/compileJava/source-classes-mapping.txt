@@ -1,5 +1,3 @@
-zuhowks/asiluxteam/fr/launcher/auth/mineweb/AuthMineWeb.java
- zuhowks.asiluxteam.fr.launcher.auth.mineweb.AuthMineWeb
 zuhowks/asiluxteam/fr/launcher/ui/panels/pages/content/ContentPanel.java
  zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.ContentPanel
 zuhowks/asiluxteam/fr/launcher/game/MinecraftInfos.java
@@ -28,31 +26,16 @@ zuhowks/asiluxteam/fr/launcher/ui/assets/Fonts.java
  zuhowks.asiluxteam.fr.launcher.ui.assets.Fonts
 zuhowks/asiluxteam/fr/launcher/utils/XML/XMLPatchParser.java
  zuhowks.asiluxteam.fr.launcher.utils.XML.XMLPatchParser
-zuhowks/asiluxteam/fr/launcher/ui/panels/pages/content/Settings.java
- zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Settings
-zuhowks/asiluxteam/fr/launcher/ui/panel/Panel.java
- zuhowks.asiluxteam.fr.launcher.ui.panel.Panel
-zuhowks/asiluxteam/fr/launcher/utils/Helpers.java
- zuhowks.asiluxteam.fr.launcher.utils.Helpers
- zuhowks.asiluxteam.fr.launcher.utils.Helpers$1
 zuhowks/asiluxteam/fr/launcher/ui/panels/pages/content/Home.java
  zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Home
  zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Home$1
  zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Home$2
  zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Home$StepInfo
-zuhowks/asiluxteam/fr/launcher/ui/panel/IPanel.java
- zuhowks.asiluxteam.fr.launcher.ui.panel.IPanel
-zuhowks/asiluxteam/fr/launcher/Main.java
- zuhowks.asiluxteam.fr.launcher.Main
-zuhowks/asiluxteam/fr/launcher/ui/assets/Colors.java
- zuhowks.asiluxteam.fr.launcher.ui.assets.Colors
-zuhowks/asiluxteam/fr/launcher/ui/panel/IMovable.java
- zuhowks.asiluxteam.fr.launcher.ui.panel.IMovable
-zuhowks/asiluxteam/fr/launcher/ui/panels/partials/TopBar.java
- zuhowks.asiluxteam.fr.launcher.ui.panels.partials.TopBar
-zuhowks/asiluxteam/fr/launcher/ui/panels/pages/Login.java
- zuhowks.asiluxteam.fr.launcher.ui.panels.pages.Login
- zuhowks.asiluxteam.fr.launcher.ui.panels.pages.Login$1
+zuhowks/asiluxteam/fr/launcher/ui/panel/Panel.java
+ zuhowks.asiluxteam.fr.launcher.ui.panel.Panel
+zuhowks/asiluxteam/fr/launcher/utils/Helpers.java
+ zuhowks.asiluxteam.fr.launcher.utils.Helpers
+ zuhowks.asiluxteam.fr.launcher.utils.Helpers$1
 zuhowks/asiluxteam/fr/launcher/ALauncher.java
  zuhowks.asiluxteam.fr.launcher.ALauncher
 zuhowks/asiluxteam/fr/launcher/ui/panels/pages/App.java
@@ -63,3 +46,20 @@ zuhowks/asiluxteam/fr/launcher/ui/panels/pages/App.java
  zuhowks.asiluxteam.fr.launcher.ui.panels.pages.App$4
  zuhowks.asiluxteam.fr.launcher.ui.panels.pages.App$5
  zuhowks.asiluxteam.fr.launcher.ui.panels.pages.App$6
+zuhowks/asiluxteam/fr/launcher/Main.java
+ zuhowks.asiluxteam.fr.launcher.Main
+zuhowks/asiluxteam/fr/launcher/auth/mineweb/AsiluxAuthMineweb.java
+ zuhowks.asiluxteam.fr.launcher.auth.mineweb.AsiluxAuthMineweb
+zuhowks/asiluxteam/fr/launcher/ui/panels/pages/Login.java
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.Login
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.Login$1
+zuhowks/asiluxteam/fr/launcher/ui/panel/IMovable.java
+ zuhowks.asiluxteam.fr.launcher.ui.panel.IMovable
+zuhowks/asiluxteam/fr/launcher/ui/panels/partials/TopBar.java
+ zuhowks.asiluxteam.fr.launcher.ui.panels.partials.TopBar
+zuhowks/asiluxteam/fr/launcher/ui/assets/Colors.java
+ zuhowks.asiluxteam.fr.launcher.ui.assets.Colors
+zuhowks/asiluxteam/fr/launcher/ui/panel/IPanel.java
+ zuhowks.asiluxteam.fr.launcher.ui.panel.IPanel
+zuhowks/asiluxteam/fr/launcher/ui/panels/pages/content/Settings.java
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content.Settings

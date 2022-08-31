@@ -1,5 +1,6 @@
 package zuhowks.asiluxteam.fr.launcher.ui.panels.pages;
 
+import fr.holo.AuthMineweb;
 import fr.litarvan.openauth.AuthPoints;
 import fr.litarvan.openauth.AuthenticationException;
 import fr.litarvan.openauth.Authenticator;
@@ -46,7 +47,6 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Login extends Panel {
@@ -342,7 +342,7 @@ public class Login extends Panel {
             }
 
             else {
-                openUrl("https://asilux.w4.cmws.fr/#"); //TODO: CHANGER LE SITE INTERNET
+                openUrl("http://localhost/asilux.eu/"); //TODO: CHANGER LE SITE INTERNET
             }
 
         });
@@ -483,7 +483,9 @@ public class Login extends Panel {
         microsoftImage.setOnMouseEntered(e-> this.layout.setCursor(Cursor.HAND));
         microsoftImage.setOnMouseExited(e-> this.layout.setCursor(Cursor.DEFAULT));
         microsoftImage.setOnMouseClicked(e-> {
+            connectionButton.setDisable(true);
             authenticateWebMS();
+            //authenticateMS(usernameField.getText(), passwordField.getText());
         });
 
         ImageView mojangImage = new ImageView(new Image("images/icon/mojang-icon.png"));
@@ -560,7 +562,7 @@ public class Login extends Panel {
     public void authenticate(String user, String password) {
 
         if (connectWithMojang.get()) {
-            Authenticator authenticator = new Authenticator(
+            final Authenticator authenticator = new Authenticator(
                     Authenticator.MOJANG_AUTH_URL, AuthPoints.NORMAL_AUTH_POINTS
             );
 
@@ -579,28 +581,53 @@ public class Login extends Panel {
                 ));
 
                 this.logger.info("Hello " + response.getSelectedProfile().getName());
-
                 panelManager.showPanel(new App());
             } catch (AuthenticationException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Erreur");
+                alert.setTitle("Error!");
                 alert.setHeaderText("Une erreur est survenu lors de la connexion");
                 alert.setContentText(e.getMessage());
                 alert.show();
             }
         } else {
-            AuthInfos infos = new AuthInfos(
-                    usernameField.getText(),
-                    UUID.randomUUID().toString(),
-                    UUID.randomUUID().toString()
-            );
-            saver.set("offline-username", infos.getUsername());
-            saver.save();
-            ALauncher.getInstance().setAuthInfos(infos);
+            final AuthMineweb authMineweb = new AuthMineweb(ALauncher.getInstance().getWebSiteURL());
+            try {
+                fr.holo.AuthResponse response = authMineweb.authenticate(user, password);
 
-            this.logger.info("Hello " + infos.getUsername());
+                saver.set("mwAccessToken", response.getAccessToken());
+                saver.set("mwClientToken", response.getClientToken());
+                saver.save();
 
-            panelManager.showPanel(new App());
+                ALauncher.getInstance().setAuthInfos(new AuthInfos(
+                        response.getPseudo(),
+                        response.getAccessToken(),
+                        response.getClientToken(),
+                        response.getUuid()
+                ));
+
+                this.logger.info("Hello " + response.getPseudo());
+                panelManager.showPanel(new App());
+            } catch (javax.naming.AuthenticationException | IOException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error!");
+                alert.setHeaderText("Une erreur est survenu lors de la connexion");
+                alert.setContentText(e.getMessage());
+                alert.show();
+            }
+            /** FOR CRACK
+             AuthInfos infos = new AuthInfos(
+             usernameField.getText(),
+             UUID.randomUUID().toString(),
+             UUID.randomUUID().toString()
+             );
+             saver.set("offline-username", infos.getUsername());
+             saver.save();
+             ALauncher.getInstance().setAuthInfos(infos);
+
+             this.logger.info("Hello " + infos.getUsername());
+
+             panelManager.showPanel(new App());
+             **/
         }
     }
 
@@ -632,13 +659,16 @@ public class Login extends Panel {
 
     public void authenticateWebMS() {
         MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
+
         authenticator.loginWithAsyncWebview().whenComplete((response, error) -> {
             if (error != null) {
-                ALauncher.getInstance().getLogger().err(error.toString());
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Erreur");
-                alert.setContentText(error.getMessage());
-                alert.show();
+                Platform.runLater(() -> {
+                    ALauncher.getInstance().getLogger().err(error.toString());
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Erreur");
+                    alert.setContentText(error.getMessage());
+                    alert.show();
+                });
                 return;
             }
 
@@ -651,6 +681,7 @@ public class Login extends Panel {
                     response.getProfile().getId()
             ));
             this.logger.info("Hello " + response.getProfile().getName());
+
 
             Platform.runLater(() -> {
                 panelManager.showPanel(new App());
