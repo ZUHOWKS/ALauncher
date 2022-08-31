@@ -110,12 +110,15 @@ public class Settings extends ContentPanel {
                         "-fx-text-fill: rgb(255, 255, 255);" +
                         "-fx-text-size: 25;"
         );
+
+
         FontAwesomeIconView iconView = new FontAwesomeIconView(FontAwesomeIcon.SAVE);
         iconView.getStyleClass().add("save-icon");
         saveBtn.setGraphic(iconView);
         setCanTakeAllSize(saveBtn);
         setBottom(saveBtn);
         setCenterH(saveBtn);
+        saveBtn.setTranslateY(-50);
         saveBtn.setOnMouseClicked(e -> {
             double _val = Double.parseDouble(comboBox.getValue().replace(" Go", ""));
             _val *= 1024;

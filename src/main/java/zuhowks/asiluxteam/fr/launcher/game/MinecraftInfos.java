@@ -6,7 +6,6 @@ import fr.theshark34.openlauncherlib.minecraft.GameType;
 
 public class MinecraftInfos {
     public static  final String SERVER_NAME = "asiluxdev";
-
     public static final String GAME_VERSION = "1.12.2";
     public static final VersionType VERSION_TYPE = VersionType.FORGE;
     public static final ForgeVersionBuilder.ForgeVersionType FORGE_VERSION_TYPE = ForgeVersionBuilder.ForgeVersionType.NEW;
