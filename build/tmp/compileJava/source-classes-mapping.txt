@@ -1,32 +1,32 @@
-dev/asiluxserver/launcher/ui/assets/effects/BlurDropShadow.java
- dev.asiluxserver.launcher.ui.assets.effects.BlurDropShadow
-dev/asiluxserver/launcher/ui/assets/Fonts.java
- dev.asiluxserver.launcher.ui.assets.Fonts
-dev/asiluxserver/launcher/utils/XML/XMLPatchParser.java
- dev.asiluxserver.launcher.utils.XML.XMLPatchParser
-dev/asiluxserver/launcher/ui/panel/ITakePLace.java
- dev.asiluxserver.launcher.ui.panel.ITakePLace
-dev/asiluxserver/launcher/game/MinecraftInfos.java
- dev.asiluxserver.launcher.game.MinecraftInfos
-dev/asiluxserver/launcher/utils/Helpers.java
- dev.asiluxserver.launcher.utils.Helpers
- dev.asiluxserver.launcher.utils.Helpers$1
-dev/asiluxserver/launcher/utils/ZProgressBar.java
- dev.asiluxserver.launcher.utils.ZProgressBar
-dev/asiluxserver/launcher/ui/assets/Colors.java
- dev.asiluxserver.launcher.ui.assets.Colors
-dev/asiluxserver/launcher/ui/panel/IMovable.java
- dev.asiluxserver.launcher.ui.panel.IMovable
-dev/asiluxserver/launcher/ui/panel/Panel.java
- dev.asiluxserver.launcher.ui.panel.Panel
-dev/asiluxserver/launcher/ui/PanelManager.java
- dev.asiluxserver.launcher.ui.PanelManager
-dev/asiluxserver/launcher/ui/panel/IPanel.java
- dev.asiluxserver.launcher.ui.panel.IPanel
-dev/asiluxserver/launcher/Main.java
- dev.asiluxserver.launcher.Main
-dev/asiluxserver/launcher/ui/panels/pages/App.java
- dev.asiluxserver.launcher.ui.panels.pages.App
- dev.asiluxserver.launcher.ui.panels.pages.App$InfoLabel
-dev/asiluxserver/launcher/AUpdater.java
- dev.asiluxserver.launcher.AUpdater
+zuhowks/asiluxteam/fr/launcher/AUpdater.java
+ zuhowks.asiluxteam.fr.launcher.AUpdater
+zuhowks/asiluxteam/fr/launcher/ui/assets/Fonts.java
+ zuhowks.asiluxteam.fr.launcher.ui.assets.Fonts
+zuhowks/asiluxteam/fr/launcher/game/MinecraftInfos.java
+ zuhowks.asiluxteam.fr.launcher.game.MinecraftInfos
+zuhowks/asiluxteam/fr/launcher/utils/XML/XMLPatchParser.java
+ zuhowks.asiluxteam.fr.launcher.utils.XML.XMLPatchParser
+zuhowks/asiluxteam/fr/launcher/ui/panel/Panel.java
+ zuhowks.asiluxteam.fr.launcher.ui.panel.Panel
+zuhowks/asiluxteam/fr/launcher/utils/Helpers.java
+ zuhowks.asiluxteam.fr.launcher.utils.Helpers
+ zuhowks.asiluxteam.fr.launcher.utils.Helpers$1
+zuhowks/asiluxteam/fr/launcher/ui/panels/pages/App.java
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.App
+ zuhowks.asiluxteam.fr.launcher.ui.panels.pages.App$InfoLabel
+zuhowks/asiluxteam/fr/launcher/ui/assets/effects/BlurDropShadow.java
+ zuhowks.asiluxteam.fr.launcher.ui.assets.effects.BlurDropShadow
+zuhowks/asiluxteam/fr/launcher/Main.java
+ zuhowks.asiluxteam.fr.launcher.Main
+zuhowks/asiluxteam/fr/launcher/utils/ZProgressBar.java
+ zuhowks.asiluxteam.fr.launcher.utils.ZProgressBar
+zuhowks/asiluxteam/fr/launcher/ui/PanelManager.java
+ zuhowks.asiluxteam.fr.launcher.ui.PanelManager
+zuhowks/asiluxteam/fr/launcher/ui/panel/ITakePLace.java
+ zuhowks.asiluxteam.fr.launcher.ui.panel.ITakePLace
+zuhowks/asiluxteam/fr/launcher/ui/panel/IMovable.java
+ zuhowks.asiluxteam.fr.launcher.ui.panel.IMovable
+zuhowks/asiluxteam/fr/launcher/ui/assets/Colors.java
+ zuhowks.asiluxteam.fr.launcher.ui.assets.Colors
+zuhowks/asiluxteam/fr/launcher/ui/panel/IPanel.java
+ zuhowks.asiluxteam.fr.launcher.ui.panel.IPanel
