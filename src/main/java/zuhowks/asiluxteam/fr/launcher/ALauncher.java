@@ -2,6 +2,7 @@ package zuhowks.asiluxteam.fr.launcher;
 
 import fr.flowarg.flowlogger.ILogger;
 import fr.flowarg.flowlogger.Logger;
+import fr.holo.AuthMineweb;
 import fr.litarvan.openauth.AuthPoints;
 import fr.litarvan.openauth.AuthenticationException;
 import fr.litarvan.openauth.Authenticator;
@@ -18,12 +19,13 @@ import zuhowks.asiluxteam.fr.launcher.ui.PanelManager;
 import zuhowks.asiluxteam.fr.launcher.ui.panels.pages.App;
 import zuhowks.asiluxteam.fr.launcher.ui.panels.pages.Login;
 import zuhowks.asiluxteam.fr.launcher.utils.XML.XMLPatchParser;
-import zuhowks.asiluxteam.fr.launcher.utils.patch.PatchLoader;
 import zuhowks.asiluxteam.fr.launcher.utils.patch.PatchMessage;
 
+import java.io.IOException;
 import java.nio.file.Path;
 
 public class ALauncher extends Application {
+
     private static ALauncher instance;
     private final ILogger logger;
     private final Path launcherDir = GameDirGenerator.createGameDir("ALauncher", true);
@@ -32,6 +34,7 @@ public class ALauncher extends Application {
     private AuthInfos authInfos = null;
     private XMLPatchParser patchParser;
     private PatchMessage patchMessage;
+    private final String webSiteURL = "http://localhost/";
 
     public ALauncher() {
         instance = this;
@@ -105,6 +108,25 @@ public class ALauncher extends Application {
                 saver.remove("msRefreshToken");
                 saver.save();
             }
+        } else if (saver.get("mwAccessToken") != null && saver.get("mwClientToken") != null) {
+            AuthMineweb authMineweb = new AuthMineweb(this.getWebSiteURL());
+            try {
+                fr.holo.AuthResponse response = authMineweb.refresh(saver.get("mwAccessToken"), saver.get("mwClientToken"));
+                saver.set("mwAccessToken", response.getAccessToken());
+                saver.set("mwClientToken", response.getClientToken());
+                saver.save();
+                ALauncher.getInstance().setAuthInfos(new AuthInfos(
+                        response.getPseudo(),
+                        response.getAccessToken(),
+                        response.getClientToken(),
+                        response.getUuid()
+                ));
+                return true;
+            } catch (javax.naming.AuthenticationException | IOException e) {
+                saver.remove("mwAccessToken");
+                saver.remove("mwClientToken");
+                saver.save();
+            }
         }
 
         return false;
@@ -136,4 +158,7 @@ public class ALauncher extends Application {
 
     public PatchMessage getPatchMessage() { return patchMessage;}
 
+    public String getWebSiteURL() {
+        return webSiteURL;
+    }
 }

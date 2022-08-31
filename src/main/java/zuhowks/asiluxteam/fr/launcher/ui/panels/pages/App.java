@@ -10,6 +10,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -123,7 +124,6 @@ public class App extends Panel {
         setCanTakeAllSize(avatarView);
         setCenterH(avatarView);
         avatarView.setTranslateY(15d);
-
         avatarView.setOnMouseEntered(e-> {
 
             //Change User Cursor
@@ -158,7 +158,6 @@ public class App extends Panel {
             };
             avatarUpScale.play();
         });
-
         avatarView.setOnMouseExited(e-> {
 
             //Change User Cursor
@@ -192,6 +191,12 @@ public class App extends Panel {
             };
             avatarDownScale.play();
         });
+
+        //Tooltip for avatar
+        Tooltip avatarTooltip = new Tooltip(ALauncher.getInstance().getAuthInfos().getUsername());
+        avatarTooltip.setFont(Font.loadFont(Fonts.SELAWK.get(), 14));
+        avatarTooltip.setHeight(12);
+        Tooltip.install(avatarView, avatarTooltip);
 
         /* TITLE HOME */
         FontAwesomeIconView homeIcon = new FontAwesomeIconView(FontAwesomeIcon.HOME);
@@ -378,6 +383,8 @@ public class App extends Panel {
             saver.remove("clientToken");
             saver.remove("msAccessToken");
             saver.remove("msRefreshToken");
+            saver.remove("mwAccessToken");
+            saver.remove("mwClientToken");
             saver.save();
             ALauncher.getInstance().setAuthInfos(null);
             this.panelManager.showPanel(new Login());

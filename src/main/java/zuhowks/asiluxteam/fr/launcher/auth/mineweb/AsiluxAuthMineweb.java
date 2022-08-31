@@ -14,15 +14,16 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class AuthMineWeb {
+public class AsiluxAuthMineweb {
+    private ALauncher launcher = ALauncher.getInstance();
     private boolean connected = false;
     private String pseudo;
     private String hash;
 
 
-    public AuthMineWeb (String pseudo, String password) {
+    public AsiluxAuthMineweb(String pseudo, String password) {
         try {
-            URLConnection connection = (new URL("https://asilux.w4.cmws.fr/auth/start?username="+pseudo+"&password="+getSHA256(password)).openConnection());
+            URLConnection connection = (new URL(launcher.getWebSiteURL() + "/auth/start?username="+pseudo+"&password="+getSHA256(password)).openConnection());
             connection.setRequestProperty("User-Argent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
             connection.connect();
             InputStream is = connection.getInputStream();
