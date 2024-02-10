@@ -1,9 +1,14 @@
-# Mise à jour du ALauncher en version 1.1.5
+# ALauncher version 1.0.0
 
-Nouvelle version du launcher est enfin arrivé ! Beaucoup de choses on était retravaillé dans cette version du launcher. Vous retrouverez ci-dessous toutes les modifications apportées au ALauncher.
+The official ALauncher version is available now ! Enjoy the Asilux mods and testing them.
 
+## Installation
 
-# Patch note du ALauncher | 29/04/2022
+To run ALauncher, you need to install Java 8 (JDK Version 8):
+- **Window:** run executable ALauncher.exe
+- **MacOs/Linux/Alternative:** run jar file AUpdater.jar
+
+# Patch note du ALauncher | 29/04/2022 (fr)
 
 _**Nouveauté**_:
 - Connexion sur un compte microsoft via l'interface web de microsoft.
@@ -11,3 +16,4 @@ _**Nouveauté**_:
 
 _**Retiré**_:
 - Connexion à un compte microsoft via l'interface du ALauncher.
+
