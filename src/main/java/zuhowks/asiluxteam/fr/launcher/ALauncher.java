@@ -20,7 +20,6 @@ import zuhowks.asiluxteam.fr.launcher.ui.panels.pages.Login;
 import zuhowks.asiluxteam.fr.launcher.utils.XML.XMLPatchParser;
 import zuhowks.asiluxteam.fr.launcher.utils.patch.PatchMessage;
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 public class ALauncher extends Application {
