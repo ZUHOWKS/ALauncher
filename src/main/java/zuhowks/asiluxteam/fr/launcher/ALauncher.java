@@ -108,6 +108,7 @@ public class ALauncher extends Application {
                 saver.save();
             }
         } /*else if (saver.get("mwAccessToken") != null && saver.get("mwClientToken") != null) {
+
             AuthMineweb authMineweb = new AuthMineweb(this.getWebSiteURL());
             try {
                 fr.holo.AuthResponse response = authMineweb.refresh(saver.get("mwAccessToken"), saver.get("mwClientToken"));

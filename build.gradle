@@ -2,14 +2,14 @@ plugins {
     id 'idea'
     id 'com.github.johnrengelman.shadow' version '7+'
     id 'java-library'
+    id 'java'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.13'
-}
 
-apply plugin: 'org.openjfx.javafxplugin'
+}
 
 group 'com.github.zuhowks'
 version '1.0.0'
+
 
 repositories {
     mavenCentral()
@@ -26,15 +26,11 @@ repositories {
     }
 }
 
-javafx {
-    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.swing']
-}
-
 
 dependencies {
 
     implementation 'fr.litarvan:openauth:1+'
-    implementation 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
+    implementation 'de.jensd:fontawesomefx:8.+'
 
     implementation 'fr.flowarg:flowupdater:1.5+'
     implementation 'fr.flowarg:openlauncherlib:3+'
@@ -52,3 +48,4 @@ application {
 compileJava {
     options.encoding = "UTF-8"
 }
+

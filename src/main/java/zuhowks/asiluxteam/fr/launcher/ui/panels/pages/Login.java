@@ -1,6 +1,5 @@
 package zuhowks.asiluxteam.fr.launcher.ui.panels.pages;
 
-
 import fr.litarvan.openauth.AuthPoints;
 import fr.litarvan.openauth.AuthenticationException;
 import fr.litarvan.openauth.Authenticator;
@@ -591,7 +590,7 @@ public class Login extends Panel {
                 alert.show();
             }
         } else {
-            /* deprecate AuthMineweb
+            /*
             final AuthMineweb authMineweb = new AuthMineweb(ALauncher.getInstance().getWebSiteURL());
             try {
                 fr.holo.AuthResponse response = authMineweb.authenticate(user, password);
