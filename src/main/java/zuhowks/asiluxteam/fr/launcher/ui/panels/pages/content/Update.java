@@ -1,7 +1,5 @@
 package zuhowks.asiluxteam.fr.launcher.ui.panels.pages.content;
 
-import com.sun.javafx.tk.FontLoader;
-import com.sun.javafx.tk.Toolkit;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
