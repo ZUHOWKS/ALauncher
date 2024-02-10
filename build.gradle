@@ -1,16 +1,22 @@
 plugins {
     id 'idea'
-    id 'com.github.johnrengelman.shadow' version '7.0.0'
-    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7+'
+    id 'java-library'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
 }
 
+apply plugin: 'org.openjfx.javafxplugin'
+
 group 'com.github.zuhowks'
-version '1.1.5-beta'
+version '1.0.0'
 
 repositories {
     mavenCentral()
+    maven {
+        url = 'https://litarvan.github.io/maven'
+        name = 'LitarvanMaven'
+    }
     maven {
         url = 'https://jitpack.io/'
         name = 'JitPack'
@@ -21,14 +27,14 @@ repositories {
 }
 
 javafx {
-    modules = [ 'javafx.controls', 'javafx.fxml' ]
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.swing']
 }
+
 
 dependencies {
 
     implementation 'fr.litarvan:openauth:1+'
-    implementation 'de.jensd:fontawesomefx:8.9'
-    //implementation files('libs/AuthMineweb_1.3.7.jar')
+    implementation 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
 
     implementation 'fr.flowarg:flowupdater:1.5+'
     implementation 'fr.flowarg:openlauncherlib:3+'
