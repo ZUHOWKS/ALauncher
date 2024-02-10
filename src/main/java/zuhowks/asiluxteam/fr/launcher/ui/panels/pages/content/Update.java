@@ -226,15 +226,14 @@ public class Update extends ContentPanel{
             categoriesLabel.setFont(Font.loadFont(Fonts.SELAWK_SEMI_BOLD.get(), 40));
             categoriesLabel.setTranslateX(50);
 
-
-            FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+            patchVBoxPane.add(categoriesLabel,0, line);
 
             Rectangle separator = new Rectangle();
             setGrow(separator);
             setAlignment(separator, HPos.LEFT ,VPos.TOP);
             //separator.setEffect(new BlurDropShadow(Color.rgb(37,37, 37), 4, 0));
             separator.setHeight(15);
-            separator.setWidth(fontLoader.computeStringWidth(categoriesLabel.getText(), categoriesLabel.getFont()) + 12d);
+            separator.setWidth(categoriesLabel.getFont().getSize() * categoriesLabel.getText().length() * 0.65 + 15d);
             separator.setTranslateX(44d);
             separator.setTranslateY(50);
             separator.setArcHeight(15);
@@ -267,7 +266,6 @@ public class Update extends ContentPanel{
             timelineS.setCycleCount(Timeline.INDEFINITE);
             timelineS.play();
 
-            patchVBoxPane.add(categoriesLabel,0, line);
             patchVBoxPane.add(separator,0, line);
 
             patchVBoxPane.add(new Label("\n "), 0, line+1);
