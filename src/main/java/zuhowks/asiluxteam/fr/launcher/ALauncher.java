@@ -2,7 +2,6 @@ package zuhowks.asiluxteam.fr.launcher;
 
 import fr.flowarg.flowlogger.ILogger;
 import fr.flowarg.flowlogger.Logger;
-import fr.holo.AuthMineweb;
 import fr.litarvan.openauth.AuthPoints;
 import fr.litarvan.openauth.AuthenticationException;
 import fr.litarvan.openauth.Authenticator;
@@ -108,7 +107,8 @@ public class ALauncher extends Application {
                 saver.remove("msRefreshToken");
                 saver.save();
             }
-        } else if (saver.get("mwAccessToken") != null && saver.get("mwClientToken") != null) {
+        } /*else if (saver.get("mwAccessToken") != null && saver.get("mwClientToken") != null) {
+
             AuthMineweb authMineweb = new AuthMineweb(this.getWebSiteURL());
             try {
                 fr.holo.AuthResponse response = authMineweb.refresh(saver.get("mwAccessToken"), saver.get("mwClientToken"));
@@ -127,7 +127,7 @@ public class ALauncher extends Application {
                 saver.remove("mwClientToken");
                 saver.save();
             }
-        }
+        }*/
 
         return false;
     }

@@ -1,6 +1,5 @@
 package zuhowks.asiluxteam.fr.launcher.ui.panels.pages;
 
-import fr.holo.AuthMineweb;
 import fr.litarvan.openauth.AuthPoints;
 import fr.litarvan.openauth.AuthenticationException;
 import fr.litarvan.openauth.Authenticator;
@@ -47,6 +46,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Login extends Panel {
@@ -590,6 +590,7 @@ public class Login extends Panel {
                 alert.show();
             }
         } else {
+            /*
             final AuthMineweb authMineweb = new AuthMineweb(ALauncher.getInstance().getWebSiteURL());
             try {
                 fr.holo.AuthResponse response = authMineweb.authenticate(user, password);
@@ -613,8 +614,8 @@ public class Login extends Panel {
                 alert.setHeaderText("Une erreur est survenu lors de la connexion");
                 alert.setContentText(e.getMessage());
                 alert.show();
-            }
-            /** FOR CRACK
+            }*/
+
              AuthInfos infos = new AuthInfos(
              usernameField.getText(),
              UUID.randomUUID().toString(),
@@ -627,7 +628,7 @@ public class Login extends Panel {
              this.logger.info("Hello " + infos.getUsername());
 
              panelManager.showPanel(new App());
-             **/
+
         }
     }
 

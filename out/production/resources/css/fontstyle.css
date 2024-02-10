@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Coco';
+    src: url('/font/Cocogoose.ttf');
+}
+
+.label {
+    -fx-font-family: 'Coco';
+    -fx-font-size: 50;
+}
+
+.button .text {
+    -fx-font-family: 'Coco';
+}

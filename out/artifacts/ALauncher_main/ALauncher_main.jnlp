@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="ALauncher_main.jnlp">
+  <information>
+    <title>ALauncher</title>
+    <vendor>Unknown</vendor>
+    <description>The officiel launcher of Asilux Server</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="ALauncher_main.jar" size="88740" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="1280" height="720" main-class="zuhowks.asiluxteam.fr.launcher.ALauncher.Main"  name="ALauncher.main" />
+  <update check="background"/>
+</jnlp>
